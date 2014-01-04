@@ -1,0 +1,18 @@
+<div xmlns="http://www.w3.org/1999/xhtml" lang="en"
+     xmlns:f="http://typo3.org/ns/fluid/ViewHelpers"
+     xmlns:qf="http://typo3.org/ns/TYPO3/CMS/QuickForm/ViewHelpers">
+
+	<f:section name="TextField">
+		<f:if condition="{qf:property()}">
+			<div class="form-group">
+				<label class="control-label">
+					<qf:tca.fieldLabel />
+				</label>
+
+				<div>
+					{qf:property()}
+				</div>
+			</div>
+		</f:if>
+	</f:section>
+</div>

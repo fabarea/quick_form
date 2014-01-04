@@ -1,0 +1,26 @@
+<div xmlns="http://www.w3.org/1999/xhtml" lang="en"
+     xmlns:f="http://typo3.org/ns/fluid/ViewHelpers"
+     xmlns:qf="http://typo3.org/ns/TYPO3/CMS/QuickForm/ViewHelpers">
+
+	<f:section name="TabPanel">
+
+		<div class="tabbable tabs-above">
+			<ul class="nav nav-pills active" id="myTab">
+				<f:for each="{tabs}" as="tab" key="index" iteration="iterator">
+					<li class="nav-link {f:if(condition: iterator.isFirst, then: 'active')}">
+						<f:link.page section="tab-{groupIdentifier}-{index}" additionalAttributes="{data-toggle: 'tab'}">{tab}</f:link.page>
+					</li>
+				</f:for>
+			</ul>
+			<div class="tab-content">
+				<f:for each="{tabs}" as="tab" key="index" iteration="iterator">
+					<div class="tab-pane fade {f:if(condition: iterator.isFirst, then: 'in active')}" id="tab-{groupIdentifier}-{index}">
+						<qf:tca.form items="{items}" index="{index}"/>
+					</div>
+				</f:for>
+			</div>
+		</div>
+
+		* Mandatory fields
+	</f:section>
+</div>

@@ -1,0 +1,36 @@
+plugin.tx_quickform {
+	view {
+		templateRootPath = {$plugin.tx_quickform.view.templateRootPath}
+		partialRootPath = {$plugin.tx_quickform.view.partialRootPath}
+		layoutRootPath = {$plugin.tx_quickform.view.layoutRootPath}
+	}
+	persistence {
+		storagePid = {$plugin.tx_quickform.persistence.storagePid}
+	}
+
+	# The TS is used for validating an equipment according to his type.
+    # Before introducing the validation definition here, I tried different approaches:
+    # - annotation in class itself could not be used because some fields are mandatory for a type of equipment and not for other.
+    #   We don't have some partial validation mechanism in Extbase in TYPO3 6.1
+    # - eval => 'required'. As an approach, I could use the "eval" key from the TCA and introduces some validation upon that key.
+    #   Unfortunately, the BE and FE does not have the same requirement.
+    #
+    validate {
+        objectName {
+
+            # type 1
+            1 {
+                field_name {
+                    required = 1
+                }
+            }
+        }
+    }
+	settings {
+
+	}
+	features {
+		# uncomment the following line to enable the new Property Mapper.
+		# rewrittenPropertyMapper = 1
+	}
+}

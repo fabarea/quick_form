@@ -1,0 +1,19 @@
+<div xmlns="http://www.w3.org/1999/xhtml" lang="en"
+     xmlns:f="http://typo3.org/ns/fluid/ViewHelpers"
+     xmlns:qf="http://typo3.org/ns/TYPO3/CMS/QuickForm/ViewHelpers">
+
+	<f:section name="DatePicker">
+
+		<div class="form-group {qf:render.hasError(property: '{property}')}">
+			<label class="control-label" for="{property}">
+				<qf:tca.fieldLabel />
+				<f:if condition="{qf:property.isRequired(property: '{property}')}">*</f:if>
+			</label>
+
+			<f:form.textfield property="{property}" id="{property}"
+			                  value="{qf:format.dateProperty()}"
+			                  additionalAttributes="{autocomplete: 'off'}"
+			                  class="form-control datepicker {qf:render.validate(property: '{property}')}"/>
+		</div>
+	</f:section>
+</div>

@@ -1,0 +1,18 @@
+<div xmlns="http://www.w3.org/1999/xhtml" lang="en"
+     xmlns:f="http://typo3.org/ns/fluid/ViewHelpers"
+     xmlns:qf="http://typo3.org/ns/TYPO3/CMS/QuickForm/ViewHelpers">
+
+	<f:section name="Select">
+		<div class="form-group {qf:render.hasError(property: '{property}')}">
+			<label for="{property}">
+				<qf:tca.fieldLabel />
+				<f:if condition="{qf:property.isRequired(property: '{property}')}">*</f:if>
+			</label>
+
+			<f:form.select property="{property}" id="{property}"
+			               additionalAttributes="{autocomplete: 'off'}"
+			               class="form-control {qf:render.validate(property: '{property}')}"
+			               options="{qf:tca.items()}" />
+		</div>
+	</f:section>
+</div>

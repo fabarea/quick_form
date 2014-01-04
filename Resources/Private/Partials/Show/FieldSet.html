@@ -1,0 +1,15 @@
+<div xmlns="http://www.w3.org/1999/xhtml" lang="en"
+     xmlns:f="http://typo3.org/ns/fluid/ViewHelpers"
+     xmlns:qf="http://typo3.org/ns/TYPO3/CMS/QuickForm/ViewHelpers">
+
+	<f:section name="FieldSet">
+		<fieldset>
+			<f:if condition="{legend}">
+				<legend>
+					<f:translate key="{legend}"/>
+				</legend>
+			</f:if>
+			<qf:tca.show items="{items}"/>
+		</fieldset>
+	</f:section>
+</div>

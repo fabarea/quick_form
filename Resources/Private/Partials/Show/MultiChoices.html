@@ -1,0 +1,26 @@
+<div xmlns="http://www.w3.org/1999/xhtml" lang="en"
+     xmlns:f="http://typo3.org/ns/fluid/ViewHelpers"
+     xmlns:qf="http://typo3.org/ns/TYPO3/CMS/QuickForm/ViewHelpers">
+
+	<f:section name="MultiChoices">
+		<f:if condition="{qf:property()}">
+			<div class="form-group {qf:render.hasError(property: '{property}')}">
+				<label class="control-label">
+					<qf:tca.fieldLabel />
+				</label>
+
+				<div>
+					<f:for each="{qf:tca.items(removeEmptyValues: 'true')}" as="choiceLabel" key="choiceValue">
+						<label class="checkbox-inline">
+							<f:form.checkbox class="{property}" value="1"
+							                 disabled="disabled"
+							                 additionalAttributes="{autocomplete: 'off'}"
+							                 checked="{qf:form.isChecked(expectedValue: '{choiceValue}')}" />
+							{choiceLabel}
+						</label>
+					</f:for>
+				</div>
+			</div>
+		</f:if>
+	</f:section>
+</div>

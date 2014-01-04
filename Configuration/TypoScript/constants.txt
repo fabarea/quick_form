@@ -1,0 +1,12 @@
+plugin.tx_quickform {
+	view {
+		# cat=plugin.tx_quickform/file; type=string; label=Path to template root (FE)
+		templateRootPath = EXT:quick_form/Resources/Private/Templates/
+		# cat=plugin.tx_quickform/file; type=string; label=Path to template partials (FE)
+		partialRootPath = EXT:quick_form/Resources/Private/Partials/
+		# cat=plugin.tx_quickform/file; type=string; label=Path to template layouts (FE)
+		layoutRootPath = EXT:quick_form/Resources/Private/Layouts/
+	}
+	persistence {
+	}
+}

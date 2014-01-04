@@ -1,0 +1,20 @@
+<div xmlns="http://www.w3.org/1999/xhtml" lang="en"
+     xmlns:f="http://typo3.org/ns/fluid/ViewHelpers"
+     xmlns:qf="http://typo3.org/ns/TYPO3/CMS/QuickForm/ViewHelpers">
+
+	<f:section name="RadioButtons">
+		<div class="form-group {qf:render.hasError(property: '{property}')}">
+			<label class="form-group">
+				<qf:tca.fieldLabel />
+			</label>
+
+			<f:for each="{qf:tca.items()}" as="radioButtonLabel" key="value">
+				<div class="radio">
+					<label>
+						<f:form.radio property="{property}" value="{value}" disabled="disabled"/>
+						{radioButtonLabel}
+					</label>
+				</div>
+			</f:for>
+	</f:section>
+</div>
