@@ -23,22 +23,18 @@ namespace TYPO3\CMS\QuickForm\ViewHelpers\Render;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\QuickForm\Validation\ValidationService;
+use TYPO3\CMS\QuickForm\ViewHelpers\AbstractValidationViewHelper;
 
 /**
  * View helper which tells whether a property has an error.
  */
-class HasErrorViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
+class HasErrorViewHelper extends AbstractValidationViewHelper {
 
 	/**
 	 * @var string
 	 */
 	protected $pluginSignature = 'tx_lima_pi1';
-
-	/**
-	 * @var \TYPO3\CMS\QuickForm\ViewHelpers\Property\IsRequiredViewHelper
-	 * @inject
-	 */
-	protected $isRequiredViewHelper;
 
 	/**
 	 * @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface
@@ -71,7 +67,7 @@ class HasErrorViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHe
 		$result = '';
 		foreach ($fields as $fieldName => $configuration) {
 			$propertyName = GeneralUtility::underscoredToLowerCamelCase($fieldName);
-			if ($propertyName === $property && $this->isRequiredViewHelper->render($property)) {
+			if ($propertyName === $property && ValidationService::getInstance($this)->isRequired($property)) {
 				if (empty($arguments['equipment'][$property])) {
 					$result = 'has-error';
 				}

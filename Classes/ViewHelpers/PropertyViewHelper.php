@@ -25,12 +25,12 @@ namespace TYPO3\CMS\QuickForm\ViewHelpers;
  ***************************************************************/
 
 /**
- * View helper which render a property. The property and the object are given from the context.
+ * View helper which returns a property value. The property and the object are given from the context.
  */
 class PropertyViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\RenderViewHelper {
 
 	/**
-	 * Returns property value. The property and the object are given from the context.
+	 * Returns a property value. The property and the object are given from the context.
 	 *
 	 * @return string
 	 */

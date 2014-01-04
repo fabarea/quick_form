@@ -47,6 +47,7 @@ class FormViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\RenderViewHelper {
 		$this->registerArgument('arguments', 'array', 'Arguments to pass to the partial.', FALSE, array());
 		$this->registerArgument('index', 'int', 'The current index of the items.', FALSE, NULL);
 		$this->registerArgument('dataType', 'string', 'The data type to render, corresponds likely to the table name', FALSE, '');
+		$this->registerArgument('model', 'string', 'The model name which will be used for validating. Required if no object is assigned to the form.', FALSE, '');
 		$this->registerArgument('debug', 'boolean', 'Whether the View Helper must be debugged', FALSE, FALSE);
 	}
 
@@ -181,6 +182,7 @@ class FormViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\RenderViewHelper {
 				throw new \Exception('Missing dataType argument for the first call. Forgotten <f.form.tca dataType="tx_domain_xyz" />?', 1385395355);
 			}
 
+			$this->arguments['arguments']['model'] = $this->arguments['model'];
 			$this->arguments['arguments']['dataType'] = $this->arguments['dataType'];
 			$this->arguments['arguments']['type'] = (int) $this->arguments['type']; // add useful variable to be transmitted along the rendering.
 			$initialArguments = ArgumentRegistry::getInstance()->set($this->arguments['arguments'])->get();
@@ -203,6 +205,7 @@ class FormViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\RenderViewHelper {
 			$dataType = $this->arguments['dataType'];
 			if (0 === $type && empty($GLOBALS['TCA'][$dataType]['interface']['types'][$type])) {
 				$type++; // try to shift to the next index.
+				$this->arguments['type'] = $type;
 			}
 
 			if (empty($GLOBALS['TCA'][$dataType]['interface']['types'][$type])) {

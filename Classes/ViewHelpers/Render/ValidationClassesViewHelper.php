@@ -22,17 +22,13 @@ namespace TYPO3\CMS\QuickForm\ViewHelpers\Render;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+use TYPO3\CMS\QuickForm\Validation\ValidationService;
+use TYPO3\CMS\QuickForm\ViewHelpers\AbstractValidationViewHelper;
 
 /**
  * View helper which returns classes that will validate the field.
  */
-class ValidateViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
-
-	/**
-	 * @var \TYPO3\CMS\QuickForm\ViewHelpers\Property\IsRequiredViewHelper
-	 * @inject
-	 */
-	protected $isRequiredViewHelper;
+class ValidationClassesViewHelper extends AbstractValidationViewHelper {
 
 	/**
 	 * Returns classes that will validate the field.
@@ -42,7 +38,8 @@ class ValidateViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHe
 	 */
 	public function render($property) {
 		$result = '';
-		if ($this->isRequiredViewHelper->render($property)) {
+
+		if (ValidationService::getInstance($this)->isRequired($property)) {
 			$result = 'required';
 		}
 		return $result;

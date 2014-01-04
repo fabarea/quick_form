@@ -10,7 +10,7 @@
 			</label>
 
 			<f:form.hidden property="{property}" id="{property}"
-			               class="{qf:render.validate(property: '{property}')}"/>
+			               class="{qf:render.validationClasses(property: '{property}')}"/>
 			<div>
 				<f:for each="{qf:tca.items(removeEmptyValues: 'true')}" as="choiceLabel" key="choiceValue">
 					<label class="checkbox-inline">

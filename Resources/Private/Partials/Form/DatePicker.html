@@ -13,7 +13,7 @@
 			<f:form.textfield property="{property}" id="{property}"
 			                  value="{qf:format.dateProperty()}"
 			                  additionalAttributes="{autocomplete: 'off'}"
-			                  class="form-control datepicker {qf:render.validate(property: '{property}')}"/>
+			                  class="form-control datepicker {qf:render.validationClasses(property: '{property}')}"/>
 		</div>
 	</f:section>
 </div>

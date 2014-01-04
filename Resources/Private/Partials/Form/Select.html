@@ -11,7 +11,7 @@
 
 			<f:form.select property="{property}" id="{property}"
 			               additionalAttributes="{autocomplete: 'off'}"
-			               class="form-control {qf:render.validate(property: '{property}')}"
+			               class="form-control {qf:render.validationClasses(property: '{property}')}"
 			               options="{qf:tca.items()}" />
 		</div>
 	</f:section>
