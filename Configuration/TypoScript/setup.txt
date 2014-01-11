@@ -16,7 +16,7 @@ plugin.tx_quickform {
     #   Unfortunately, the BE and FE does not have the same requirement.
     #
     validate {
-        objectName {
+        formObjectName {
 
             # type 1
             1 {

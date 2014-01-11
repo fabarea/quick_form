@@ -64,6 +64,11 @@ class ValidationService implements SingletonInterface {
 	protected $formObjectName;
 
 	/**
+	 * @var string
+	 */
+	protected $validationType;
+
+	/**
 	 * @var array
 	 */
 	protected $properties = array();
@@ -72,6 +77,9 @@ class ValidationService implements SingletonInterface {
 	 * @var array
 	 */
 	static protected $instances;
+
+	const VALIDATION_TYPE_TYPOSCRIPT = 'typoscript';
+	const VALIDATION_TYPE_TCA = 'tca';
 
 	/**
 	 * Returns a class instance.
@@ -84,13 +92,16 @@ class ValidationService implements SingletonInterface {
 		$formObjectName = $viewHelper->getViewHelperVariableContainer()->get('TYPO3\CMS\Fluid\ViewHelpers\FormViewHelper', 'formObjectName');
 		if (empty(self::$instances[$formObjectName])) {
 
+			$validationType = $viewHelper->getTemplateVariableContainer()->get('validationType');
+
 			/** @var \TYPO3\CMS\QuickForm\Validation\ValidationService $instance */
 			$instance = GeneralUtility::makeInstance('TYPO3\CMS\QuickForm\Validation\ValidationService');
-			$instance->setTemplateVariableContainer($viewHelper->getTemplateVariableContainer());
-			$instance->setConfigurationManager($viewHelper->getConfigurationManager());
-			$instance->setReflectionService($viewHelper->getReflectionService());
-			$instance->setTypoScriptService($viewHelper->getTypoScriptService());
-			$instance->setFormObjectName($formObjectName);
+			$instance->setTemplateVariableContainer($viewHelper->getTemplateVariableContainer())
+				->setConfigurationManager($viewHelper->getConfigurationManager())
+				->setReflectionService($viewHelper->getReflectionService())
+				->setTypoScriptService($viewHelper->getTypoScriptService())
+				->setValidationType($validationType)
+				->setFormObjectName($formObjectName);
 
 			self::$instances[$formObjectName] = $instance;
 		}
@@ -108,34 +119,89 @@ class ValidationService implements SingletonInterface {
 
 		if (!isset($this->properties[$property]['required'])) {
 
-			$isRequired = FALSE;
-
-			$configuration = $this->getValidationConfiguration();
-
-			$type = $this->templateVariableContainer->get('type');
-
-			$field = GeneralUtility::camelCaseToLowerCaseUnderscored($property);
-
-			// TRUE means the validation is defined by TypoScript useful for multi-type objects.
-			if (!empty($configuration['validate'][$this->formObjectName][$type][$field])) {
-				$validations = $configuration['validate'][$this->formObjectName][$type][$field];
-				if (isset($validations['required']) && $validations['required'] == 1) {
-					$isRequired = TRUE;
-				}
+			if ($this->validationType == self::VALIDATION_TYPE_TCA) {
+				$isRequired = $this->isRequiredWithTcaStrategy($property);
+			} elseif ($this->validationType == self::VALIDATION_TYPE_TYPOSCRIPT) {
+				$isRequired = $this->isRequiredWithTypoScriptStrategy($property);
 			} else {
-
-				// Get the validation value from the class name by reflection.
-				$className = $this->getClassName();
-				$values = $this->reflectionService->getPropertyTagsValues($className, $property);
-				$validations = $values['validate'];
-				if (is_array($validations)) {
-					$isRequired = in_array('NotEmpty', $validations);
-				}
+				// todo this case is not bullet proof...
+				$isRequired = $this->isRequiredWithModelStrategy($property);
 			}
+
 			$this->properties[$property]['required'] = $isRequired;
 		}
 
 		return $this->properties[$property]['required'];
+	}
+
+	/**
+	 * Tell whether the field is required using the typoscript strategy.
+	 *
+	 * @param $property
+	 * @throws \Exception
+	 * @return bool
+	 */
+	protected function isRequiredWithTcaStrategy($property) {
+
+		$isRequired = FALSE;
+
+		// gtodo
+		return $isRequired;
+	}
+
+	/**
+	 * Tell whether the field is required using the typoscript strategy.
+	 *
+	 * @param $property
+	 * @throws \Exception
+	 * @return bool
+	 */
+	protected function isRequiredWithTypoScriptStrategy($property) {
+
+		$isRequired = FALSE;
+
+		$validationConfiguration = $this->getValidationConfiguration();
+
+		$type = $this->templateVariableContainer->get('type');
+		$field = GeneralUtility::camelCaseToLowerCaseUnderscored($property);
+
+		// TRUE means the validation is defined by TypoScript useful for multi-type objects.
+		if (empty($validationConfiguration[$this->formObjectName][$type])) {
+			$message = sprintf('I could not find TypoScript validation for type "%s". It must be added "tx_quickform.validate.%s.%s {...}"',
+				$this->formObjectName,
+				$this->formObjectName,
+				$type
+			);
+			throw new \Exception($message, 1388850911);
+		}
+
+		$rules = $validationConfiguration[$this->formObjectName][$type];
+		if (!empty($rules[$field]) && isset($rules[$field]['required']) && $rules[$field]['required'] == 1) {
+			$isRequired = TRUE;
+		}
+		return $isRequired;
+	}
+
+	/**
+	 * Tell whether the field is required using the typoscript strategy.
+	 *
+	 * @param $property
+	 * @throws \Exception
+	 * @return bool
+	 */
+	protected function isRequiredWithModelStrategy($property) {
+
+		$isRequired = FALSE;
+
+		// Get the validation value from the class name by reflection.
+		$className = $this->getClassName();
+		$values = $this->reflectionService->getPropertyTagsValues($className, $property);
+		$rules = $values['validate'];
+		if (is_array($rules)) {
+			$isRequired = in_array('NotEmpty', $rules);
+		}
+
+		return $isRequired;
 	}
 
 	/**
@@ -163,11 +229,13 @@ class ValidationService implements SingletonInterface {
 		// try to read the class name from the object
 		if (empty($className)) {
 			$object = $this->templateVariableContainer->get($this->formObjectName);
-			$className = get_class($object);
-		}
 
-		if (empty($className)) {
-			throw new \Exception('I could not guess the class name connected to this form.', 1388850910);
+			if (!is_object($object)) {
+				$message = 'I could not guess the class name connected to this form. A model name must be passed as attribute to be used as source of validation, eg. model="MyExtension\User"';
+				throw new \Exception($message, 1388850910);
+			}
+
+			$className = get_class($object);
 		}
 
 		return $className;
@@ -175,37 +243,56 @@ class ValidationService implements SingletonInterface {
 
 	/**
 	 * @param mixed $configurationManager
+	 * @return $this
 	 */
 	public function setConfigurationManager($configurationManager) {
 		$this->configurationManager = $configurationManager;
+		return $this;
 	}
 
 	/**
 	 * @param \TYPO3\CMS\Extbase\Reflection\ReflectionService $reflectionService
+	 * @return $this
 	 */
 	public function setReflectionService($reflectionService) {
 		$this->reflectionService = $reflectionService;
+		return $this;
 	}
 
 	/**
 	 * @param \TYPO3\CMS\Extbase\Service\TypoScriptService $typoScriptService
+	 * @return $this
 	 */
 	public function setTypoScriptService($typoScriptService) {
 		$this->typoScriptService = $typoScriptService;
+		return $this;
 	}
 
 	/**
 	 * @param mixed $templateVariableContainer
+	 * @return $this
 	 */
 	public function setTemplateVariableContainer($templateVariableContainer) {
 		$this->templateVariableContainer = $templateVariableContainer;
+		return $this;
 	}
 
 	/**
 	 * @param string $formObjectName
+	 * @return $this
 	 */
 	public function setFormObjectName($formObjectName) {
 		$this->formObjectName = $formObjectName;
+		return $this;
+	}
+
+	/**
+	 * @param string $validationType
+	 * @return $this
+	 */
+	public function setValidationType($validationType) {
+		$this->validationType = $validationType;
+		return $this;
 	}
 }
 

@@ -25,6 +25,8 @@ namespace TYPO3\CMS\QuickForm\ViewHelpers\Tca;
  ***************************************************************/
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\QuickForm\Component\ComponentInterface;
+use TYPO3\CMS\QuickForm\Component\GenericComponent;
 use TYPO3\CMS\QuickForm\Utility\ArgumentRegistry;
 use TYPO3\CMS\Vidi\Tca\TcaService;
 
@@ -36,7 +38,7 @@ class FormViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\RenderViewHelper {
 	/**
 	 * @var string
 	 */
-	protected $extensionKey = 'quick_form';
+	protected $partialRootPath = '';
 
 	/**
 	 * @return void
@@ -48,6 +50,7 @@ class FormViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\RenderViewHelper {
 		$this->registerArgument('index', 'int', 'The current index of the items.', FALSE, NULL);
 		$this->registerArgument('dataType', 'string', 'The data type to render, corresponds likely to the table name', FALSE, '');
 		$this->registerArgument('model', 'string', 'The model name which will be used for validating. Required if no object is assigned to the form.', FALSE, '');
+		$this->registerArgument('validation', 'string', 'Type of validation, possible values are tca, typoscript, model.', FALSE, 'tca');
 		$this->registerArgument('debug', 'boolean', 'Whether the View Helper must be debugged', FALSE, FALSE);
 	}
 
@@ -65,6 +68,13 @@ class FormViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\RenderViewHelper {
 
 		foreach ($items as $item) {
 
+
+			// Convert Quick Form component to array
+			if ($item instanceof ComponentInterface) {
+				$item = $item->toArray();
+			}
+
+			$this->resolvePartialRootPath($item);
 			$renderViewHelper = $this->getRenderViewHelper();
 
 			if (is_array($item) && isset($item['partial'])) {
@@ -182,8 +192,9 @@ class FormViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\RenderViewHelper {
 				throw new \Exception('Missing dataType argument for the first call. Forgotten <f.form.tca dataType="tx_domain_xyz" />?', 1385395355);
 			}
 
-			$this->arguments['arguments']['model'] = $this->arguments['model'];
+			$this->arguments['arguments']['model'] = $this->arguments['model']; // @todo check whether it can be merged into validation type
 			$this->arguments['arguments']['dataType'] = $this->arguments['dataType'];
+			$this->arguments['arguments']['validationType'] = $this->arguments['validation'];
 			$this->arguments['arguments']['type'] = (int) $this->arguments['type']; // add useful variable to be transmitted along the rendering.
 			$initialArguments = ArgumentRegistry::getInstance()->set($this->arguments['arguments'])->get();
 		}
@@ -203,19 +214,19 @@ class FormViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\RenderViewHelper {
 
 		if (empty($items)) {
 			$dataType = $this->arguments['dataType'];
-			if (0 === $type && empty($GLOBALS['TCA'][$dataType]['interface']['types'][$type])) {
+			if (0 === $type && empty($GLOBALS['TCA'][$dataType]['feInterface']['types'][$type])) {
 				$type++; // try to shift to the next index.
 				$this->arguments['type'] = $type;
 			}
 
-			if (empty($GLOBALS['TCA'][$dataType]['interface']['types'][$type])) {
-				$message = sprintf('No TCA configuration found in ["interface"][types][%s] for data type "%s"',
+			if (empty($GLOBALS['TCA'][$dataType]['feInterface']['types'][$type])) {
+				$message = sprintf('No TCA configuration found in [feInterface][types][%s] for data type "%s"',
 					$type,
 					$dataType
 				);
 				throw new \Exception($message, 1384703096);
 			}
-			$items = $GLOBALS['TCA'][$dataType]['interface']['types'][$type];
+			$items = $GLOBALS['TCA'][$dataType]['feInterface']['types'][$type];
 		} elseif (isset($items[$index])) {
 			$items = $items[$index];
 		}
@@ -232,7 +243,9 @@ class FormViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\RenderViewHelper {
 	 * @return boolean
 	 */
 	protected function sanitizeItems($items) {
-		if ($this->isAssociativeArray($items)) {
+		if (is_string($items)) {
+			$items = GeneralUtility::trimExplode(',', $items, TRUE);
+		} elseif ($this->isAssociativeArray($items)) {
 			$items = array($items);
 		}
 		return $items;
@@ -259,7 +272,7 @@ class FormViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\RenderViewHelper {
 		// Prepare View
 		/** @var \TYPO3\CMS\Fluid\View\TemplateView $view */
 		$view = $this->viewHelperVariableContainer->getView();
-		$view->setPartialRootPath($this->computePartialRootPath());
+		$view->setPartialRootPath($this->partialRootPath);
 
 		// Inject Variable Container
 		$renderingContext->injectViewHelperVariableContainer($this->viewHelperVariableContainer);
@@ -272,11 +285,18 @@ class FormViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\RenderViewHelper {
 	}
 
 	/**
-	 * Compute and return the partial root path
+	 * Compute the partial root path given an item.
+	 *
+	 * @param array|ComponentInterface $item
 	 */
-	public function computePartialRootPath() {
-		// @todo make it configurable
-		return ExtensionManagementUtility::extPath($this->extensionKey) . 'Resources/Private/Partials/';
+	protected function resolvePartialRootPath($item) {
+
+		$extensionKey = GenericComponent::DEFAULT_EXTENSION_KEY;
+
+		if (isset($item['extensionKey'])) {
+			$extensionKey = $item['extensionKey'];
+		}
+		$this->partialRootPath = ExtensionManagementUtility::extPath($extensionKey) . 'Resources/Private/Partials/';
 	}
 }
 

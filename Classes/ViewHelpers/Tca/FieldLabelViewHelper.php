@@ -30,7 +30,8 @@ use TYPO3\CMS\Vidi\Tca\TcaService;
 class FieldLabelViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
 
 	/**
-	 * Returns a label for field given by the context. Under the hood, it will search teh label from the TCA.
+	 * Returns a label for field given by the context.
+	 * It will search the label value from the TCA.
 	 *
 	 * @param string $key
 	 * @return string
