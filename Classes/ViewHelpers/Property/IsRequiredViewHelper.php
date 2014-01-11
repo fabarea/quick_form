@@ -30,7 +30,6 @@ use TYPO3\CMS\QuickForm\ViewHelpers\AbstractValidationViewHelper;
  */
 class IsRequiredViewHelper extends AbstractValidationViewHelper {
 
-
 	/**
 	 * Returns whether a property is required given a property name.
 	 *
@@ -40,8 +39,6 @@ class IsRequiredViewHelper extends AbstractValidationViewHelper {
 	public function render($property) {
 		return ValidationService::getInstance($this)->isRequired($property);
 	}
-
-
 }
 
 ?>

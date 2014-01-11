@@ -32,6 +32,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 use TYPO3\CMS\QuickForm\ViewHelpers\AbstractValidationViewHelper;
+use TYPO3\CMS\Vidi\Tca\TcaService;
 
 /**
  * Service class related to validation. This is meant to be used internally in Quick Form.
@@ -137,22 +138,19 @@ class ValidationService implements SingletonInterface {
 	/**
 	 * Tell whether the field is required using the typoscript strategy.
 	 *
-	 * @param $property
-	 * @throws \Exception
+	 * @param string $property
 	 * @return bool
 	 */
 	protected function isRequiredWithTcaStrategy($property) {
-
-		$isRequired = FALSE;
-
-		// gtodo
-		return $isRequired;
+		$dataType = $type = $this->templateVariableContainer->get('dataType');
+		$fieldName = GeneralUtility::camelCaseToLowerCaseUnderscored($property);
+		return TcaService::table($dataType)->field($fieldName)->isRequired();
 	}
 
 	/**
 	 * Tell whether the field is required using the typoscript strategy.
 	 *
-	 * @param $property
+	 * @param string $property
 	 * @throws \Exception
 	 * @return bool
 	 */
@@ -185,7 +183,7 @@ class ValidationService implements SingletonInterface {
 	/**
 	 * Tell whether the field is required using the typoscript strategy.
 	 *
-	 * @param $property
+	 * @param string $property
 	 * @throws \Exception
 	 * @return bool
 	 */

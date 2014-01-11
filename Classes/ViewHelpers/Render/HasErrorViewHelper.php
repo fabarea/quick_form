@@ -23,6 +23,7 @@ namespace TYPO3\CMS\QuickForm\ViewHelpers\Render;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\QuickForm\Validation\ValidationService;
 use TYPO3\CMS\QuickForm\ViewHelpers\AbstractValidationViewHelper;
 
@@ -32,17 +33,6 @@ use TYPO3\CMS\QuickForm\ViewHelpers\AbstractValidationViewHelper;
 class HasErrorViewHelper extends AbstractValidationViewHelper {
 
 	/**
-	 * @var string
-	 */
-	protected $pluginSignature = 'tx_lima_pi1';
-
-	/**
-	 * @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface
-	 * @inject
-	 */
-	protected $configurationManager;
-
-	/**
 	 * Returns whether a property has an error.
 	 *
 	 * @param string $property
@@ -50,29 +40,22 @@ class HasErrorViewHelper extends AbstractValidationViewHelper {
 	 */
 	public function render($property) {
 
-		$settings = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS);
+		$fieldNamePrefix = (string) $this->viewHelperVariableContainer->get('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'fieldNamePrefix');
+		$formObjectName = (string) $this->viewHelperVariableContainer->get('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'formObjectName');
 
-		$arguments = GeneralUtility::_GP($this->pluginSignature);
+		$arguments = GeneralUtility::_GP($fieldNamePrefix);
 
-		$name = 'equipment';
-		$equipmentType = $settings['equipmentType'];
-
-		$fields = array();
-
-
-		if (!empty($settings['validate'][$name][$equipmentType])) {
-			$fields = $settings['validate'][$name][$equipmentType];
-		}
 
 		$result = '';
-		foreach ($fields as $fieldName => $configuration) {
-			$propertyName = GeneralUtility::underscoredToLowerCamelCase($fieldName);
-			if ($propertyName === $property && ValidationService::getInstance($this)->isRequired($property)) {
-				if (empty($arguments['equipment'][$property])) {
-					$result = 'has-error';
-				}
+		if (isset($arguments[$formObjectName][$property])) {
+
+			$value = $arguments[$formObjectName][$property];
+
+			if (ValidationService::getInstance($this)->isRequired($property) && empty($value)) {
+				$result = 'has-error';
 			}
 		}
+
 		return $result;
 	}
 }

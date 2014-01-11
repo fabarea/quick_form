@@ -5,10 +5,11 @@
 	<f:section name="RadioButtons">
 		<div class="form-group {qf:render.hasError(property: '{property}')}">
 			<label class="form-group">
-				<qf:tca.fieldLabel />
+				<qf:tca.fieldLabel/>
 				<f:if condition="{qf:property.isRequired(property: '{property}')}">*</f:if>
 			</label>
 
+			<f:form.hidden property="{property}" value="{value}"/>
 			<f:for each="{qf:tca.items()}" as="radioButtonLabel" key="value">
 				<div class="radio">
 					<label class="radio-inline">
@@ -17,5 +18,6 @@
 					</label>
 				</div>
 			</f:for>
+		</div>
 	</f:section>
 </div>

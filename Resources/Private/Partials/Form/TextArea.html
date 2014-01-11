@@ -3,7 +3,7 @@
      xmlns:qf="http://typo3.org/ns/TYPO3/CMS/QuickForm/ViewHelpers">
 
 	<f:section name="TextArea">
-		<div class="form-group {qf:render.hasError(property: '{property}')}">
+		<div id="form-group-{property}" class="form-group {qf:render.hasError(property: '{property}')}">
 			<label class="control-label" for="{property}">
 				<qf:tca.fieldLabel />
 				<f:if condition="{qf:property.isRequired(property: '{property}')}">*</f:if>

@@ -58,7 +58,7 @@ class ItemsViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\RenderViewHelper {
 		$itemsFromDatabase = $this->fetchItemsFromDatabase($dataType, $fieldName);
 
 		if (!empty($itemsFromDatabase)) {
-			$items = array_merge($items, $itemsFromDatabase);
+			$items = $items + $itemsFromDatabase;
 		}
 
 		return $items;
@@ -91,7 +91,7 @@ class ItemsViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\RenderViewHelper {
 				if (!empty($labelKey)) {
 					$label = LocalizationUtility::translate($labelKey, '');
 
-					// Means, it does not correspond to a key
+					// Means, it does not correspond to a translatable label.
 					if (empty($label)) {
 						$label = html_entity_decode($items[0]);
 					}
