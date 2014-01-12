@@ -10,25 +10,23 @@
 				<f:if condition="{qf:property.isRequired(property: '{property}')}">*</f:if>
 			</label>
 
-			<mu:widget.upload allowedExtensions="jpg, png" storage="1" property="{property}"/>
+			<f:form.hidden property="{property}" id="{property}" value="{value}"/>
 
-			<f:if condition="{equipment.images}">
-				<ul class="qq-upload-list-selector qq-upload-list">
-					<f:for each="{equipment.images}" as="image">
-						<li class="item-image qq-file-id-{image.originalResource.uid} alert alert-success">
-							<f:form.hidden name="equipment[{property}][]" value="{image.originalResource.uid}"/>
-							<f:image src="{image.originalResource.uid}" width="100" height="75" alt=""
-							         class="qq-thumbnail-selector"/>
-							<!--<span class="qq-upload-file-selector qq-upload-file"><small>{image.originalResource.name}</small></span>-->
-							<span class="qq-upload-size-selector qq-upload-size">{qf:math.division(a: '{image.originalResource.size}', b: '1000')}kB</span>
-							<a class="btn-delete-image qq-upload-delete-selector btn-small btn-warning" href="#">Delete</a>
-							<a class="view-btn btn-small btn-info" target="_blank"
-							   href="{image.originalResource.publicUrl}">View</a>
-						</li>
-					</f:for>
-				</ul>
+			<f:if condition="{qf:property.value()}">
+				<f:alias map="{image: '{qf:resource.file()}'}">
+					<div class="item-image" style="margin-bottom: 10px">
+						<f:image src="{image.uid}" width="100" height="75" alt=""
+						         class="qq-thumbnail-selector"/>
+						<span class="qq-upload-file-selector qq-upload-file"><small>{image.name}</small></span>
+						<span class="qq-upload-size-selector qq-upload-size">{qf:math.division(a: '{image.size}', b: '1000')}kB</span>
+						<a class="btn-delete-image qq-upload-delete-selector btn-small btn-warning" href="#">Delete</a>
+						<a class="view-btn btn-small btn-info" target="_blank"
+						   href="{image.publicUrl}">View</a>
+					</div>
+				</f:alias>
 			</f:if>
 
+			<mu:widget.upload allowedExtensions="jpg, png" storage="1" property="{property}" maximumItems="1"/>
 		</div>
 	</f:section>
 </div>

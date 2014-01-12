@@ -3,14 +3,14 @@
      xmlns:qf="http://typo3.org/ns/TYPO3/CMS/QuickForm/ViewHelpers">
 
 	<f:section name="NumberField">
-		<f:if condition="{qf:property()}">
+		<f:if condition="{qf:property.value()}">
 			<div class="form-group">
 				<label class="control-label">
 					<qf:tca.fieldLabel />
 				</label>
 
 				<div>
-					{qf:property()}
+					{qf:property.value()}
 				</div>
 			</div>
 		</f:if>

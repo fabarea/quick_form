@@ -10,22 +10,25 @@
 				<f:if condition="{qf:property.isRequired(property: '{property}')}">*</f:if>
 			</label>
 
-			<mu:widget.showUploaded property="{property}"/>
-
 			<f:if condition="{equipment.images}">
 				<ul class="qq-upload-list-selector qq-upload-list">
 					<f:for each="{equipment.images}" as="image">
 						<li class="item-image qq-file-id-{image.originalResource.uid} alert alert-success">
 							<f:form.hidden name="equipment[{property}][]" value="{image.originalResource.uid}"/>
-							<f:image src="{image.originalResource.uid}" width="100" height="75" alt="" class="qq-thumbnail-selector"/>
-							<!--<span class="qq-upload-file-selector qq-upload-file">{image.originalResource.name}</span>-->
+							<f:image src="{image.originalResource.uid}" width="100" height="75" alt=""
+							         class="qq-thumbnail-selector"/>
+							<!--<span class="qq-upload-file-selector qq-upload-file"><small>{image.originalResource.name}</small></span>-->
 							<span class="qq-upload-size-selector qq-upload-size">{qf:math.division(a: '{image.originalResource.size}', b: '1000')}kB</span>
-							<a class="view-btn btn-small btn-info" target="_blank" href="{image.originalResource.publicUrl}"
-							   style="display: inline;">View</a>
+							<a class="btn-delete-image qq-upload-delete-selector btn-small btn-warning" href="#">Delete</a>
+							<a class="view-btn btn-small btn-info" target="_blank"
+							   href="{image.originalResource.publicUrl}">View</a>
 						</li>
 					</f:for>
 				</ul>
 			</f:if>
+
+			<mu:widget.upload allowedExtensions="jpg, png" storage="1" property="{property}"/>
+
 		</div>
 	</f:section>
 </div>

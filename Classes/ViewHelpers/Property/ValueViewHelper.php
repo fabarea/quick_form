@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\CMS\QuickForm\ViewHelpers;
+namespace TYPO3\CMS\QuickForm\ViewHelpers\Property;
 
 /***************************************************************
  *  Copyright notice
@@ -23,11 +23,13 @@ namespace TYPO3\CMS\QuickForm\ViewHelpers;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
+use TYPO3\CMS\Fluid\ViewHelpers\RenderViewHelper;
 
 /**
  * View helper which returns a property value. The property and the object are given from the context.
  */
-class PropertyViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\RenderViewHelper {
+class ValueViewHelper extends RenderViewHelper {
 
 	/**
 	 * Returns a property value. The property and the object are given from the context.
@@ -38,17 +40,14 @@ class PropertyViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\RenderViewHelper {
 
 		$result = '';
 
-		// Retrieve object.
+		// Retrieve object or array.
 		$formObjectName = $this->viewHelperVariableContainer->get('TYPO3\CMS\Fluid\ViewHelpers\FormViewHelper', 'formObjectName');
 		$object = $this->templateVariableContainer->get($formObjectName);
 
-		if (is_object($object)) {
-
+		if (!empty($object)) {
 			// Retrieve the property name.
 			$property = $this->templateVariableContainer->get('property');
-
-			$getter = 'get' . ucfirst($property);
-			$result = $object->$getter();
+			$result = ObjectAccess::getProperty($object, $property);
 		}
 
 		return $result;

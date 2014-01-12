@@ -3,7 +3,7 @@
      xmlns:qf="http://typo3.org/ns/TYPO3/CMS/QuickForm/ViewHelpers">
 
 	<f:section name="MultiChoices">
-		<f:if condition="{qf:property()}">
+		<f:if condition="{qf:property.value()}">
 			<div class="form-group {qf:render.hasError(property: '{property}')}">
 				<label class="control-label">
 					<qf:tca.fieldLabel />

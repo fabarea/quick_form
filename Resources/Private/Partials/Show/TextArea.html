@@ -4,14 +4,14 @@
 
 	<f:section name="TextArea">
 
-		<f:if condition="{qf:property()}">
+		<f:if condition="{qf:property.value()}">
 			<div class="form-group">
 				<label class="control-label">
 					<qf:tca.fieldLabel />
 				</label>
 
 				<div>
-					<f:format.nl2br>{qf:property()}</f:format.nl2br>
+					<f:format.nl2br>{qf:property.value()}</f:format.nl2br>
 				</div>
 			</div>
 		</f:if>

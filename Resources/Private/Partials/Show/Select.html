@@ -4,7 +4,7 @@
 
 	<f:section name="Select">
 
-		<f:if condition="{qf:property()}">
+		<f:if condition="{qf:property.value()}">
 			<div class="form-group {qf:render.hasError(property: '{property}')}">
 				<label for="{property}">
 					<qf:tca.fieldLabel />
