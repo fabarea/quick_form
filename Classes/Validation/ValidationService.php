@@ -81,6 +81,7 @@ class ValidationService implements SingletonInterface {
 
 	const VALIDATION_TYPE_TYPOSCRIPT = 'typoscript';
 	const VALIDATION_TYPE_TCA = 'tca';
+	const VALIDATION_TYPE_OBJECT = 'object';
 
 	/**
 	 * Returns a class instance.
@@ -125,7 +126,6 @@ class ValidationService implements SingletonInterface {
 			} elseif ($this->validationType == self::VALIDATION_TYPE_TYPOSCRIPT) {
 				$isRequired = $this->isRequiredWithTypoScriptStrategy($property);
 			} else {
-				// todo this case is not bullet proof...
 				$isRequired = $this->isRequiredWithModelStrategy($property);
 			}
 
@@ -192,8 +192,7 @@ class ValidationService implements SingletonInterface {
 		$isRequired = FALSE;
 
 		// Get the validation value from the class name by reflection.
-		$className = $this->getClassName();
-		$values = $this->reflectionService->getPropertyTagsValues($className, $property);
+		$values = $this->reflectionService->getPropertyTagsValues($this->validationType, $property);
 		$rules = $values['validate'];
 		if (is_array($rules)) {
 			$isRequired = in_array('NotEmpty', $rules);
@@ -210,33 +209,6 @@ class ValidationService implements SingletonInterface {
 	protected function getValidationConfiguration() {
 		$configuration = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
 		return $this->typoScriptService->convertTypoScriptArrayToPlainArray($configuration['plugin.']['tx_quickform.']['validate.']);
-	}
-
-	/**
-	 * Returns the class name of the current form. It uses different strategy.
-	 * It firstly reads from attribute "model" whether a class name was given.
-	 * If not, it try to get the object given to the form.
-	 *
-	 * @throws \Exception
-	 * @return string
-	 */
-	protected function getClassName() {
-
-		$className = $this->templateVariableContainer->get('model');
-
-		// try to read the class name from the object
-		if (empty($className)) {
-			$object = $this->templateVariableContainer->get($this->formObjectName);
-
-			if (!is_object($object)) {
-				$message = 'I could not guess the class name connected to this form. A model name must be passed as attribute to be used as source of validation, eg. model="MyExtension\User"';
-				throw new \Exception($message, 1388850910);
-			}
-
-			$className = get_class($object);
-		}
-
-		return $className;
 	}
 
 	/**

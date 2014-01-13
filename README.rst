@@ -27,7 +27,7 @@ In other words, the VH must be wrapped by a ``f:form`` tag as in the example::
 	        additionalAttributes="{role: 'form'}">
 
 		# Use of TCA View Helper
-		<qf:tca.form type="1" arguments="{_all}" dataType="tx_lima_domain_model_contact"/>
+		<qf:tca.form type="1" arguments="{_all}" dataType="tx_lima_domain_model_contact" validation="tca"/>
 
 	</f:form>
 
@@ -40,14 +40,15 @@ Quick Form will show information on the Frontend whether the field contains vali
 It is configured to add a well-known "*" to
 show the field is required.
 
-To get the validation info, Quick Form has three possible sources that can be configured with attribute "validation". There
-are three possibles values:
-The sources can not be combined. If nothing is configured Quick Form
-will take the TCA as fallback source which has the advantage to keep in sync the Backend and the Frontend
+To get the validation info, Quick Form has three possible sources that can be configured with attribute "validation".
+If nothing is configured Quick Form will take the TCA as fallback which has the advantage to keep in sync the Backend and the Frontend.
 
-* Domain Model: attribute model="MyExtension\Domain\Model\Foo" must be given in the View Helper **unless** you assign the object in the View. The model name can the be retrieved.
-* TypoScript: this is useful when multi-type validation is required
-* TCA field: the fall-back
+* tca: the default value, check validation against TCA.
+* typoscript: Extbase makes it quite complicated to validate a model having different types.
+  To work around typoscript validation can be used. Configuration must be given in ``plugin.tx_quickform.validate``
+* object: use the object provided by context and use reflection to tell what fields are required.
+* MyExtension\Domain\Model\Foo: an object is not always available in the context. A model name can be provided.
+
 
 @todo add more validation output such as string length, email, ...
 
