@@ -32,6 +32,7 @@ class IsCheckedViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewH
 
 	/**
 	 * @var string
+	 * @todo check in HasErrorViewHelper for removing me
 	 */
 	protected $pluginSignature = 'tx_lima_pi1';
 
@@ -55,6 +56,7 @@ class IsCheckedViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewH
 		$formObjectName = $this->viewHelperVariableContainer->get('TYPO3\CMS\Fluid\ViewHelpers\FormViewHelper', 'formObjectName');
 		$property = $this->templateVariableContainer->get('property');
 
+		return false;
 		if (is_array($arguments['equipment']) && isset($arguments['equipment'][$property])) {
 			$values = GeneralUtility::trimExplode(',', $arguments['equipment'][$property]);
 		} elseif ($this->templateVariableContainer->get($formObjectName)) {

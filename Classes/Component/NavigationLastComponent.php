@@ -29,9 +29,9 @@ namespace TYPO3\CMS\QuickForm\Component;
  ***************************************************************/
 
 /**
- * A submit form component to be rendered in a Quick Form.
+ * A navigation component to be rendered in a Quick Form.
  */
-class SubmitComponent extends GenericComponent{
+class NavigationLastComponent extends GenericComponent {
 
 	/**
 	 * @var string
@@ -45,9 +45,12 @@ class SubmitComponent extends GenericComponent{
 
 	/**
 	 * constructor
+	 *
+	 * @param integer $previous
 	 */
-	public function __construct() {
-		$this->partialName = 'Form/Submit';
+	public function __construct($previous) {
+		$this->partialName = 'Form/NavigationLast';
+		$this->arguments['previous'] = $previous;
 	}
 
 	/**

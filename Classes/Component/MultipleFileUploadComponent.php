@@ -29,9 +29,9 @@ namespace TYPO3\CMS\QuickForm\Component;
  ***************************************************************/
 
 /**
- * A submit form component to be rendered in a Quick Form.
+ * A hidden form component to be rendered in a Quick Form.
  */
-class SubmitComponent extends GenericComponent{
+class MultipleFileUploadComponent extends GenericComponent {
 
 	/**
 	 * @var string
@@ -46,8 +46,14 @@ class SubmitComponent extends GenericComponent{
 	/**
 	 * constructor
 	 */
-	public function __construct() {
-		$this->partialName = 'Form/Submit';
+	public function __construct($property, $label = '') {
+		$this->partialName = 'Form/MultipleFileUpload';
+		$this->arguments['property'] = $property;
+
+		if (empty($label)) {
+			$label = $property;
+		}
+		$this->arguments['label'] = $label;
 	}
 
 	/**

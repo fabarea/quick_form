@@ -25,6 +25,7 @@ namespace TYPO3\CMS\QuickForm\ViewHelpers\Tca;
  ***************************************************************/
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\QuickForm\Component\ComponentInterface;
 use TYPO3\CMS\QuickForm\Component\GenericComponent;
 use TYPO3\CMS\QuickForm\Utility\ArgumentRegistry;
@@ -39,6 +40,12 @@ class FormViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\RenderViewHelper {
 	 * @var string
 	 */
 	protected $partialRootPath = '';
+
+	/**
+	 * @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface
+	 * @inject
+	 */
+	protected $configurationManager;
 
 	/**
 	 * @return void
@@ -288,12 +295,24 @@ class FormViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\RenderViewHelper {
 	 */
 	protected function resolvePartialRootPath($item) {
 
-		$extensionKey = GenericComponent::DEFAULT_EXTENSION_KEY;
+		$settings = $this->getSettings();
 
+		$extensionKey = $settings['partialExtensionKey'];
 		if (isset($item['extensionKey'])) {
 			$extensionKey = $item['extensionKey'];
 		}
 		$this->partialRootPath = ExtensionManagementUtility::extPath($extensionKey) . 'Resources/Private/Partials/';
+	}
+
+	/**
+	 * Returns the validation configuration
+	 *
+	 * @return string
+	 */
+	protected function getSettings() {
+
+		$configuration = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
+		return $configuration['plugin.']['tx_quickform.']['settings.'];
 	}
 }
 

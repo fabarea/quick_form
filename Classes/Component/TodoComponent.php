@@ -36,7 +36,7 @@ class TodoComponent extends GenericComponent {
 	/**
 	 * @var string
 	 */
-	protected $partialName = '';
+	protected $partialName;
 
 	/**
 	 * @var array

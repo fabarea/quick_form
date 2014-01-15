@@ -31,6 +31,7 @@ class DatePropertyViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractVi
 
 	/**
 	 * @var string
+	 * @todo check in HasErrorViewHelper for removing me
 	 */
 	protected $pluginSignature = 'tx_lima_pi1';
 
@@ -53,7 +54,6 @@ class DatePropertyViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractVi
 
 		// Retrieve the property name.
 		$property = $this->templateVariableContainer->get('property');
-
 
 		// Arguments have priority on object.
 		if (is_array($arguments['equipment']) && isset($arguments['equipment'][$property])) {

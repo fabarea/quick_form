@@ -10,7 +10,7 @@
 				<f:if condition="{qf:property.isRequired(property: '{property}')}">*</f:if>
 			</label>
 
-			<f:form.hidden property="{property}" id="{property}" value="{value}"/>
+			<f:form.hidden property="{property}" id="{property}" />
 
 			<f:if condition="{qf:property.value()}">
 				<f:alias map="{image: '{qf:resource.file()}'}">

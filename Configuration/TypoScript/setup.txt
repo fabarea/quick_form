@@ -28,6 +28,8 @@ plugin.tx_quickform {
     }
 	settings {
 
+		# Tell to fetch the Quick Form Partials from quick_form by default. Can be overridden.
+		partialExtensionKey = quick_form
 	}
 	features {
 		# uncomment the following line to enable the new Property Mapper.

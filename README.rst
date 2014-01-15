@@ -9,28 +9,52 @@ The form can be used with an Extbase but not necessary.
 Installation
 =================
 
-Installation as "normal" in the Extension Manager
+Installation as "normal" in the Extension Manager.
 
+
+Configuration
+=================
+
+Settings are done by TypoScript in EXT:quick_form/Configuration/TypoScript/setup.txt.
+
+* key "partialExtension": - Tells where to find the Partials. Starting a new project it is encouraged to copy / paste the Partials
+  from EXT:quick_form into your own extension and adjust the HTML markup there. Make sure to respect the path convention. - default "quick_form"
+* key "validate" - Configuration for form validation by TypoScript. - default empty
 
 View Helpers
 =================
 
+Edit form
+------------
+
 There is a View Helper that will read the TCA configuration and will generate the form on the Frontend::
 
-	<qf:tca.form type="1" arguments="{_all}" dataType="tx_lima_domain_model_contact"/>
+	<qf:tca.form type="1" arguments="{_all}" dataType="fe_users"/>
 
 Important to notice, the View Helper will not generate the form tag giving the full flexibility of the action and controller.
 In other words, the VH must be wrapped by a ``f:form`` tag as in the example::
 
 	# Regular Extbase Form
-	<f:form action="update" controller="Contact" name="contact" object="{contact}" addQueryString="0" noCacheHash="1"
-	        additionalAttributes="{role: 'form'}">
+	<f:form action="update" controller="User" name="user" object="{user}" additionalAttributes="{role: 'form'}">
 
-		# Use of TCA View Helper
-		<qf:tca.form type="1" arguments="{_all}" dataType="tx_lima_domain_model_contact" validation="tca"/>
+		<qf:tca.form type="1" arguments="{_all}" dataType="fe_users" validation="tca"/>
 
 	</f:form>
 
+
+Show form (pre-visualisation)
+------------------------------------
+
+For pre-visualisation needs, the ``tca.show`` can be used. It will display the visualisation (read-only) instead of the field for editing.
+
+::
+
+	<f:form action="create" controller="User" name="user" object="{user}" additionalAttributes="{role: 'form'}">
+
+		# tca.show != tca.form
+		<qf:tca.show type="1" arguments="{_all}" dataType="fe_users"/>
+
+	</f:form>
 
 Flexible Validation
 ====================
@@ -51,12 +75,6 @@ If nothing is configured Quick Form will take the TCA as fallback which has the 
 
 
 @todo add more validation output such as string length, email, ...
-
-Show after submit (multi-steps)
-====================================
-
-If Quick Form detects being within a "show" action, it will display the visualisation of the form element (read-only) instead of the field for editing.
-This can be useful if the user wants to review the data before updating.
 
 
 TCA configuration
@@ -92,7 +110,7 @@ TCA configuration can be more complex by accepting nested structure::
 		),
 
 Quick Form also accepts a syntax with object that is a bit more concise than array and that is convenient
-when working with an IDE which auto-complete parameters.
+when working with an IDE which auto-complete parameters::
 
 	# Usage of a Quick Form Component
 	return array(
@@ -115,7 +133,7 @@ Use "external" Partials
 Partials within EXT:quick_start are taken as defaults. However, it is possible to use "external" Partials located in
 another extension::
 
-	new \TYPO3\CMS\QuickForm\Component\GenericComponent('Form/BecomeContact', array('property' => 'propertyName'), 'foo'),
+	new \TYPO3\CMS\QuickForm\Component\GenericComponent('Form/Foo', array('property' => 'propertyName'), 'foo'),
 
 * The first parameter corresponds to the Partial Name
 * The second to the arguments
