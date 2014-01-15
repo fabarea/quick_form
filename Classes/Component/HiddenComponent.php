@@ -29,7 +29,7 @@ namespace TYPO3\CMS\QuickForm\Component;
  ***************************************************************/
 
 /**
- * A multiple file upload form component to be rendered in a Quick Form.
+ * A hidden form component to be rendered in a Quick Form.
  */
 class HiddenComponent extends GenericComponent {
 

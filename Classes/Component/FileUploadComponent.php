@@ -27,6 +27,7 @@ namespace TYPO3\CMS\QuickForm\Component;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * A file upload form component to be rendered in a Quick Form.
@@ -51,7 +52,7 @@ class FileUploadComponent extends GenericComponent {
 		$this->arguments['property'] = $property;
 
 		if (empty($label)) {
-			$label = $property;
+			$label = GeneralUtility::camelCaseToLowerCaseUnderscored($property);
 		}
 		$this->arguments['label'] = $label;
 	}

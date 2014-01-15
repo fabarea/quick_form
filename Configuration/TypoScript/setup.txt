@@ -8,13 +8,9 @@ plugin.tx_quickform {
 		storagePid = {$plugin.tx_quickform.persistence.storagePid}
 	}
 
-	# The TS is used for validating an equipment according to his type.
-    # Before introducing the validation definition here, I tried different approaches:
-    # - annotation in class itself could not be used because some fields are mandatory for a type of equipment and not for other.
-    #   We don't have some partial validation mechanism in Extbase in TYPO3 6.1
-    # - eval => 'required'. As an approach, I could use the "eval" key from the TCA and introduces some validation upon that key.
-    #   Unfortunately, the BE and FE does not have the same requirement.
-    #
+	# Sometimes it is easier to make TS form validation, e.g. for a Model that can have multi-types
+	# This not meant to be final but Extbase makes it quite complicated
+	# http://forge.typo3.org/projects/typo3v4-mvc/wiki/How_to_use_partial_validation_for_a_multi-step_form
     validate {
         formObjectName {
 

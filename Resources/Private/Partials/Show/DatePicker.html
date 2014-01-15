@@ -4,7 +4,7 @@
 
 	<f:section name="DatePicker">
 
-		<f:if condition="{qf:format.dateProperty()}">
+		<f:if condition="{qf:property.date()}">
 
 			<div class="form-group">
 				<label class="control-label">
@@ -12,7 +12,7 @@
 				</label>
 
 				<div>
-					{qf:format.dateProperty()}
+					{qf:property.date()}
 				</div>
 			</div>
 		</f:if>

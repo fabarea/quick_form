@@ -25,7 +25,6 @@ namespace TYPO3\CMS\QuickForm\ViewHelpers\Tca;
  ***************************************************************/
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
-use TYPO3\CMS\QuickForm\Utility\ArgumentRegistry;
 use TYPO3\CMS\Vidi\Tca\TcaService;
 
 /**

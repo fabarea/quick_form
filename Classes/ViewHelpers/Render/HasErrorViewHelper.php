@@ -45,7 +45,6 @@ class HasErrorViewHelper extends AbstractValidationViewHelper {
 
 		$arguments = GeneralUtility::_GP($fieldNamePrefix);
 
-
 		$result = '';
 		if (isset($arguments[$formObjectName][$property])) {
 

@@ -30,9 +30,9 @@ namespace TYPO3\CMS\QuickForm\Component;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * A multi file upload form component to be rendered in a Quick Form.
+ * A multi-choices form component to be rendered in a Quick Form.
  */
-class MultipleFileUploadComponent extends GenericComponent {
+class MultiChoicesComponent extends GenericComponent {
 
 	/**
 	 * @var string
@@ -48,7 +48,7 @@ class MultipleFileUploadComponent extends GenericComponent {
 	 * constructor
 	 */
 	public function __construct($property, $label = '') {
-		$this->partialName = 'Form/MultipleFileUpload';
+		$this->partialName = 'Form/MultiChoices';
 		$this->arguments['property'] = $property;
 
 		if (empty($label)) {

@@ -42,10 +42,10 @@ class ArgumentRegistry implements \TYPO3\CMS\Core\SingletonInterface {
 	/**
 	 * Gets a singleton instance of this class.
 	 *
-	 * @return \TYPO3\CMS\Lima\Utility\ArgumentRegistry
+	 * @return \TYPO3\CMS\QuickForm\Utility\ArgumentRegistry
 	 */
 	static public function getInstance() {
-		return GeneralUtility::makeInstance('TYPO3\CMS\Lima\Utility\ArgumentRegistry');
+		return GeneralUtility::makeInstance('TYPO3\CMS\QuickForm\Utility\ArgumentRegistry');
 	}
 
 	/**
@@ -57,7 +57,7 @@ class ArgumentRegistry implements \TYPO3\CMS\Core\SingletonInterface {
 
 	/**
 	 * @param array $arguments
-	 * @return \TYPO3\CMS\Lima\Utility\ArgumentRegistry
+	 * @return \TYPO3\CMS\QuickForm\Utility\ArgumentRegistry
 	 */
 	public function set($arguments) {
 		$this->arguments = $arguments;

@@ -23,18 +23,13 @@ namespace TYPO3\CMS\QuickForm\ViewHelpers\Form;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
 
 /**
  * View helper which tells whether a checkbox should be checked according to a property name which
  * contains comma separated values.
  */
 class IsCheckedViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
-
-	/**
-	 * @var string
-	 * @todo check in HasErrorViewHelper for removing me
-	 */
-	protected $pluginSignature = 'tx_lima_pi1';
 
 	/**
 	 * Returns whether a checkbox should be checked according to a property name which
@@ -45,28 +40,22 @@ class IsCheckedViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewH
 	 */
 	public function render($expectedValue) {
 
-		# Used fall-back "GeneralUtility::_GP" since the two approaches below failed.
-
-		# Problem with getResponse()->getArguments(), it does not merge GET / POST.
-		#$arguments = $this->controllerContext->getResponse()->getArguments();
-
-		$values = array();
-		$arguments = GeneralUtility::_GP($this->pluginSignature);
-
-		$formObjectName = $this->viewHelperVariableContainer->get('TYPO3\CMS\Fluid\ViewHelpers\FormViewHelper', 'formObjectName');
+		$fieldNamePrefix = (string) $this->viewHelperVariableContainer->get('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'fieldNamePrefix');
+		$formObjectName = (string) $this->viewHelperVariableContainer->get('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'formObjectName');
 		$property = $this->templateVariableContainer->get('property');
 
-		return false;
+		// Retrieve GET / POST and object from context
+		$arguments = GeneralUtility::_GP($fieldNamePrefix);
+		$object = $this->templateVariableContainer->get($formObjectName);
+
+		// GET / POST values have the priority
 		if (is_array($arguments['equipment']) && isset($arguments['equipment'][$property])) {
 			$values = GeneralUtility::trimExplode(',', $arguments['equipment'][$property]);
-		} elseif ($this->templateVariableContainer->get($formObjectName)) {
-
-			// Retrieve object.
-			$object = $this->templateVariableContainer->get($formObjectName);
+		} elseif (is_object($object)) {
 
 			// Retrieve value from object.
-			$getter = 'get' . ucfirst($property);
-			$values = GeneralUtility::trimExplode(',', $object->$getter());
+			$value = ObjectAccess::getProperty($object, $property);
+			$values = GeneralUtility::trimExplode(',', $value);
 		}
 
 		return in_array($expectedValue, $values);

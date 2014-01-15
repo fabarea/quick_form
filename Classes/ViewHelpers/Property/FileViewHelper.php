@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\CMS\QuickForm\ViewHelpers\Resource;
+namespace TYPO3\CMS\QuickForm\ViewHelpers\Property;
 
 /***************************************************************
  *  Copyright notice

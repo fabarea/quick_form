@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\CMS\QuickForm\ViewHelpers\Format;
+namespace TYPO3\CMS\QuickForm\ViewHelpers\Property;
 /***************************************************************
  *  Copyright notice
  *
@@ -23,17 +23,12 @@ namespace TYPO3\CMS\QuickForm\ViewHelpers\Format;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
 
 /**
  * View helper which format a date of a given property
  */
-class DatePropertyViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
-
-	/**
-	 * @var string
-	 * @todo check in HasErrorViewHelper for removing me
-	 */
-	protected $pluginSignature = 'tx_lima_pi1';
+class DateViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
 
 	/**
 	 * Returns a date given a format.
@@ -43,25 +38,20 @@ class DatePropertyViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractVi
 	 */
 	public function render($format = 'Y-m-d') {
 
-		$result = '';
-
-		// Retrieve arguments
-		$arguments = GeneralUtility::_GP($this->pluginSignature);
-
-		// Retrieve object.
-		$formObjectName = $this->viewHelperVariableContainer->get('TYPO3\CMS\Fluid\ViewHelpers\FormViewHelper', 'formObjectName');
-		$object = $this->templateVariableContainer->get($formObjectName);
-
-		// Retrieve the property name.
+		$fieldNamePrefix = (string) $this->viewHelperVariableContainer->get('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'fieldNamePrefix');
+		$formObjectName = (string) $this->viewHelperVariableContainer->get('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'formObjectName');
 		$property = $this->templateVariableContainer->get('property');
+
+		// Retrieve GET / POST and object from context
+		$arguments = GeneralUtility::_GP($fieldNamePrefix);
+		$object = $this->templateVariableContainer->get($formObjectName);
 
 		// Arguments have priority on object.
 		if (is_array($arguments['equipment']) && isset($arguments['equipment'][$property])) {
 			$result = $arguments['equipment'][$property];
 		} elseif (is_object($object)) {
 
-			$getter = 'get' . ucfirst($property);
-			$value = $object->$getter();
+			$value = ObjectAccess::getProperty($object, $property);
 
 			if ($value instanceof \DateTime) {
 				$result = $value->format($format);
