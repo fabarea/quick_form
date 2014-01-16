@@ -46,7 +46,7 @@ interface ComponentInterface {
 	/**
 	 * @return string
 	 */
-	public function getExtensionKey();
+	public function getPartialExtensionKey();
 
 	/**
 	 * @return string

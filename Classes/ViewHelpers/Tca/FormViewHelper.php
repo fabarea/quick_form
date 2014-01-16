@@ -298,8 +298,8 @@ class FormViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\RenderViewHelper {
 		$settings = $this->getSettings();
 
 		$extensionKey = $settings['partialExtensionKey'];
-		if (isset($item['extensionKey'])) {
-			$extensionKey = $item['extensionKey'];
+		if (is_array($item) && isset($item['partialExtensionKey'])) {
+			$extensionKey = $item['partialExtensionKey'];
 		}
 		$this->partialRootPath = ExtensionManagementUtility::extPath($extensionKey) . 'Resources/Private/Partials/';
 	}

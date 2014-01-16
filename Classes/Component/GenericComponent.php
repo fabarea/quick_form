@@ -34,9 +34,9 @@ namespace TYPO3\CMS\QuickForm\Component;
 class GenericComponent implements ComponentInterface {
 
 	/**
-	 * Extension key where to find the default Partials
+	 * Extension key where to find the default Partials.
 	 */
-	const DEFAULT_EXTENSION_KEY = 'quick_form';
+	const PARTIAL_EXTENSION_KEY = 'quick_form';
 
 	/**
 	 * @var string
@@ -46,7 +46,7 @@ class GenericComponent implements ComponentInterface {
 	/**
 	 * @var string
 	 */
-	protected $extensionKey = self::DEFAULT_EXTENSION_KEY;
+	protected $partialExtensionKey = self::PARTIAL_EXTENSION_KEY;
 
 	/**
 	 * @var array
@@ -56,11 +56,11 @@ class GenericComponent implements ComponentInterface {
 	/**
 	 * constructor
 	 */
-	public function __construct($partialName, $arguments = array(), $extensionKey = '') {
+	public function __construct($partialName, $arguments = array(), $partialExtensionKey = '') {
 		$this->partialName = $partialName;
 		$this->arguments = $arguments;
-		if (!empty($extensionKey)) {
-			$this->extensionKey = $extensionKey;
+		if (!empty($partialExtensionKey)) {
+			$this->partialExtensionKey = $partialExtensionKey;
 		}
 	}
 
@@ -81,8 +81,8 @@ class GenericComponent implements ComponentInterface {
 	/**
 	 * @return string
 	 */
-	public function getExtensionKey() {
-		return $this->extensionKey;
+	public function getPartialExtensionKey() {
+		return $this->partialExtensionKey;
 	}
 
 	/**
@@ -92,7 +92,7 @@ class GenericComponent implements ComponentInterface {
 		return array(
 			'partial' => $this->getPartialName(),
 			'arguments' => $this->getArguments(),
-			'extensionKey' => $this->getExtensionKey(),
+			'partialExtensionKey' => $this->getPartialExtensionKey(),
 		);
 	}
 
@@ -103,8 +103,8 @@ class GenericComponent implements ComponentInterface {
 	 * @return GenericComponent
 	 */
 	static public function __set_state($states) {
-		$extensionKey = empty($states['extensionKey']) ? GenericComponent::DEFAULT_EXTENSION_KEY : $states['extensionKey'];
-		return new GenericComponent($states['partialName'], $states['arguments'], $extensionKey);
+		$partialExtensionKey = empty($states['partialExtensionKey']) ? GenericComponent::PARTIAL_EXTENSION_KEY : $states['partialExtensionKey'];
+		return new GenericComponent($states['partialName'], $states['arguments'], $partialExtensionKey);
 	}
 }
 
