@@ -48,6 +48,8 @@ class IsCheckedViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewH
 		$arguments = GeneralUtility::_GP($fieldNamePrefix);
 		$object = $this->templateVariableContainer->get($formObjectName);
 
+		$values = array();
+
 		// GET / POST values have the priority
 		if (is_array($arguments['equipment']) && isset($arguments['equipment'][$property])) {
 			$values = GeneralUtility::trimExplode(',', $arguments['equipment'][$property]);
