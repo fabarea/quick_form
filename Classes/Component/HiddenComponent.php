@@ -34,22 +34,16 @@ namespace TYPO3\CMS\QuickForm\Component;
 class HiddenComponent extends GenericComponent {
 
 	/**
-	 * @var string
-	 */
-	protected $partialName;
-
-	/**
-	 * @var array
-	 */
-	protected $arguments = array();
-
-	/**
-	 * constructor
+	 * Constructor
+	 *
+	 * @param string $property
+	 * @param string $value
 	 */
 	public function __construct($property, $value = '') {
-		$this->partialName = 'Form/Hidden';
-		$this->arguments['property'] = $property;
-		$this->arguments['value'] = $value;
+		$partialName = 'Form/Hidden';
+		$arguments['property'] = $property;
+		$arguments['value'] = $value;
+		parent::__construct($partialName, $arguments);
 	}
 
 	/**

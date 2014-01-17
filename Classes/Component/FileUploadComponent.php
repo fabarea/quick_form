@@ -35,26 +35,21 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class FileUploadComponent extends GenericComponent {
 
 	/**
-	 * @var string
-	 */
-	protected $partialName;
-
-	/**
-	 * @var array
-	 */
-	protected $arguments = array();
-
-	/**
-	 * constructor
+	 * Constructor
+	 *
+	 * @param string $property
+	 * @param string $label
 	 */
 	public function __construct($property, $label = '') {
-		$this->partialName = 'Form/FileUpload';
-		$this->arguments['property'] = $property;
+		$partialName = 'Form/FileUpload';
+		$arguments['property'] = $property;
 
 		if (empty($label)) {
 			$label = GeneralUtility::camelCaseToLowerCaseUnderscored($property);
 		}
-		$this->arguments['label'] = $label;
+		$arguments['label'] = $label;
+
+		parent::__construct($partialName, $arguments);
 	}
 
 	/**

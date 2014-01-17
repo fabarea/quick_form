@@ -34,20 +34,12 @@ namespace TYPO3\CMS\QuickForm\Component;
 class NavigationFirstComponent extends GenericComponent {
 
 	/**
-	 * @var string
-	 */
-	protected $partialName;
-
-	/**
-	 * @var array
-	 */
-	protected $arguments = array();
-
-	/**
-	 * constructor
+	 * Constructor
 	 */
 	public function __construct() {
-		$this->partialName = 'Form/NavigationFirst';
+		$partialName = 'Form/NavigationFirst';
+		$arguments = array();
+		parent::__construct($partialName, $arguments);
 	}
 
 	/**

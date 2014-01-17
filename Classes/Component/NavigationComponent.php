@@ -34,25 +34,16 @@ namespace TYPO3\CMS\QuickForm\Component;
 class NavigationComponent extends GenericComponent {
 
 	/**
-	 * @var string
-	 */
-	protected $partialName;
-
-	/**
-	 * @var array
-	 */
-	protected $arguments = array();
-
-	/**
-	 * constructor
+	 * Constructor
 	 *
 	 * @param integer $previous
 	 * @param integer $next
 	 */
 	public function __construct($previous, $next) {
-		$this->partialName = 'Form/NavigationLast';
-		$this->arguments['previous'] = $previous;
-		$this->arguments['next'] = $previous;
+		$partialName = 'Form/NavigationLast';
+		$arguments['previous'] = $previous;
+		$arguments['next'] = $previous;
+		parent::__construct($partialName, $arguments);
 	}
 
 	/**

@@ -34,11 +34,6 @@ namespace TYPO3\CMS\QuickForm\Component;
 class GenericComponent implements ComponentInterface {
 
 	/**
-	 * Extension key where to find the default Partials.
-	 */
-	const PARTIAL_EXTENSION_KEY = 'quick_form';
-
-	/**
 	 * @var string
 	 */
 	protected $partialName;
@@ -46,7 +41,7 @@ class GenericComponent implements ComponentInterface {
 	/**
 	 * @var string
 	 */
-	protected $partialExtensionKey = self::PARTIAL_EXTENSION_KEY;
+	protected $partialExtensionKey;
 
 	/**
 	 * @var array
@@ -54,7 +49,11 @@ class GenericComponent implements ComponentInterface {
 	protected $arguments = array();
 
 	/**
-	 * constructor
+	 * Constructor a Generic Component in Quick Form.
+	 *
+	 * @param string $partialName
+	 * @param array $arguments
+	 * @param string $partialExtensionKey
 	 */
 	public function __construct($partialName, $arguments = array(), $partialExtensionKey = '') {
 		$this->partialName = $partialName;
@@ -103,8 +102,7 @@ class GenericComponent implements ComponentInterface {
 	 * @return GenericComponent
 	 */
 	static public function __set_state($states) {
-		$partialExtensionKey = empty($states['partialExtensionKey']) ? GenericComponent::PARTIAL_EXTENSION_KEY : $states['partialExtensionKey'];
-		return new GenericComponent($states['partialName'], $states['arguments'], $partialExtensionKey);
+		return new GenericComponent($states['partialName'], $states['arguments'], $states['partialExtensionKey']);
 	}
 }
 

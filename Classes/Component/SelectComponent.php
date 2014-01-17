@@ -27,20 +27,32 @@ namespace TYPO3\CMS\QuickForm\Component;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * A to-do form component to be rendered in a Quick Form.
+ * A multi file upload form component to be rendered in a Quick Form.
  */
-class TodoComponent extends GenericComponent {
+class SelectComponent extends GenericComponent {
 
 	/**
 	 * Constructor
 	 *
-	 * @param string $message
+	 * @param string $property
+	 * @param string $label
+	 * @param string $items
+	 * @param string $itemsDataType
 	 */
-	public function __construct($message = '') {
-		$partialName = 'Form/Todo';
-		$arguments['message'] = $message;
+	public function __construct($property, $label = '', $items = '', $itemsDataType = '') {
+		$partialName = 'Form/Select';
+		$arguments['property'] = $property;
+
+		if (empty($label)) {
+			$label = GeneralUtility::camelCaseToLowerCaseUnderscored($property);
+		}
+		$arguments['label'] = $label;
+		$arguments['items'] = $items;
+		$arguments['itemsDataType'] = $itemsDataType;
+
 		parent::__construct($partialName, $arguments);
 	}
 
