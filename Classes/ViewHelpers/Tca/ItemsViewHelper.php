@@ -24,6 +24,7 @@ namespace TYPO3\CMS\QuickForm\ViewHelpers\Tca;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Vidi\Tca\TcaService;
 
@@ -33,13 +34,37 @@ use TYPO3\CMS\Vidi\Tca\TcaService;
 class ItemsViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\RenderViewHelper {
 
 	/**
-	 * Returns options of the current property
+	 * Returns options of the current property.
+	 * - $items can be either an array which is then returned straightaway or
+	 *   it can also be a string which corresponds to a Fluid variable given in the Controller.
+	 *   If it is a string, argument $itemsDataType is required and corresponds to a table name
+	 *
+	 * @param mixed $items can be a string which corresponds
+	 * @param string $itemsDataType
+	 * @param boolean $removeEmptyValues
+	 * @return array
+	 */
+	public function render($items = NULL, $itemsDataType = '', $removeEmptyValues = FALSE) {
+
+		if (is_array($items)) {
+			return $items;
+		} elseif(is_string($items)) {
+			$items = $this->fetchItemsFromFluidVariable($items, $itemsDataType);
+		} else {
+			$items = $this->fetchItemsFromTca($removeEmptyValues);
+
+		}
+		return $items;
+	}
+
+	/**
+	 * Retrieve items from TCA.
 	 *
 	 * @param boolean $removeEmptyValues
 	 * @throws \Exception
 	 * @return array
 	 */
-	public function render($removeEmptyValues = FALSE) {
+	protected function fetchItemsFromTca($removeEmptyValues) {
 
 		$dataType = $this->templateVariableContainer->get('dataType');
 		if (empty($dataType)) {
@@ -53,14 +78,45 @@ class ItemsViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\RenderViewHelper {
 
 		$fieldName = GeneralUtility::camelCaseToLowerCaseUnderscored($property);
 
-		$items = $this->fetchItems($dataType, $fieldName, $removeEmptyValues);
+		$values = $this->fetchItems($dataType, $fieldName, $removeEmptyValues);
 		$itemsFromDatabase = $this->fetchItemsFromDatabase($dataType, $fieldName);
 
 		if (!empty($itemsFromDatabase)) {
-			$items = $items + $itemsFromDatabase;
+			$values = $values + $itemsFromDatabase;
 		}
 
-		return $items;
+		return $values;
+	}
+
+	/**
+	 * Retrieve items from TCA.
+	 *
+	 * @param string $items
+	 * @param string $itemsDataType
+	 * @throws \Exception
+	 * @return array
+	 */
+	protected function fetchItemsFromFluidVariable($items, $itemsDataType) {
+
+		if ($itemsDataType === '') {
+			throw new \Exception('Attribute $itemDataType can not be empty', 1389936621);
+		}
+
+		$allIdentifier = $this->templateVariableContainer->getAllIdentifiers();
+		if (!in_array($items, $allIdentifier)) {
+			$message = sprintf('I could not fetch items for Fluid variable "%s". Has it been set in the Controller?', $items);
+			throw new \Exception($message, 1389880458);
+		}
+
+		$labelField = TcaService::table($itemsDataType)->getLabelField();
+		$labelProperty = GeneralUtility::underscoredToLowerCamelCase($labelField);
+		$values = array();
+		foreach ($this->templateVariableContainer->get('organisations') as $subject) {
+			$key = ObjectAccess::getProperty($subject, 'uid');
+			$value = ObjectAccess::getProperty($subject, is_array($subject) ? $labelField : $labelProperty);
+			$values[$key] = $value;
+		}
+		return $values;
 	}
 
 	/**
