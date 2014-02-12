@@ -25,7 +25,8 @@ namespace TYPO3\CMS\QuickForm\ViewHelpers\Tca;
 use TYPO3\CMS\Vidi\Tca\TcaService;
 
 /**
- * View helper which translates a label for field given by the context. Under the hood, it will search teh label from the TCA.
+ * View helper which translates a label for field given by the context.
+ * Under the hood, it will search the label from the TCA.
  */
 class FieldLabelViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
 
@@ -33,7 +34,9 @@ class FieldLabelViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractView
 	 * Returns a label for field given by the context.
 	 * It will search the label value from the TCA.
 	 *
-	 * @param string $key
+	 * An alternate label can be defined by using a "LLL:" reference in the key.
+	 *
+	 * @param string $key Name of a TCA field or LLL: reference
 	 * @return string
 	 */
 	public function render($key = '') {
@@ -43,7 +46,21 @@ class FieldLabelViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractView
 			$key = $this->templateVariableContainer->get('label');
 		}
 
-		return TcaService::table($dataType)->field($key)->getLabel();
+		if (strpos($key, 'LLL:') === 0) {
+			$result = $this->getFrontendObject()->sL($key);
+		} else {
+			$result = TcaService::table($dataType)->field($key)->getLabel();
+		}
+		return $result;
+	}
+
+	/**
+	 * Returns an instance of the Frontend object.
+	 *
+	 * @return \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
+	 */
+	protected function getFrontendObject() {
+		return $GLOBALS['TSFE'];
 	}
 }
 ?>
