@@ -10,23 +10,25 @@
 				<f:if condition="{qf:property.isRequired(property: '{property}')}">*</f:if>
 			</label>
 
-			<f:form.hidden property="{property}" id="{property}" />
+			<qf:form.hidden property="{property}"/>
 
 			<f:if condition="{qf:property.value()}">
-				<f:alias map="{image: '{qf:property.file()}'}">
-					<div class="item-image" style="margin-bottom: 10px">
-						<f:image src="{image.uid}" width="100" height="75" alt=""
-						         class="qq-thumbnail-selector"/>
-						<span class="qq-upload-file-selector qq-upload-file"><small>{image.name}</small></span>
-						<span class="qq-upload-size-selector qq-upload-size">{qf:math.division(a: '{image.size}', b: '1000')}kB</span>
-						<a class="btn-delete-image qq-upload-delete-selector btn-small btn-warning" href="#">Delete</a>
-						<a class="view-btn btn-small btn-info" target="_blank"
-						   href="{image.publicUrl}">View</a>
-					</div>
+				<f:alias map="{images: '{qf:property.files()}'}">
+					<f:for each="{images}" as="image" key="imageReference">
+						<div class="item-image" style="margin-bottom: 10px">
+							<qf:form.hidden property="{property}" value="{imageReference}"/>
+							<a target="_blank" href="/{image.publicUrl}">
+								<f:image src="{image.uid}" width="120" alt="{image.name}" class="qq-thumbnail-selector"/>
+							</a>
+							<span class="qq-upload-file-selector qq-upload-file"><small>{image.name}</small></span>
+							<span class="qq-upload-size-selector qq-upload-size">{qf:math.division(a: '{image.size}', b: '1000')}kB</span>
+							<a class="btn-delete-image qq-upload-delete-selector btn-small btn-warning" href="#">Delete</a>
+						</div>
+					</f:for>
 				</f:alias>
 			</f:if>
 
-			<mu:widget.upload allowedExtensions="jpg, png" storage="1" property="{property}" maximumItems="1"/>
+			<mu:widget.upload allowedExtensions="{allowedExtensions}" storage="{storage}" property="{property}" maximumItems="{qf:property.maxItems()}"/>
 		</div>
 	</f:section>
 </div>
