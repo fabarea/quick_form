@@ -40,7 +40,7 @@ class FileUploadComponent extends GenericComponent {
 	 * @param string $property
 	 * @param string $label
 	 */
-	public function __construct($property, $label = '') {
+	public function __construct($property, $label = '', $allowedExtensions = '', $storage = 1) {
 		$partialName = 'Form/FileUpload';
 		$arguments['property'] = $property;
 
@@ -48,6 +48,12 @@ class FileUploadComponent extends GenericComponent {
 			$label = GeneralUtility::camelCaseToLowerCaseUnderscored($property);
 		}
 		$arguments['label'] = $label;
+
+		if (empty($allowedExtensions)) {
+			$allowedExtensions = $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext'];
+		}
+		$arguments['allowedExtensions'] = $allowedExtensions;
+		$arguments['storage'] = $storage;
 
 		parent::__construct($partialName, $arguments);
 	}
