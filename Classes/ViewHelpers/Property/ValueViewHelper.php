@@ -42,12 +42,15 @@ class ValueViewHelper extends RenderViewHelper {
 
 		// Retrieve object or array.
 		$formObjectName = $this->viewHelperVariableContainer->get('TYPO3\CMS\Fluid\ViewHelpers\FormViewHelper', 'formObjectName');
-		$object = $this->templateVariableContainer->get($formObjectName);
+		if ($this->templateVariableContainer->exists($formObjectName)) {
 
-		if (!empty($object)) {
-			// Retrieve the property name.
-			$property = $this->templateVariableContainer->get('property');
-			$result = ObjectAccess::getProperty($object, $property);
+			$object = $this->templateVariableContainer->get($formObjectName);
+
+			if (!empty($object)) {
+				// Retrieve the property name.
+				$property = $this->templateVariableContainer->get('property');
+				$result = ObjectAccess::getProperty($object, $property);
+			}
 		}
 
 		return $result;

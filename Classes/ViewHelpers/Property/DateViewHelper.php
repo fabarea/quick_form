@@ -38,27 +38,33 @@ class DateViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
 	 */
 	public function render($format = 'Y-m-d') {
 
+		$result = '';
+
 		$fieldNamePrefix = (string) $this->viewHelperVariableContainer->get('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'fieldNamePrefix');
 		$formObjectName = (string) $this->viewHelperVariableContainer->get('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'formObjectName');
 		$property = $this->templateVariableContainer->get('property');
 
 		// Retrieve GET / POST and object from context
 		$arguments = GeneralUtility::_GP($fieldNamePrefix);
-		$object = $this->templateVariableContainer->get($formObjectName);
+
 
 		// Arguments have priority on object.
 		if (is_array($arguments['equipment']) && isset($arguments['equipment'][$property])) {
 			$result = $arguments['equipment'][$property];
-		} elseif (is_object($object)) {
+		} elseif ($this->templateVariableContainer->exists($formObjectName)) {
 
-			$value = ObjectAccess::getProperty($object, $property);
+			$object = $this->templateVariableContainer->get($formObjectName);
+			if (is_object($object)) {
 
-			if ($value instanceof \DateTime) {
-				$result = $value->format($format);
-			} elseif (!empty($value) && $value > 0) {
-				$date = new \DateTime();
-				$date->setTimestamp($value);
-				$result = $date->format($format);
+				$value = ObjectAccess::getProperty($object, $property);
+
+				if ($value instanceof \DateTime) {
+					$result = $value->format($format);
+				} elseif (!empty($value) && $value > 0) {
+					$date = new \DateTime();
+					$date->setTimestamp($value);
+					$result = $date->format($format);
+				}
 			}
 		}
 

@@ -43,19 +43,27 @@ class FileViewHelper extends RenderViewHelper {
 
 		// Retrieve object or array.
 		$formObjectName = $this->viewHelperVariableContainer->get('TYPO3\CMS\Fluid\ViewHelpers\FormViewHelper', 'formObjectName');
-		$object = $this->templateVariableContainer->get($formObjectName);
+		if ($this->templateVariableContainer->exists($formObjectName)) {
 
-		if (!empty($object)) {
-			// Retrieve the property name.
-			$property = $this->templateVariableContainer->get('property');
-			$file = ObjectAccess::getProperty($object, $property);
+			$object = $this->templateVariableContainer->get($formObjectName);
 
-			if ($file instanceof \TYPO3\CMS\Core\Resource\AbstractFile) {
-				$result = $file;
-			} elseif($file instanceof \TYPO3\CMS\Extbase\Domain\Model\AbstractFileFolder) {
-				$result = $file->getOriginalResource();
-			} elseif ((int) $file > 0) {
-				$result = ResourceFactory::getInstance()->getFileObject($file);
+			if (!empty($object)) {
+				// Retrieve the property name.
+				$property = $this->templateVariableContainer->get('property');
+				$file = ObjectAccess::getProperty($object, $property);
+
+				if ($file instanceof \TYPO3\CMS\Core\Resource\AbstractFile) {
+					$result = $file;
+				} elseif($file instanceof \TYPO3\CMS\Extbase\Domain\Model\AbstractFileFolder) {
+					$result = $file->getOriginalResource();
+
+					// Special case for File Reference.
+					if ($result instanceof \TYPO3\CMS\Core\Resource\FileReference) {
+						$result = $result->getOriginalFile();
+					}
+				} elseif ((int) $file > 0) {
+					$result = ResourceFactory::getInstance()->getFileObject($file);
+				}
 			}
 		}
 
