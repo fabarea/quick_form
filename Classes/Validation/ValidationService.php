@@ -30,7 +30,6 @@ namespace TYPO3\CMS\QuickForm\Validation;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
-use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 use TYPO3\CMS\QuickForm\ViewHelpers\AbstractValidationViewHelper;
 use TYPO3\CMS\Vidi\Tca\TcaService;
 
