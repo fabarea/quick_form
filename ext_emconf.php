@@ -24,7 +24,7 @@ $EM_CONF[$_EXTKEY] = array (
   'modify_tables' => '',
   'clearCacheOnLoad' => 0,
   'lockType' => '',
-  'version' => '1.0.0',
+  'version' => '1.1.0',
   'constraints' =>
   array (
     'depends' =>
@@ -32,7 +32,7 @@ $EM_CONF[$_EXTKEY] = array (
       'cms' => '',
       'fluid' => '',
       'vidi' => '',
-      'typo3' => '6.1.0-6.1.99',
+      'typo3' => '6.2.0-6.2.99',
     ),
     'conflicts' =>
     array (
