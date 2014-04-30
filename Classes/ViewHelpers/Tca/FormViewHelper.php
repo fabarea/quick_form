@@ -28,7 +28,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\QuickForm\Component\ComponentInterface;
 use TYPO3\CMS\QuickForm\ObjectFactory;
-use TYPO3\CMS\QuickForm\Utility\ArgumentRegistry;
+use TYPO3\CMS\QuickForm\ArgumentRegistry;
 use TYPO3\CMS\Vidi\Tca\TcaService;
 
 /**
