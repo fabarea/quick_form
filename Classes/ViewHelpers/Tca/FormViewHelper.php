@@ -27,7 +27,7 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\QuickForm\Component\ComponentInterface;
-use TYPO3\CMS\QuickForm\Component\GenericComponent;
+use TYPO3\CMS\QuickForm\ObjectFactory;
 use TYPO3\CMS\QuickForm\Utility\ArgumentRegistry;
 use TYPO3\CMS\Vidi\Tca\TcaService;
 
@@ -268,22 +268,16 @@ class FormViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\RenderViewHelper {
 	 */
 	public function getRenderViewHelper() {
 
-		/** @var \TYPO3\CMS\Fluid\Core\Rendering\RenderingContext $renderingContext */
-		$renderingContext = $this->objectManager->get('TYPO3\CMS\Fluid\Core\Rendering\RenderingContext');
-		$renderingContext->setControllerContext($this->controllerContext);
-		$renderingContext->injectTemplateVariableContainer($this->templateVariableContainer);
+		$renderViewHelper = ObjectFactory::getInstance()->getRenderViewHelper(
+			$this->controllerContext,
+			$this->templateVariableContainer,
+			$this->viewHelperVariableContainer
+		);
 
-		// Prepare View
+		// Dynamically configure the View
 		/** @var \TYPO3\CMS\Fluid\View\TemplateView $view */
 		$view = $this->viewHelperVariableContainer->getView();
 		$view->setPartialRootPath($this->partialRootPath);
-
-		// Inject Variable Container
-		$renderingContext->injectViewHelperVariableContainer($this->viewHelperVariableContainer);
-
-		/** @var \TYPO3\CMS\Fluid\ViewHelpers\RenderViewHelper $renderViewHelper */
-		$renderViewHelper = $this->objectManager->get('TYPO3\CMS\Fluid\ViewHelpers\RenderViewHelper');
-		$renderViewHelper->setRenderingContext($renderingContext);
 
 		return $renderViewHelper;
 	}
