@@ -199,7 +199,7 @@ class FormViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\RenderViewHelper {
 
 			$this->arguments['arguments']['dataType'] = $this->arguments['dataType'];
 			$this->arguments['arguments']['validationType'] = $this->arguments['validation'];
-			$this->arguments['arguments']['type'] = (int) $this->arguments['type']; // add useful variable to be transmitted along the rendering.
+			$this->arguments['arguments']['type'] = (int)$this->arguments['type']; // add useful variable to be transmitted along the rendering.
 			$initialArguments = ArgumentRegistry::getInstance()->set($this->arguments['arguments'])->get();
 		}
 
@@ -212,7 +212,7 @@ class FormViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\RenderViewHelper {
 	 */
 	protected function getItems() {
 		$items = $this->arguments['items'];
-		$type = (int) $this->arguments['type'];
+		$type = (int)$this->arguments['type'];
 
 		$index = $this->arguments['index'];
 
