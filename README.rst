@@ -84,26 +84,22 @@ In file ``EXT:sample/Configuration/TCA/tx_sample_domain_model_foo`` make sure to
 
 	# Adequate for "flat" structure.
 	return array(
-		'feInterface' => array(
-			'types' => array(
-				'1' => 'first_name, last_name, ...',
-			),
+		'quick_form' => array(
+			'1' => 'first_name, last_name, ...',
 		),
 
 TCA configuration can be more complex by accepting nested structure::
 
 	# Adequate for "nested" structure which contains field-set and other containers.
 	return array(
-		'feInterface' => array(
-			'types' => array(
-				'1' => array(
-					'partial' => 'Form/FieldSet',
-					'items' => array(
-						'first_name',
-						'last_name',
-						array(
-							'partial' => 'Form/Submit',
-						),
+		'quick_form' => array(
+			'1' => array(
+				'partial' => 'Form/FieldSet',
+				'items' => array(
+					'first_name',
+					'last_name',
+					array(
+						'partial' => 'Form/Submit',
 					),
 				),
 			),
@@ -114,15 +110,13 @@ when working with an IDE which auto-complete parameters::
 
 	# Usage of a Quick Form Component
 	return array(
-		'feInterface' => array(
-			'types' => array(
-				'1' => array(
-					'partial' => 'Form/FieldSet',
-					'items' => array(
-						'first_name',
-						'last_name',
-						new \TYPO3\CMS\QuickForm\Component\SubmitComponent()
-					),
+		'quick_form' => array(
+			'1' => array(
+				'partial' => 'Form/FieldSet',
+				'items' => array(
+					'first_name',
+					'last_name',
+					new \TYPO3\CMS\QuickForm\Component\SubmitComponent()
 				),
 			),
 		),

@@ -218,19 +218,19 @@ class FormViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\RenderViewHelper {
 
 		if (empty($items)) {
 			$dataType = $this->arguments['dataType'];
-			if (0 === $type && empty($GLOBALS['TCA'][$dataType]['feInterface']['types'][$type])) {
+			if (0 === $type && empty($GLOBALS['TCA'][$dataType]['quick_form'][$type])) {
 				$type++; // try to shift to the next index.
 				$this->arguments['type'] = $type;
 			}
 
-			if (empty($GLOBALS['TCA'][$dataType]['feInterface']['types'][$type])) {
-				$message = sprintf('No TCA configuration found in [feInterface][types][%s] for data type "%s"',
+			if (empty($GLOBALS['TCA'][$dataType]['quick_form'][$type])) {
+				$message = sprintf('No TCA configuration found in [quick_form][%s] for data type "%s"',
 					$type,
 					$dataType
 				);
 				throw new \Exception($message, 1384703096);
 			}
-			$items = $GLOBALS['TCA'][$dataType]['feInterface']['types'][$type];
+			$items = $GLOBALS['TCA'][$dataType]['quick_form'][$type];
 		} elseif (isset($items[$index])) {
 			$items = $items[$index];
 		}
