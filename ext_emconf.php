@@ -39,7 +39,7 @@ $EM_CONF[$_EXTKEY] = array (
     ),
     'suggests' =>
     array (
-      'metadata' => '',
+      'media_upload' => '',
     ),
   ),
   'user' => 'fab1en',
