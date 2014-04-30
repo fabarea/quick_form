@@ -73,14 +73,13 @@ class FormViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\RenderViewHelper {
 
 		foreach ($items as $item) {
 
-
 			// Convert Quick Form component to array
 			if ($item instanceof ComponentInterface) {
 				$item = $item->toArray();
 			}
 
-			$this->resolvePartialRootPath($item);
 			$renderViewHelper = $this->getRenderViewHelper();
+			$this->configureView($item);
 
 			if (is_array($item) && isset($item['partial'])) {
 
@@ -274,28 +273,41 @@ class FormViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\RenderViewHelper {
 			$this->viewHelperVariableContainer
 		);
 
-		// Dynamically configure the View
+		return $renderViewHelper;
+	}
+
+	/**
+	 * Dynamically configure the View.
+	 *
+	 * @param array|ComponentInterface $item
+	 * @return void
+	 */
+	protected function configureView($item) {
+
+		$partialRootPath = $this->resolvePartialRootPath($item);
+
 		/** @var \TYPO3\CMS\Fluid\View\TemplateView $view */
 		$view = $this->viewHelperVariableContainer->getView();
-		$view->setPartialRootPath($this->partialRootPath);
-
-		return $renderViewHelper;
+		$view->setPartialRootPath($partialRootPath);
 	}
 
 	/**
 	 * Compute the partial root path given an item.
 	 *
 	 * @param array|ComponentInterface $item
+	 * @return string
 	 */
 	protected function resolvePartialRootPath($item) {
 
 		$settings = $this->getSettings();
 
+		// Indicate the extension where to find the partials.
+		// Default value is "quick_form" here.
 		$extensionKey = $settings['partialExtensionKey'];
 		if (is_array($item) && isset($item['partialExtensionKey'])) {
 			$extensionKey = $item['partialExtensionKey'];
 		}
-		$this->partialRootPath = ExtensionManagementUtility::extPath($extensionKey) . 'Resources/Private/Partials/';
+		return ExtensionManagementUtility::extPath($extensionKey) . 'Resources/Private/Partials/';
 	}
 
 	/**
