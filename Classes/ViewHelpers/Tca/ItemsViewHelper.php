@@ -39,7 +39,7 @@ class ItemsViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\RenderViewHelper {
 	 *   it can also be a string which corresponds to a Fluid variable given in the Controller.
 	 *   If it is a string, argument $itemsDataType is required and corresponds to a table name
 	 *
-	 * @param mixed $items can be a string which corresponds
+	 * @param mixed $items can be a string which corresponds to a fluid variable item.
 	 * @param string $itemsDataType
 	 * @param boolean $removeEmptyValues
 	 * @return array
