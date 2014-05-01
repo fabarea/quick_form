@@ -127,7 +127,7 @@ Use "external" Partials
 Partials within EXT:quick_start are taken as defaults. However, it is possible to use "external" Partials located in
 another extension::
 
-	new \TYPO3\CMS\QuickForm\Component\GenericComponent('Form/Foo', array('property' => 'propertyName'), 'foo'),
+	new \TYPO3\CMS\QuickForm\Component\GenericComponent('Form/Foo', array('property' => 'propertyName', 'label' => 'fieldName'), 'foo'),
 
 * The first parameter corresponds to the Partial Name
 * The second to the arguments
@@ -249,6 +249,8 @@ TCA configuration
 
 Extbase code
 ++++++++++++
+
+::
 
 	/**
 	 * @var \DateTime
