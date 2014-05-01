@@ -3,15 +3,19 @@
      xmlns:qf="http://typo3.org/ns/TYPO3/CMS/QuickForm/ViewHelpers">
 
 	<f:section name="Checkbox">
-		<div class="checkbox {qf:render.hasError(property: '{property}')}">
-			<label>
-				<f:form.checkbox class="{property}" value="1"
-				                 additionalAttributes="{autocomplete: 'off'}"
-				                 disabled="disabled"
-				                 checked="{qf:form.isChecked(expectedValue: '1')}"/>
+		<div id="form-group-{property}" class="form-group {qf:render.hasError(property: '{property}')}">
+			<label class="control-label">
 
-				<qf:tca.fieldLabel />
 			</label>
+			<div class="checkbox">
+				<label>
+					<f:form.checkbox property="{property}" value="1"
+					                 additionalAttributes="{autocomplete: 'off'}"
+					                 disabled="disabled"
+					                 checked="{qf:form.isChecked(expectedValue: '1')}"/>
+					<qf:tca.fieldLabel/>
+				</label>
+			</div>
 		</div>
 	</f:section>
 </div>
