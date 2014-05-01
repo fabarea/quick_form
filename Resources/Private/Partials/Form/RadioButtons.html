@@ -9,15 +9,15 @@
 				<f:if condition="{qf:property.isRequired(property: '{property}')}">*</f:if>
 			</label>
 
-			<f:form.hidden property="{property}" value="{value}"/>
-			<f:for each="{qf:tca.items()}" as="radioButtonLabel" key="value">
-				<div class="radio">
+			<div>
+				<f:form.hidden property="{property}" value="{value}"/>
+				<f:for each="{qf:tca.items()}" as="radioButtonLabel" key="value">
 					<label class="radio-inline">
 						<f:form.radio property="{property}" value="{value}"/>
 						{radioButtonLabel}
 					</label>
-				</div>
-			</f:for>
+				</f:for>
+			</div>
 		</div>
 	</f:section>
 </div>
