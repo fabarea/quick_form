@@ -39,6 +39,8 @@ class FileUploadComponent extends GenericComponent {
 	 *
 	 * @param string $property
 	 * @param string $label
+	 * @param string $allowedExtensions
+	 * @param int $storage
 	 */
 	public function __construct($property, $label = '', $allowedExtensions = '', $storage = 1) {
 		$partialName = 'Form/FileUpload';
