@@ -85,6 +85,11 @@ class ItemsViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\RenderViewHelper {
 			$values = $values + $itemsFromDatabase;
 		}
 
+		$itemsFromUserFunction = $this->fetchItemsFromUserFunction($dataType, $fieldName);
+		if (!empty($itemsFromUserFunction)) {
+			$values = $values + $itemsFromUserFunction;
+		}
+
 		return $values;
 	}
 
@@ -128,10 +133,9 @@ class ItemsViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\RenderViewHelper {
 	 * @return array
 	 */
 	protected function fetchItems($tableName, $fieldName, $removeEmptyValues) {
+		$values = array();
 
 		$configuration = TcaService::table($tableName)->field($fieldName)->getConfiguration();
-
-		$values = array();
 		if (!empty($configuration['items'])) {
 
 			foreach ($configuration['items'] as $items) {
@@ -158,6 +162,35 @@ class ItemsViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\RenderViewHelper {
 	}
 
 	/**
+	 * Retrieve items from User Function.
+	 *
+	 * @param string $tableName
+	 * @param string $fieldName
+	 * @return array
+	 */
+	protected function fetchItemsFromUserFunction($tableName, $fieldName) {
+		$values = array();
+
+		$configuration = TcaService::table($tableName)->field($fieldName)->getConfiguration();
+		if (!empty($configuration['itemsProcFunc'])) {
+			$parts = explode('php:', $configuration['itemsProcFunc']);
+			if (!empty($parts[1])) {
+
+				list($class, $method) = explode('->', $parts[1]);
+
+				$parameters['items'] = array();
+				$object = GeneralUtility::makeInstance($class);
+				$object->$method($parameters);
+
+				foreach ($parameters['items'] as $items) {
+					$values[$items[0]] = $items[1];
+				}
+			}
+		}
+		return $values;
+	}
+
+	/**
 	 * Retrieve items from Database.
 	 *
 	 * @param string $tableName
@@ -173,7 +206,8 @@ class ItemsViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\RenderViewHelper {
 			$foreignLabelField = TcaService::table($foreignTable)->getLabelField();
 			$foreignOrder = TcaService::table($tableName)->field($fieldName)->getForeignOrder();
 
-			$clause = '1 = 1';
+			$clause = '1 = 1 ';
+			$clause .= TcaService::table($tableName)->field($fieldName)->getForeignClause();
 			if ($this->isFrontendMode()) {
 				$clause .= $this->getPageRepository()->enableFields($foreignTable);
 			}
