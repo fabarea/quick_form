@@ -39,9 +39,11 @@ class MultiChoicesComponent extends GenericComponent {
 	 *
 	 * @param string $property
 	 * @param string $label
+	 * @param array $options for the Partials, array('key' => 'value')
 	 */
-	public function __construct($property, $label = '') {
+	public function __construct($property, $label = '', array $options = array()) {
 		$partialName = 'Form/MultiChoices';
+		$arguments = $options;
 		$arguments['property'] = $property;
 
 		if (empty($label)) {
