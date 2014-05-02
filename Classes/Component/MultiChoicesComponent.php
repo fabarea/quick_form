@@ -40,6 +40,7 @@ class MultiChoicesComponent extends GenericComponent {
 	 * @param string $property
 	 * @param string $label
 	 * @param array $options for the Partials, array('key' => 'value')
+	 *              + "class" give a class name, optional: checkbox-inline, default: checkbox
 	 */
 	public function __construct($property, $label = '', array $options = array()) {
 		$partialName = 'Form/MultiChoices';
