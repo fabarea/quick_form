@@ -134,6 +134,15 @@ another extension::
 * The third is the extension where the Partials come from
 
 
+Override label
+==============
+
+In case the Frontend label must be different than in the BE, use option ``alternative_label`` in the arguments of the Form Component::
+
+	array(
+		'alternative_label' => 'LLL:EXT:bobst_forms/Resources/Private/Language/locallang.xlf:privacy_satement_label',
+	)
+
 Quick Form Components
 =====================
 
@@ -176,6 +185,17 @@ CheckboxGroup
 				'operational_data_wheels',
 				'operational_data_tracks',
 			),
+		),
+
+Checkbox
+--------
+
+If checkbox must be specially configured::
+
+		new \TYPO3\CMS\QuickForm\Component\CheckboxComponent(
+			'hasNewsletterSubscription',
+			'has_newsletter_subscription',
+			array('group_label' => 'Newsletter')
 		),
 
 TCA configuration
@@ -305,9 +325,23 @@ Property::
 File Upload
 -----------
 
+Suggested `EXT:media_upload`_ to use the file upload API in your Extbase controller.
+
 ::
 
 	new \TYPO3\CMS\QuickForm\Component\FileUploadComponent('logo'),
+
+
+Media Upload
+------------
+
+Require `EXT:media_upload`_ which provides HTML5 file upload widget.
+
+::
+
+	new \TYPO3\CMS\QuickForm\Component\MediaUploadComponent('logo'),
+
+.. _EXT:media_upload: https://github.com/fudriot/media_upload
 
 TCA configuration
 +++++++++++++++++
