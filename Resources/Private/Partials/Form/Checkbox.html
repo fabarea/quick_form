@@ -5,7 +5,10 @@
 	<f:section name="Checkbox">
 		<div id="form-group-{property}" class="form-group {qf:render.hasError(property: '{property}')}">
 			<label class="control-label">
-
+				{group_label}
+				<f:if condition="{group_label}">
+					<f:if condition="{qf:property.isRequired(property: '{property}')}">*</f:if>
+				</f:if>
 			</label>
 			<div class="checkbox">
 				<label>
@@ -13,7 +16,9 @@
 					                 additionalAttributes="{autocomplete: 'off'}"
 					                 checked="{qf:form.isChecked(expectedValue: '1')}"/>
 					<qf:tca.fieldLabel/>
-					<f:if condition="{qf:property.isRequired(property: '{property}')}">*</f:if>
+					<f:if condition="!{group_label}">
+						<f:if condition="{qf:property.isRequired(property: '{property}')}">*</f:if>
+					</f:if>
 				</label>
 			</div>
 		</div>
