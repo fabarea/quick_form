@@ -43,7 +43,8 @@ class FieldLabelViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractView
 		$dataType = $this->templateVariableContainer->get('dataType');
 
 		if ($key == '') {
-			$key = $this->templateVariableContainer->get('label');
+			$labelName = $this->templateVariableContainer->exists('alternative_label') ? 'alternative_label' : 'label';
+			$key = $this->templateVariableContainer->get($labelName);
 		}
 
 		if (strpos($key, 'LLL:') === 0) {
