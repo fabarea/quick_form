@@ -10,10 +10,9 @@
 				<f:if condition="{qf:property.isRequired(property: '{property}')}">*</f:if>
 			</label>
 
-			<strong>MARKUP OF THIS COMPONENT IS NOT VALID ANY MORE AND REQUIRES UPDATE.</strong>
-			<strong>WE WANT A NATIVE FILE UPLOAD HERE.</strong>
-			<strong>USE COMPONENT MEDIA UPLOAD FOR HTML5 WIDGET</strong>
 			<qf:form.hidden property="{property}"/>
+
+			<strong>add warning if third-party library is not detected</strong>
 
 			<f:if condition="{qf:property.value()}">
 				<f:alias map="{images: '{qf:property.files()}'}">

@@ -10,9 +10,6 @@
 				<f:if condition="{qf:property.isRequired(property: '{property}')}">*</f:if>
 			</label>
 
-			<strong>MARKUP OF THIS COMPONENT IS NOT VALID ANY MORE AND REQUIRES UPDATE.</strong>
-			<strong>WE WANT A NATIVE FILE UPLOAD HERE.</strong>
-			<strong>USE COMPONENT MEDIA UPLOAD FOR HTML5 WIDGET</strong>
 			<qf:form.hidden property="{property}"/>
 
 			<f:if condition="{qf:property.value()}">
@@ -25,13 +22,12 @@
 							</a>
 							<span class="qq-upload-file-selector qq-upload-file"><small>{image.name}</small></span>
 							<span class="qq-upload-size-selector qq-upload-size">{qf:math.division(a: '{image.size}', b: '1000')}kB</span>
-							<a class="btn-delete-image qq-upload-delete-selector btn-small btn-warning" href="#">Delete</a>
 						</div>
 					</f:for>
 				</f:alias>
 			</f:if>
 
-			<mu:widget.upload allowedExtensions="{allowedExtensions}" storage="{storage}" property="{property}" maximumItems="{qf:property.maxItems()}"/>
+			<mu:widget.showUploaded property="{property}"/>
 		</div>
 	</f:section>
 </div>
