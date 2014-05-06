@@ -67,11 +67,11 @@ show the field is required.
 To get the validation info, Quick Form has three possible sources that can be configured with attribute "validation".
 If nothing is configured Quick Form will take the TCA as fallback which has the advantage to keep in sync the Backend and the Frontend.
 
-* tca: the default value, check validation against TCA.
-* typoscript: Extbase makes it quite complicated to validate a model having different types.
+* ``tca``: check validation against TCA, default
+* ``typoscript``: Extbase makes it quite complicated to validate a model having different types.
   To work around typoscript validation can be used. Configuration must be given in ``plugin.tx_quickform.validate``
-* object: use the object provided by context and use reflection to tell what fields are required.
-* MyExtension\Domain\Model\Foo: an object is not always available in the context. A model name can be provided.
+* ``object``: use the object provided by context and use reflection to tell what fields are required.
+* ``MyExtension\Domain\Model\Foo``: an object is not always available in the context. A model name can be provided.
 
 
 @todo add more validation output such as string length, email, ...
@@ -206,7 +206,7 @@ TCA configuration
 
 		'operational_data_wheels' => array(
 			'exclude' => 0,
-			'label' => 'LLL:EXT:ext/Resources/Private/Language/locallang_db.xml:tx_ext_domain_model_equipment.operational_data_wheels',
+			'label' => 'LLL:EXT:ext/Resources/Private/Language/locallang_db.xml:tx_foo_domain_model_foo.operational_data_wheels',
 			'config' => array(
 				'type' => 'check',
 				'default' => '0'
@@ -214,7 +214,7 @@ TCA configuration
 		),
 		'operational_data_tracks' => array(
 			'exclude' => 0,
-			'label' => 'LLL:EXT:ext/Resources/Private/Language/locallang_db.xml:tx_ext_domain_model_equipment.operational_data_tracks',
+			'label' => 'LLL:EXT:ext/Resources/Private/Language/locallang_db.xml:tx_foo_domain_model_foo.operational_data_tracks',
 			'config' => array(
 				'type' => 'check',
 				'default' => '0'
@@ -257,7 +257,7 @@ TCA configuration
 
 		'available_on_market_from' => array(
 			'exclude' => 0,
-			'label' => 'LLL:EXT:ext/Resources/Private/Language/locallang_db.xml:tx_ext_domain_model_equipment.available_on_market_from',
+			'label' => 'LLL:EXT:ext/Resources/Private/Language/locallang_db.xml:tx_foo_domain_model_foo.available_on_market_from',
 			'config' => array(
 				'type' => 'input',
 				'size' => 12,
@@ -291,17 +291,15 @@ TCA configuration
 
 ::
 
-	'protection_level' => array(
+	'some_field' => array(
 		'exclude' => 0,
-		'label' => 'LLL:EXT:ext/Resources/Private/Language/locallang_db.xml:tx_ext_domain_model_equipment.protection_level',
+		'label' => 'LLL:EXT:ext/Resources/Private/Language/locallang_db.xml:tx_foo_domain_model_foo.some_field',
 		'config' => array(
 			'type' => 'select',
 			'items' => array(
 				array('', ''),
-				array('LLL:EXT:ext/Resources/Private/Language/locallang_db.xml:tx_ext_domain_model_equipment.protection_level.imas', '1'),
-				array('LLL:EXT:ext/Resources/Private/Language/locallang_db.xml:tx_ext_domain_model_equipment.protection_level.stanag', '2'),
-				array('LLL:EXT:ext/Resources/Private/Language/locallang_db.xml:tx_ext_domain_model_equipment.protection_level.mil', '3'),
-				array('LLL:EXT:ext/Resources/Private/Language/locallang_db.xml:tx_ext_domain_model_equipment.protection_level.other', '4'),
+				array('LLL:EXT:ext/Resources/Private/Language/locallang_db.xml:tx_foo_domain_model_foo.some_field.label_1', '1'),
+				array('LLL:EXT:ext/Resources/Private/Language/locallang_db.xml:tx_foo_domain_model_foo.some_field.label_2', '2'),
 			),
 			'size' => 4,
 			'maxitems' => 10,
