@@ -162,10 +162,10 @@ class ValidationService implements SingletonInterface {
 		$type = $this->templateVariableContainer->get('type');
 		$field = GeneralUtility::camelCaseToLowerCaseUnderscored($property);
 
-		// TRUE means the validation is defined by TypoScript useful for multi-type objects.
+		// TRUE means the validation is defined by TypoScript which is useful in the context of multi-type models.
 		if (empty($validationConfiguration[$this->formObjectName][$type])) {
 			$message = sprintf('I could not find TypoScript validation for type "%s". It must be added "tx_quickform.validate.%s.%s {...}"',
-				$this->formObjectName,
+				$type,
 				$this->formObjectName,
 				$type
 			);
