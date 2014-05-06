@@ -10,6 +10,7 @@
 			</label>
 			<f:form.textarea property="{property}" id="{property}"
 			                 additionalAttributes="{qf:form.additionalAttributes()}"
+			                 rows="{qf:tca.configuration(key: 'rows')}"
 			                 class="form-control {qf:render.validationClasses(property: '{property}')}"/>
 		</div>
 	</f:section>
