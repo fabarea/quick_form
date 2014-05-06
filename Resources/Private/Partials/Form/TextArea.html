@@ -9,7 +9,7 @@
 				<f:if condition="{qf:property.isRequired(property: '{property}')}">*</f:if>
 			</label>
 			<f:form.textarea property="{property}" id="{property}"
-			                 additionalAttributes="{autocomplete: 'off'}"
+			                 additionalAttributes="{qf:form.additionalAttributes()}"
 			                 class="form-control {qf:render.validationClasses(property: '{property}')}"/>
 		</div>
 	</f:section>

@@ -10,7 +10,7 @@
 			</label>
 
 			<f:form.select property="{property}" id="{property}"
-			               additionalAttributes="{autocomplete: 'off'}"
+			               additionalAttributes="{qf:form.additionalAttributes()}"
 			               size="{qf:tca.selectSize()}"
 			               class="form-control {qf:render.validationClasses(property: '{property}')}"
 			               options="{qf:tca.items()}" multiple="multiple" />

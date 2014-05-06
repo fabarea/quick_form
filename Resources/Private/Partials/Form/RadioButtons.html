@@ -13,7 +13,9 @@
 				<f:form.hidden property="{property}" value="{value}"/>
 				<f:for each="{qf:tca.items()}" as="radioButtonLabel" key="value">
 					<label class="radio-inline">
-						<f:form.radio property="{property}" value="{value}"/>
+						<f:form.radio property="{property}"
+						              additionalAttributes="{qf:form.additionalAttributes()}"
+						              value="{value}"/>
 						{radioButtonLabel}
 					</label>
 				</f:for>

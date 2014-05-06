@@ -13,7 +13,7 @@
 			<div class="checkbox">
 				<label>
 					<f:form.checkbox property="{property}" value="1"
-					                 additionalAttributes="{autocomplete: 'off'}"
+					                 additionalAttributes="{qf:form.additionalAttributes()}"
 					                 checked="{qf:form.isChecked(expectedValue: '1')}"/>
 					<qf:tca.fieldLabel/>
 					<f:if condition="!{group_label}">

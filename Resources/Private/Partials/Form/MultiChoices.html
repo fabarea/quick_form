@@ -15,7 +15,7 @@
 				<f:for each="{qf:tca.items(removeEmptyValues: 'true')}" as="choiceLabel" key="choiceValue">
 					<label class="{f:if(condition: '{class}', then: '{class}', else: 'checkbox-inline')}">
 						<f:form.checkbox class="{property}" value="{choiceValue}"
-						                 additionalAttributes="{autocomplete: 'off'}"
+						                 additionalAttributes="{qf:form.additionalAttributes()}"
 						                 checked="{qf:form.isChecked(expectedValue: '{choiceValue}')}" />
 						{choiceLabel}
 					</label>
