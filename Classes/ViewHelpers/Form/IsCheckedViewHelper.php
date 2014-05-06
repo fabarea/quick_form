@@ -51,8 +51,8 @@ class IsCheckedViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewH
 		$values = array();
 
 		// GET / POST values have the priority
-		if (is_array($arguments['equipment']) && isset($arguments['equipment'][$property])) {
-			$values = GeneralUtility::trimExplode(',', $arguments['equipment'][$property]);
+		if (is_array($arguments[$formObjectName]) && isset($arguments[$formObjectName][$property])) {
+			$values = GeneralUtility::trimExplode(',', $arguments[$formObjectName][$property]);
 		} elseif (is_object($object)) {
 
 			// Retrieve value from object.

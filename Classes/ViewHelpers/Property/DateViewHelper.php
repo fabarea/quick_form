@@ -49,8 +49,8 @@ class DateViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
 
 
 		// Arguments have priority on object.
-		if (is_array($arguments['equipment']) && isset($arguments['equipment'][$property])) {
-			$result = $arguments['equipment'][$property];
+		if (is_array($arguments[$formObjectName]) && isset($arguments[$formObjectName][$property])) {
+			$result = $arguments[$formObjectName][$property];
 		} elseif ($this->templateVariableContainer->exists($formObjectName)) {
 
 			$object = $this->templateVariableContainer->get($formObjectName);
