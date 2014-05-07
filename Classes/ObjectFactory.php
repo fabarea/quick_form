@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\CMS\QuickForm;
+namespace Vanilla\QuickForm;
 
 /***************************************************************
  *  Copyright notice
@@ -46,10 +46,10 @@ class ObjectFactory implements SingletonInterface {
 	/**
 	 * Gets a singleton instance of this class.
 	 *
-	 * @return \TYPO3\CMS\QuickForm\ObjectFactory
+	 * @return \Vanilla\QuickForm\ObjectFactory
 	 */
 	static public function getInstance() {
-		return GeneralUtility::makeInstance('TYPO3\CMS\QuickForm\ObjectFactory');
+		return GeneralUtility::makeInstance('Vanilla\QuickForm\ObjectFactory');
 	}
 
 	/**

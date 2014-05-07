@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\CMS\QuickForm\ViewHelpers\Property;
+namespace Vanilla\QuickForm\ViewHelpers\Property;
 /***************************************************************
  *  Copyright notice
  *
@@ -22,8 +22,8 @@ namespace TYPO3\CMS\QuickForm\ViewHelpers\Property;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-use TYPO3\CMS\QuickForm\Validation\ValidationService;
-use TYPO3\CMS\QuickForm\ViewHelpers\AbstractValidationViewHelper;
+use Vanilla\QuickForm\Validation\ValidationService;
+use Vanilla\QuickForm\ViewHelpers\AbstractValidationViewHelper;
 
 /**
  * View helper which tells whether a property is required given a property name.

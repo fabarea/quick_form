@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\CMS\QuickForm\ViewHelpers\Math;
+namespace Vanilla\QuickForm\ViewHelpers\Math;
 /***************************************************************
  *  Copyright notice
  *

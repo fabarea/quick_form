@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\CMS\QuickForm\Validation;
+namespace Vanilla\QuickForm\Validation;
 
 /***************************************************************
  *  Copyright notice
@@ -30,7 +30,7 @@ namespace TYPO3\CMS\QuickForm\Validation;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
-use TYPO3\CMS\QuickForm\ViewHelpers\AbstractValidationViewHelper;
+use Vanilla\QuickForm\ViewHelpers\AbstractValidationViewHelper;
 use TYPO3\CMS\Vidi\Tca\TcaService;
 
 /**
@@ -85,8 +85,8 @@ class ValidationService implements SingletonInterface {
 	/**
 	 * Returns a class instance.
 	 *
-	 * @param \TYPO3\CMS\QuickForm\ViewHelpers\AbstractValidationViewHelper $viewHelper
-	 * @return \TYPO3\CMS\QuickForm\Validation\ValidationService
+	 * @param \Vanilla\QuickForm\ViewHelpers\AbstractValidationViewHelper $viewHelper
+	 * @return \Vanilla\QuickForm\Validation\ValidationService
 	 */
 	static public function getInstance(AbstractValidationViewHelper $viewHelper) {
 
@@ -95,8 +95,8 @@ class ValidationService implements SingletonInterface {
 
 			$validationType = $viewHelper->getTemplateVariableContainer()->get('validationType');
 
-			/** @var \TYPO3\CMS\QuickForm\Validation\ValidationService $instance */
-			$instance = GeneralUtility::makeInstance('TYPO3\CMS\QuickForm\Validation\ValidationService');
+			/** @var \Vanilla\QuickForm\Validation\ValidationService $instance */
+			$instance = GeneralUtility::makeInstance('Vanilla\QuickForm\Validation\ValidationService');
 			$instance->setTemplateVariableContainer($viewHelper->getTemplateVariableContainer())
 				->setConfigurationManager($viewHelper->getConfigurationManager())
 				->setReflectionService($viewHelper->getReflectionService())

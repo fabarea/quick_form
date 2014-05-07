@@ -116,7 +116,7 @@ when working with an IDE which auto-complete parameters::
 				'items' => array(
 					'first_name',
 					'last_name',
-					new \TYPO3\CMS\QuickForm\Component\SubmitComponent()
+					new \Vanilla\QuickForm\Component\SubmitComponent()
 				),
 			),
 		),
@@ -127,7 +127,7 @@ Use "external" Partials
 Partials within EXT:quick_start are taken as defaults. However, it is possible to use "external" Partials located in
 another extension::
 
-	new \TYPO3\CMS\QuickForm\Component\GenericComponent('Form/Foo', array('property' => 'propertyName', 'label' => 'fieldName'), 'foo'),
+	new \Vanilla\QuickForm\Component\GenericComponent('Form/Foo', array('property' => 'propertyName', 'label' => 'fieldName'), 'foo'),
 
 * The first parameter corresponds to the Partial Name
 * The second to the arguments
@@ -192,7 +192,7 @@ Checkbox
 
 If checkbox must be specially configured::
 
-		new \TYPO3\CMS\QuickForm\Component\CheckboxComponent(
+		new \Vanilla\QuickForm\Component\CheckboxComponent(
 			'hasNewsletterSubscription',
 			'has_newsletter_subscription',
 			array('group_label' => 'Newsletter')
@@ -256,7 +256,7 @@ Honey Pot
 In TCA::
 
 
-	new \TYPO3\CMS\QuickForm\Component\HoneyPotComponent(),
+	new \Vanilla\QuickForm\Component\HoneyPotComponent(),
 
 In Extbase controller::
 
@@ -304,7 +304,7 @@ Multi Choice
 
 ::
 
-	new \TYPO3\CMS\QuickForm\Component\MultiChoicesComponent('protectionLevel'),
+	new \Vanilla\QuickForm\Component\MultiChoicesComponent('protectionLevel'),
 
 TCA configuration
 +++++++++++++++++
@@ -347,7 +347,7 @@ Suggested `EXT:media_upload`_ to use the file upload API in your Extbase control
 
 ::
 
-	new \TYPO3\CMS\QuickForm\Component\FileUploadComponent('logo'),
+	new \Vanilla\QuickForm\Component\FileUploadComponent('logo'),
 
 
 Media Upload
@@ -357,7 +357,7 @@ Require `EXT:media_upload`_ which provides HTML5 file upload widget.
 
 ::
 
-	new \TYPO3\CMS\QuickForm\Component\MediaUploadComponent('logo'),
+	new \Vanilla\QuickForm\Component\MediaUploadComponent('logo'),
 
 .. _EXT:media_upload: https://github.com/fudriot/media_upload
 

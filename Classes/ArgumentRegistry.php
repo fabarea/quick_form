@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\CMS\QuickForm;
+namespace Vanilla\QuickForm;
 
 /***************************************************************
  *  Copyright notice
@@ -43,10 +43,10 @@ class ArgumentRegistry implements SingletonInterface {
 	/**
 	 * Gets a singleton instance of this class.
 	 *
-	 * @return \TYPO3\CMS\QuickForm\ArgumentRegistry
+	 * @return \Vanilla\QuickForm\ArgumentRegistry
 	 */
 	static public function getInstance() {
-		return GeneralUtility::makeInstance('TYPO3\CMS\QuickForm\ArgumentRegistry');
+		return GeneralUtility::makeInstance('Vanilla\QuickForm\ArgumentRegistry');
 	}
 
 	/**
@@ -58,7 +58,7 @@ class ArgumentRegistry implements SingletonInterface {
 
 	/**
 	 * @param array $arguments
-	 * @return \TYPO3\CMS\QuickForm\ArgumentRegistry
+	 * @return \Vanilla\QuickForm\ArgumentRegistry
 	 */
 	public function set($arguments) {
 		$this->arguments = $arguments;

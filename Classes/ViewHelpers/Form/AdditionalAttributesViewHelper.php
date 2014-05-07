@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\CMS\QuickForm\ViewHelpers\Form;
+namespace Vanilla\QuickForm\ViewHelpers\Form;
 /***************************************************************
  *  Copyright notice
  *
@@ -41,8 +41,8 @@ class AdditionalAttributesViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\Ab
 		// @see https://developer.mozilla.org/en-US/docs/Web/Security/Securing_your_site/Turning_off_form_autocompletion
 		$attributes = array('autocomplete' => true);
 
-		/** @var \TYPO3\CMS\QuickForm\Validation\ValidationService $validationService */
-		$validationService = GeneralUtility::makeInstance('TYPO3\CMS\QuickForm\Validation\ValidationService');
+		/** @var \Vanilla\QuickForm\Validation\ValidationService $validationService */
+		$validationService = GeneralUtility::makeInstance('Vanilla\QuickForm\Validation\ValidationService');
 
 		// check if the the property is required.
 		$property = $this->templateVariableContainer->get('property');

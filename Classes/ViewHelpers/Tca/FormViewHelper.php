@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\CMS\QuickForm\ViewHelpers\Tca;
+namespace Vanilla\QuickForm\ViewHelpers\Tca;
 
 /***************************************************************
  *  Copyright notice
@@ -26,9 +26,9 @@ namespace TYPO3\CMS\QuickForm\ViewHelpers\Tca;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
-use TYPO3\CMS\QuickForm\Component\ComponentInterface;
-use TYPO3\CMS\QuickForm\ObjectFactory;
-use TYPO3\CMS\QuickForm\ArgumentRegistry;
+use Vanilla\QuickForm\Component\ComponentInterface;
+use Vanilla\QuickForm\ObjectFactory;
+use Vanilla\QuickForm\ArgumentRegistry;
 use TYPO3\CMS\Vidi\Tca\TcaService;
 
 /**
