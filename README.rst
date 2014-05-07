@@ -250,6 +250,26 @@ Some more JavaScript is required here. To be found a jQuery plugin for Bootstrap
 repository in branch "bs3" as of this writing. https://github.com/eternicode/bootstrap-datepicker/tree/bs3
 
 
+Honey Pot
+---------
+
+In TCA::
+
+
+	new \TYPO3\CMS\QuickForm\Component\HoneyPotComponent(),
+
+In Extbase controller::
+
+	/**
+	 * @return void
+	 * @validate $request \Vanilla\QuickForm\Validator\HoneyPotValidator
+	 * @param \Vendor\Extension\Domain\Model\Foo $foo
+	 */
+	public function createAction(Foo $foo = NULL) {
+
+
+	}
+
 TCA configuration
 +++++++++++++++++
 
