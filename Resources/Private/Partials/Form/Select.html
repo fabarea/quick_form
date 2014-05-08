@@ -10,6 +10,7 @@
 			</label>
 
 			<f:form.select property="{property}" id="{property}"
+			               value="{qf:property.value()}"
 			               additionalAttributes="{qf:form.additionalAttributes()}"
 			               class="form-control {qf:render.validationClasses(property: '{property}')}"
 			               options="{qf:tca.items(items: '{items}', itemsDataType: '{itemsDataType}')}" />

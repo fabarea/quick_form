@@ -29,39 +29,21 @@ use TYPO3\CMS\Fluid\ViewHelpers\RenderViewHelper;
 use TYPO3\CMS\Vidi\Tca\TcaService;
 
 /**
- * View helper which returns a property value. The property and the object are given from the context.
+ * View helper which returns a placeholder taken from the TCA.
  */
-class ValueViewHelper extends RenderViewHelper {
+class PlaceholderViewHelper extends RenderViewHelper {
 
 	/**
-	 * Returns a property value. The property and the object are given from the context.
+	 * Returns a placeholder taken from the TCA.
+	 * The property is given by the context.
 	 *
-	 * @return string
+	 * @return NULL|string
 	 */
 	public function render() {
-
-		$result = '';
-
-		// Retrieve object or array.
-		$formObjectName = $this->viewHelperVariableContainer->get('TYPO3\CMS\Fluid\ViewHelpers\FormViewHelper', 'formObjectName');
-		if ($this->templateVariableContainer->exists($formObjectName)) {
-
-			$object = $this->templateVariableContainer->get($formObjectName);
-
-			if (!empty($object)) {
-				// Retrieve the property name.
-				$property = $this->templateVariableContainer->get('property');
-				$result = ObjectAccess::getProperty($object, $property);
-			} else {
-				// Fetch defaults from TCA
-				$dataType = $this->templateVariableContainer->get('dataType');
-				$property = $this->templateVariableContainer->get('property');
-				$fieldName = GeneralUtility::camelCaseToLowerCaseUnderscored($property);
-				$result = TcaService::table($dataType)->field($fieldName)->get('default');
-			}
-		}
-
-		return $result;
+		$dataType = $this->templateVariableContainer->get('dataType');
+		$property = $this->templateVariableContainer->get('property');
+		$fieldName = GeneralUtility::camelCaseToLowerCaseUnderscored($property);
+		return TcaService::table($dataType)->field($fieldName)->get('placeholder');
 	}
 }
 

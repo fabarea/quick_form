@@ -11,11 +11,12 @@
 
 			<div>
 				<f:form.hidden property="{property}" value="{value}"/>
-				<f:for each="{qf:tca.items()}" as="radioButtonLabel" key="value">
+				<f:for each="{qf:tca.items()}" as="radioButtonLabel" key="radioValue">
 					<label class="radio-inline">
 						<f:form.radio property="{property}"
+						              value="{radioValue}"/>
+						              checked="{f:if(condition: '{qf:property.value()} == {radioValue}', then: 'true', else: 'false')}"
 						              additionalAttributes="{qf:form.additionalAttributes()}"
-						              value="{value}"/>
 						{radioButtonLabel}
 					</label>
 				</f:for>

@@ -9,6 +9,8 @@
 				<f:if condition="{qf:property.isRequired(property: '{property}')}">*</f:if>
 			</label>
 			<f:form.textarea property="{property}" id="{property}"
+			                 value="{qf:property.value()}"
+			                 placeholder="{qf:property.placeholder()}"
 			                 additionalAttributes="{qf:form.additionalAttributes()}"
 			                 rows="{qf:tca.configuration(key: 'rows')}"
 			                 class="form-control {qf:render.validationClasses(property: '{property}')}"/>
