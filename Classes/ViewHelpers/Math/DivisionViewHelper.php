@@ -22,11 +22,12 @@ namespace Vanilla\QuickForm\ViewHelpers\Math;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
  * View helper which tells whether a property is required given a property name.
  */
-class DivisionViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
+class DivisionViewHelper extends AbstractViewHelper {
 
 	/**
 	 * @param mixed $a

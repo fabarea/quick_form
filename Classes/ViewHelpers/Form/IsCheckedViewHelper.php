@@ -24,12 +24,13 @@ namespace Vanilla\QuickForm\ViewHelpers\Form;
  ***************************************************************/
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
+use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
  * View helper which tells whether a checkbox should be checked according to a property name which
  * contains comma separated values.
  */
-class IsCheckedViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
+class IsCheckedViewHelper extends AbstractViewHelper {
 
 	/**
 	 * Returns whether a checkbox should be checked according to a property name which

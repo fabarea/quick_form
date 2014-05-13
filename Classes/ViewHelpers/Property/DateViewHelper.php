@@ -24,11 +24,12 @@ namespace Vanilla\QuickForm\ViewHelpers\Property;
  ***************************************************************/
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
+use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
  * View helper which format a date of a given property
  */
-class DateViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
+class DateViewHelper extends AbstractViewHelper {
 
 	/**
 	 * Returns a date given a format.

@@ -22,13 +22,14 @@ namespace Vanilla\QuickForm\ViewHelpers\Tca;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 use TYPO3\CMS\Vidi\Tca\TcaService;
 
 /**
  * View helper which translates a label for field given by the context.
  * Under the hood, it will search the label from the TCA.
  */
-class FieldLabelViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
+class FieldLabelViewHelper extends AbstractViewHelper {
 
 	/**
 	 * Returns a label for field given by the context.
