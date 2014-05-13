@@ -10,6 +10,7 @@
 			</label>
 			<f:form.textfield property="{property}" id="{property}"
 			                  value="{qf:property.value()}"
+			                  type="{qf:form.inputType()}"
 			                  placeholder="{qf:property.placeholder()}"
 			                  additionalAttributes="{qf:form.additionalAttributes()}"
 			                  class="form-control {qf:render.validationClasses(property: '{property}')}"/>

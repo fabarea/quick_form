@@ -108,7 +108,7 @@ class FormViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\RenderViewHelper {
 
 				if ($fieldType == TcaService::TEXTAREA) {
 					$section = 'TextArea';
-				} elseif ($fieldType == TcaService::TEXTFIELD) {
+				} elseif ($fieldType == TcaService::TEXTFIELD || $fieldType == TcaService::EMAIL) {
 					$section = 'TextField';
 				} elseif ($fieldType == TcaService::NUMBER) {
 					$section = 'NumberField';
