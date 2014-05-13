@@ -23,11 +23,12 @@ namespace Vanilla\QuickForm\ViewHelpers\Form;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
  * View helper which returns default additional attributes for a form component.
  */
-class AdditionalAttributesViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
+class AdditionalAttributesViewHelper extends AbstractViewHelper {
 
 	/**
 	 * Returns default additional attributes for a form component.
@@ -39,7 +40,7 @@ class AdditionalAttributesViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\Ab
 
 		// Default attributes for Firefox, can be removed as of Firefox 31
 		// @see https://developer.mozilla.org/en-US/docs/Web/Security/Securing_your_site/Turning_off_form_autocompletion
-		$attributes = array('autocomplete' => true);
+		$attributes = array('autocomplete' => "off");
 
 		/** @var \Vanilla\QuickForm\Validation\ValidationService $validationService */
 		$validationService = GeneralUtility::makeInstance('Vanilla\QuickForm\Validation\ValidationService');
