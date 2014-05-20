@@ -82,5 +82,3 @@ class AbstractValidationViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\Abst
 	}
 
 }
-
-?>

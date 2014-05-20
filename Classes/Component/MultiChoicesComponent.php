@@ -68,5 +68,3 @@ class MultiChoicesComponent extends GenericComponent {
 		return $this->partialName;
 	}
 }
-
-?>

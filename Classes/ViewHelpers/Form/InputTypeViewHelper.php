@@ -52,5 +52,3 @@ class InputTypeViewHelper extends AbstractViewHelper {
 		return $inputType;
 	}
 }
-
-?>

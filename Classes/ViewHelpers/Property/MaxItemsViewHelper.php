@@ -56,5 +56,3 @@ class MaxItemsViewHelper extends AbstractValidationViewHelper {
 		return $result;
 	}
 }
-
-?>

@@ -76,5 +76,3 @@ class FilesViewHelper extends RenderViewHelper {
 		return $result;
 	}
 }
-
-?>

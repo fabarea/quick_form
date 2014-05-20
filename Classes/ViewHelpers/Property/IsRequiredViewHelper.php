@@ -40,5 +40,3 @@ class IsRequiredViewHelper extends AbstractValidationViewHelper {
 		return ValidationService::getInstance($this)->isRequired($property);
 	}
 }
-
-?>

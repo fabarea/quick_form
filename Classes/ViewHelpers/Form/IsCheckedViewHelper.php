@@ -64,5 +64,3 @@ class IsCheckedViewHelper extends AbstractViewHelper {
 		return in_array($expectedValue, $values);
 	}
 }
-
-?>

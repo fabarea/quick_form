@@ -251,5 +251,3 @@ class ItemsViewHelper extends RenderViewHelper {
 	}
 
 }
-
-?>

@@ -68,5 +68,3 @@ class CheckboxComponent extends GenericComponent {
 		return $this->partialName;
 	}
 }
-
-?>

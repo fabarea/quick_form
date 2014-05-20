@@ -58,5 +58,3 @@ class HasErrorViewHelper extends AbstractValidationViewHelper {
 		return $result;
 	}
 }
-
-?>

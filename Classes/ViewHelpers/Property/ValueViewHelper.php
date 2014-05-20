@@ -64,5 +64,3 @@ class ValueViewHelper extends RenderViewHelper {
 		return $result;
 	}
 }
-
-?>

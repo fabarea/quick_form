@@ -74,5 +74,3 @@ class FileUploadComponent extends GenericComponent {
 		return $this->partialName;
 	}
 }
-
-?>

@@ -105,5 +105,3 @@ class GenericComponent implements ComponentInterface {
 		return new GenericComponent($states['partialName'], $states['arguments'], $states['partialExtensionKey']);
 	}
 }
-
-?>

@@ -321,5 +321,3 @@ class FormViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\RenderViewHelper {
 		return $configuration['plugin.']['tx_quickform.']['settings.'];
 	}
 }
-
-?>

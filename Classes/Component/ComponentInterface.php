@@ -53,5 +53,3 @@ interface ComponentInterface {
 	 */
 	public function toArray();
 }
-
-?>

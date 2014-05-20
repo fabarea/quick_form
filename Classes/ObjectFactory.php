@@ -92,5 +92,3 @@ class ObjectFactory implements SingletonInterface {
 		return GeneralUtility::makeInstance('TYPO3\CMS\Extbase\Object\ObjectManager');
 	}
 }
-
-?>

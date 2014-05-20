@@ -45,5 +45,3 @@ class InputNameViewHelper extends AbstractViewHelper {
 		return sprintf('%s[%s][]', $formObjectName, $property);
 	}
 }
-
-?>

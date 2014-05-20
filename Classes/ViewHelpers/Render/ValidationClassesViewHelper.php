@@ -45,5 +45,3 @@ class ValidationClassesViewHelper extends AbstractValidationViewHelper {
 		return $result;
 	}
 }
-
-?>

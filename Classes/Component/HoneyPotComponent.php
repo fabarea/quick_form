@@ -56,5 +56,3 @@ class HoneyPotComponent extends GenericComponent{
 		return $this->partialName;
 	}
 }
-
-?>

@@ -70,5 +70,3 @@ class SelectComponent extends GenericComponent {
 		return $this->partialName;
 	}
 }
-
-?>

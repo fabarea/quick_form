@@ -58,5 +58,3 @@ class TodoComponent extends GenericComponent {
 		return $this->partialName;
 	}
 }
-
-?>

@@ -52,5 +52,3 @@ class ShowViewHelper extends FormViewHelper {
 		return 'Show/' . $section;
 	}
 }
-
-?>

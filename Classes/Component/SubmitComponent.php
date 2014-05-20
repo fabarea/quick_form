@@ -56,5 +56,3 @@ class SubmitComponent extends GenericComponent{
 		return $this->partialName;
 	}
 }
-
-?>

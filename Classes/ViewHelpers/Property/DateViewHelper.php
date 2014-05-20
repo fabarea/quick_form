@@ -72,4 +72,3 @@ class DateViewHelper extends AbstractViewHelper {
 		return $result;
 	}
 }
-?>

@@ -65,5 +65,3 @@ class ArgumentRegistry implements SingletonInterface {
 		return $this;
 	}
 }
-
-?>

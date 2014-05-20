@@ -65,4 +65,3 @@ class FieldLabelViewHelper extends AbstractViewHelper {
 		return $GLOBALS['TSFE'];
 	}
 }
-?>

@@ -60,5 +60,3 @@ class HiddenComponent extends GenericComponent {
 		return $this->partialName;
 	}
 }
-
-?>

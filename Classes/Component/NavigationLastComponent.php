@@ -58,5 +58,3 @@ class NavigationLastComponent extends GenericComponent {
 		return $this->partialName;
 	}
 }
-
-?>

@@ -63,5 +63,3 @@ class SelectSizeViewHelper extends RenderViewHelper {
 		return $size;
 	}
 }
-
-?>

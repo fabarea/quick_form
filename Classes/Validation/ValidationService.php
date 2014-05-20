@@ -264,5 +264,3 @@ class ValidationService implements SingletonInterface {
 		return $this;
 	}
 }
-
-?>

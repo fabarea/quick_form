@@ -46,5 +46,3 @@ class PlaceholderViewHelper extends RenderViewHelper {
 		return TcaService::table($dataType)->field($fieldName)->get('placeholder');
 	}
 }
-
-?>

@@ -42,4 +42,3 @@ class ConfigurationViewHelper extends AbstractViewHelper {
 		return TcaService::table($dataType)->field($property)->get($key);
 	}
 }
-?>

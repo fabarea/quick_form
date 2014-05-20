@@ -53,5 +53,3 @@ class AdditionalAttributesViewHelper extends AbstractViewHelper {
 		return $attributes;
 	}
 }
-
-?>
