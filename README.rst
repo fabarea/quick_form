@@ -347,8 +347,8 @@ Beware, a special array-to-string converter must be defined in the Controller in
 		// Configure property mapping.
 		if ($this->arguments->hasArgument('objectName')) {
 
-			/** @var \Cobweb\BobstForms\TypeConverter\EntityToStringConverter $typeConverter */
-			$typeConverter = $this->objectManager->get('Vanilla\Messenger\TypeConverter\ArrayToStringConverter');
+			/** @var \Vanilla\QuickForm\TypeConverter\ArrayToStringConverter $typeConverter */
+			$typeConverter = $this->objectManager->get('Vanilla\QuickForm\TypeConverter\ArrayToStringConverter');
 
 			$this->arguments->getArgument('request')
 				->getPropertyMappingConfiguration()
