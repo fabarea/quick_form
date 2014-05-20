@@ -8,13 +8,10 @@
 				<qf:tca.fieldLabel />
 				<f:if condition="{qf:property.isRequired(property: '{property}')}">*</f:if>
 			</label>
-
-			<f:form.hidden property="{property}" id="{property}"
-			               class="{qf:render.validationClasses(property: '{property}')}"/>
 			<div>
 				<f:for each="{qf:tca.items(removeEmptyValues: 'true')}" as="choiceLabel" key="choiceValue">
 					<label class="{f:if(condition: '{class}', then: '{class}', else: 'checkbox-inline')}">
-						<f:form.checkbox class="{property}" value="{choiceValue}"
+						<f:form.checkbox name="{qf:form.inputName()}" value="{choiceValue}"
 						                 additionalAttributes="{qf:form.additionalAttributes()}"
 						                 checked="{qf:form.isChecked(expectedValue: '{choiceValue}')}" />
 						{choiceLabel}

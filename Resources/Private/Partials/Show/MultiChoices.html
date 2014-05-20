@@ -8,11 +8,10 @@
 				<label class="control-label">
 					<qf:tca.fieldLabel />
 				</label>
-
 				<div>
 					<f:for each="{qf:tca.items(removeEmptyValues: 'true')}" as="choiceLabel" key="choiceValue">
 						<label class="checkbox-inline">
-							<f:form.checkbox class="{property}" value="1"
+							<f:form.checkbox name="{qf:form.inputName()}" value="1"
 							                 disabled="disabled"
 							                 checked="{qf:form.isChecked(expectedValue: '{choiceValue}')}" />
 							{choiceLabel}

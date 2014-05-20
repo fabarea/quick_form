@@ -333,11 +333,29 @@ Extbase code
 Property::
 
 	/**
-	 * @var int
+	 * @var string
 	 */
-	protected $protectionLevel;
+	protected $someField;
 
+Beware, a special array-to-string converter must be defined in the Controller in order to convert the multi-choice to a CSV chain::
 
+	/**
+	 * Initialize object
+	 */
+	public function initializeAction() {
+
+		// Configure property mapping.
+		if ($this->arguments->hasArgument('objectName')) {
+
+			/** @var \Cobweb\BobstForms\TypeConverter\EntityToStringConverter $typeConverter */
+			$typeConverter = $this->objectManager->get('Vanilla\Messenger\TypeConverter\ArrayToStringConverter');
+
+			$this->arguments->getArgument('request')
+				->getPropertyMappingConfiguration()
+				->forProperty('someField')
+				->setTypeConverter($typeConverter);
+		}
+	}
 .. ................................................................................................
 
 File Upload
