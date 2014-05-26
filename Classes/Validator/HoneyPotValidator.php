@@ -28,11 +28,12 @@ namespace Vanilla\QuickForm\Validator;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 
 /**
  * Validate the honey pot
  */
-class HoneyPotValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator {
+class HoneyPotValidator extends AbstractValidator {
 
 	/**
 	 * Checks whether:
@@ -60,9 +61,6 @@ class HoneyPotValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstract
 			die('No user agent - u sure you are not a bot?');
 		}
 
-		if (!$_COOKIE['fe_typo_user']) {
-			die('No cookies - pls activate cookies for this page');
-		}
 		return TRUE;
 	}
 }
