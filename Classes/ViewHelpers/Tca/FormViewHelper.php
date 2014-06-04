@@ -104,11 +104,11 @@ class FormViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\RenderViewHelper {
 			} elseif (TRUE === is_string($item)) { // this is a field.
 
 				$initialArguments = $this->getInitialArguments();
-				$fieldType = TcaService::table($initialArguments['dataType'])->field($item)->getFieldType();
+				$fieldType = TcaService::table($initialArguments['dataType'])->field($item)->getType();
 
 				if ($fieldType == TcaService::TEXTAREA) {
 					$section = 'TextArea';
-				} elseif ($fieldType == TcaService::TEXTFIELD || $fieldType == TcaService::EMAIL) {
+				} elseif ($fieldType == TcaService::TEXT || $fieldType == TcaService::EMAIL) {
 					$section = 'TextField';
 				} elseif ($fieldType == TcaService::NUMBER) {
 					$section = 'NumberField';
@@ -116,7 +116,7 @@ class FormViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\RenderViewHelper {
 					$section = 'DatePicker';
 				} elseif ($fieldType == TcaService::SELECT) {
 					$section = 'Select';
-				} elseif ($fieldType == TcaService::MULTI_SELECT) {
+				} elseif ($fieldType == TcaService::MULTISELECT) {
 					$section = 'MultiSelect';
 				} elseif ($fieldType == TcaService::CHECKBOX) {
 					$section = 'Checkbox';
