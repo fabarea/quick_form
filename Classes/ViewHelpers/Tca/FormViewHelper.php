@@ -123,8 +123,8 @@ class FormViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\RenderViewHelper {
 				} elseif ($fieldType == TcaService::RADIO) {
 					$section = 'RadioButtons';
 				} else {
-					var_dump('Unknown field type:' . $fieldType);
-					exit();
+					$message = sprintf('Unknown field type: "%s" for field "%s"', $fieldType, $item);
+					throw new \Exception($message, 1401954717);
 				}
 
 				$partial = $this->computePartialNameForField($section);
