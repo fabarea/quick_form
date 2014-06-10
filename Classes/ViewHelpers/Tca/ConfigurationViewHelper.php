@@ -23,6 +23,7 @@ namespace Vanilla\QuickForm\ViewHelpers\Tca;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3\CMS\Vidi\Converter\FieldConverter;
 use TYPO3\CMS\Vidi\Tca\TcaService;
 
 /**
@@ -39,7 +40,7 @@ class ConfigurationViewHelper extends AbstractViewHelper {
 	public function render($key) {
 		$dataType = $this->templateVariableContainer->get('dataType');
 		$property = $this->templateVariableContainer->get('property');
-		$fieldName = TcaService::table($dataType)->convertToFieldName($property);
+		$fieldName = FieldConverter::toField($dataType, $property);
 		return TcaService::table($dataType)->field($fieldName)->get($key);
 	}
 }
