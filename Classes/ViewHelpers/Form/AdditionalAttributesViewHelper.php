@@ -45,11 +45,20 @@ class AdditionalAttributesViewHelper extends AbstractViewHelper {
 		/** @var \Vanilla\QuickForm\Validation\ValidationService $validationService */
 		$validationService = GeneralUtility::makeInstance('Vanilla\QuickForm\Validation\ValidationService');
 
-		// check if the the property is required.
+		// Check if the the property is required.
 		$property = $this->templateVariableContainer->get('property');
 		if ($validationService->isRequired($property)) {
 			$attributes['required'] = 'required';
 		}
+
+		$hasAdditionalAttributes = $this->templateVariableContainer->exists('additionalAttributes');
+		if ($hasAdditionalAttributes) {
+			$additionalAttributes = $this->templateVariableContainer->get('additionalAttributes');
+			foreach ($additionalAttributes as $attribute => $value) {
+				$attributes[$attribute] = $value;
+			}
+		}
+
 		return $attributes;
 	}
 }
