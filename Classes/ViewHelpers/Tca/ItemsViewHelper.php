@@ -184,7 +184,7 @@ class ItemsViewHelper extends RenderViewHelper {
 				$object->$method($parameters);
 
 				foreach ($parameters['items'] as $items) {
-					$values[$items[0]] = $items[1];
+					$values[$items[1]] = $items[0];
 				}
 			}
 		}

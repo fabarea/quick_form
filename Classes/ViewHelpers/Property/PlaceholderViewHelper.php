@@ -36,6 +36,7 @@ class PlaceholderViewHelper extends RenderViewHelper {
 	/**
 	 * Returns a placeholder taken from the TCA.
 	 * The property is given by the context.
+	 * @todo remove me as handled by {qf:form.additionalAttributes()}
 	 *
 	 * @return NULL|string
 	 */
