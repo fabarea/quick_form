@@ -3,7 +3,7 @@
      xmlns:qf="http://typo3.org/ns/Vanilla/QuickForm/ViewHelpers">
 
 	<f:section name="Checkbox">
-		<div id="form-group-{property}" class="form-group {qf:render.hasError(property: '{property}')}">
+		<div id="form-group-{property}" class="form-group {qf:property.errorClass()}">
 			<label class="control-label">
 				{group_label}
 				<f:if condition="{group_label}">

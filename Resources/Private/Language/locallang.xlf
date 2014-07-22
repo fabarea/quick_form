@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="" product-name="local lang module">
+		<header/>
+		<body>
+			<trans-unit id="NotEmpty">
+				<source>This field is required.</source>
+			</trans-unit>
+			<trans-unit id="EmailAddress">
+				<source>Not a valid email address.</source>
+			</trans-unit>
+			<trans-unit id="FileRequired">
+				<source>A file is missing.</source>
+			</trans-unit>
+			<trans-unit id="FileSize">
+				<source>File is too heavy.</source>
+			</trans-unit>
+			<trans-unit id="AllowedExtensions">
+				<source>This kind of file is not allowed.</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

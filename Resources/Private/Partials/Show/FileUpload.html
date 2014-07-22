@@ -4,7 +4,7 @@
      xmlns:mu="http://typo3.org/ns/TYPO3/CMS/MediaUpload/ViewHelpers">
 
 	<f:section name="FileUpload">
-		<div class="form-group {qf:render.hasError(property: '{property}')}">
+		<div class="form-group {qf:property.errorClass()}">
 			<label class="control-label">
 				<qf:tca.fieldLabel/>
 				<f:if condition="{qf:property.isRequired(property: '{property}')}">*</f:if>

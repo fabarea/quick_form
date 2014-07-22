@@ -1,15 +1,16 @@
 <?php
-namespace Vanilla\QuickForm\ViewHelpers\Render;
+namespace Vanilla\QuickForm\Validation;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2013 Fabien Udriot <fabien.udriot@typo3.org>
+ *  (c) 2014 Fabien Udriot <fabien.udriot@typo3.org>
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
  *  free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
+ *  the Free Software Foundation; either version 3 of the License, or
  *  (at your option) any later version.
  *
  *  The GNU General Public License can be found at
@@ -22,26 +23,19 @@ namespace Vanilla\QuickForm\ViewHelpers\Render;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-use Vanilla\QuickForm\Validation\ValidationService;
-use Vanilla\QuickForm\ViewHelpers\AbstractValidationViewHelper;
+use TYPO3\CMS\Core\Type\Enumeration;
 
 /**
- * View helper which returns classes that will validate the field.
+ * Validation strategy enumeration
  */
-class ValidationClassesViewHelper extends AbstractValidationViewHelper {
+class ValidationStrategy extends Enumeration {
 
-	/**
-	 * Returns classes that will validate the field.
-	 *
-	 * @param string $property
-	 * @return string
-	 */
-	public function render($property) {
-		$result = '';
+	const TCA = 'tca';
 
-		if (ValidationService::getInstance($this)->isRequired($property)) {
-			$result = 'required';
-		}
-		return $result;
-	}
+	const TYPOSCRIPT = 'typoscript';
+
+	const OBJECT = 'object';
+
+	const __default = self::OBJECT;
+
 }

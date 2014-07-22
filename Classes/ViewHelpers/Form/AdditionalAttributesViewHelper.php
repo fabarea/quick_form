@@ -22,13 +22,13 @@ namespace Vanilla\QuickForm\ViewHelpers\Form;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
+use Vanilla\QuickForm\Validation\ValidatorName;
+use Vanilla\QuickForm\ViewHelpers\AbstractValidationViewHelper;
 
 /**
  * View helper which returns default additional attributes for a form component.
  */
-class AdditionalAttributesViewHelper extends AbstractViewHelper {
+class AdditionalAttributesViewHelper extends AbstractValidationViewHelper {
 
 	/**
 	 * Returns default additional attributes for a form component.
@@ -37,17 +37,15 @@ class AdditionalAttributesViewHelper extends AbstractViewHelper {
 	 */
 	public function render() {
 
-
 		// Default attributes for Firefox, can be removed as of Firefox 31
 		// @see https://developer.mozilla.org/en-US/docs/Web/Security/Securing_your_site/Turning_off_form_autocompletion
 		$attributes = array('autocomplete' => "off");
 
-		/** @var \Vanilla\QuickForm\Validation\ValidationService $validationService */
-		$validationService = GeneralUtility::makeInstance('Vanilla\QuickForm\Validation\ValidationService');
-
 		// Check if the the property is required.
 		$property = $this->templateVariableContainer->get('property');
-		if ($validationService->isRequired($property)) {
+		$appliedValidators = $this->getValidationService()->getAppliedValidators($property);
+
+		if (isset($appliedValidators[ValidatorName::NOT_EMPTY]) || $appliedValidators[ValidatorName::FILE_REQUIRED]) {
 			$attributes['required'] = 'required';
 		}
 

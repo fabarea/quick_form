@@ -4,7 +4,7 @@
 
 	<f:section name="DatePicker">
 
-		<div class="form-group {qf:render.hasError(property: '{property}')}">
+		<div class="form-group {qf:property.errorClass()}">
 			<label class="control-label" for="{property}">
 				<qf:tca.fieldLabel />
 				<f:if condition="{qf:property.isRequired(property: '{property}')}">*</f:if>
@@ -13,7 +13,7 @@
 			<f:form.textfield property="{property}" id="{property}"
 			                  value="{qf:property.date()}"
 			                  additionalAttributes="{qf:form.additionalAttributes()}"
-			                  class="form-control datepicker {qf:render.validationClasses(property: '{property}')}"/>
+			                  class="form-control datepicker"/>
 		</div>
 	</f:section>
 </div>

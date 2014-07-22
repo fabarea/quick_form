@@ -1,37 +1,34 @@
 <div xmlns="http://www.w3.org/1999/xhtml" lang="en"
      xmlns:f="http://typo3.org/ns/fluid/ViewHelpers"
-     xmlns:qf="http://typo3.org/ns/Vanilla/QuickForm/ViewHelpers"
-     xmlns:mu="http://typo3.org/ns/TYPO3/CMS/MediaUpload/ViewHelpers">
+     xmlns:qf="http://typo3.org/ns/Vanilla/QuickForm/ViewHelpers">
 
 	<f:section name="FileUpload">
-		<div class="form-group {qf:render.hasError(property: '{property}')}">
-			<label class="control-label">
-				<qf:tca.fieldLabel/>
+
+		<script>
+			(function($) {
+				$(function() {
+					// Tooltip is an opt-in feature in TB.
+					//$('#file-upload-tooltip-{property}').tooltip()
+				});
+			})(jQuery);
+		</script>
+
+		<div id="form-group-{property}" class="form-group {qf:property.errorClass()}">
+			<label class="control-label" for="{property}">
+				<qf:tca.fieldLabel />
 				<f:if condition="{qf:property.isRequired(property: '{property}')}">*</f:if>
+
+				<span id="file-upload-tooltip-{property}"
+				      class="glyphicon glyphicon-question-sign"
+				      data-toggle="tooltip"
+				      data-placement="top"
+				      title="{f:translate(key: 'file_upload_tooltip', extensionName: 'media_upload', arguments: {0: '{mu:maxUploadSize()}', 1: '{mu:allowedExtensions()}'})}"></span>
+
 			</label>
 
-			<strong>MARKUP OF THIS COMPONENT IS NOT VALID ANY MORE AND REQUIRES UPDATE.</strong>
-			<strong>WE WANT A NATIVE FILE UPLOAD HERE.</strong>
-			<strong>USE COMPONENT MEDIA UPLOAD FOR HTML5 WIDGET</strong>
-			<qf:form.hidden property="{property}"/>
-
-			<f:if condition="{qf:property.value()}">
-				<f:alias map="{images: '{qf:property.files()}'}">
-					<f:for each="{images}" as="image" key="imageReference">
-						<div class="item-image" style="margin-bottom: 10px">
-							<qf:form.hidden property="{property}" value="{imageReference}"/>
-							<a target="_blank" href="/{image.publicUrl}">
-								<f:image src="{image.uid}" width="120" alt="{image.name}" class="qq-thumbnail-selector"/>
-							</a>
-							<span class="qq-upload-file-selector qq-upload-file"><small>{image.name}</small></span>
-							<span class="qq-upload-size-selector qq-upload-size">{qf:math.division(a: '{image.size}', b: '1000')}kB</span>
-							<a class="btn-delete-image qq-upload-delete-selector btn-small btn-warning" href="#">Delete</a>
-						</div>
-					</f:for>
-				</f:alias>
-			</f:if>
-
-			<mu:widget.upload allowedExtensions="{allowedExtensions}" storage="{storage}" property="{property}" maximumItems="{qf:property.maxItems()}"/>
+			<input type="hidden" name="tx_mediaupload[storage]" value="{f:if(condition: '{storage}', then: '{storage}', else: '1')}" />
+			<f:form.upload property="{property}" id="{property}"
+			               additionalAttributes="{qf:form.additionalAttributes()}" />
 		</div>
 	</f:section>
 </div>

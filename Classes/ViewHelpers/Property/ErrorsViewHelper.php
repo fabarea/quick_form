@@ -22,22 +22,46 @@ namespace Vanilla\QuickForm\ViewHelpers\Property;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-use Vanilla\QuickForm\Validation\ValidatorName;
 use Vanilla\QuickForm\ViewHelpers\AbstractValidationViewHelper;
 
 /**
- * View helper which tells whether a property is required given a property name.
+ * View helper which returns possible errors of a property.
  */
-class IsRequiredViewHelper extends AbstractValidationViewHelper {
+class ErrorsViewHelper extends AbstractValidationViewHelper {
 
 	/**
-	 * Returns whether a property is required given a property name.
-	 *
-	 * @param string $property
-	 * @return string
+	 * @var string
 	 */
-	public function render($property) {
-		$appliedValidators = $this->getValidationService()->getAppliedValidators($property);
-		return isset($appliedValidators[ValidatorName::NOT_EMPTY]) || $appliedValidators[ValidatorName::FILE_REQUIRED];
+	protected $template = '<label class="danger">%s</label> ';
+
+	/**
+	 * Returns possible error of a field.
+	 *
+	 * @return bool
+	 */
+	public function render() {
+
+		$output = '';
+
+		if ($this->isFormPosted()) {
+			// Get the current property
+			$property = $this->templateVariableContainer->get('property');
+
+			// Get the current value for the property.
+			$value = $this->getValue($property);
+
+			// Instantiate the Validation service and check whether the value is valid.
+			$errorMessages = array();
+			if (!$this->getValidationService()->isValid($property, $value)) {
+				$errorMessages = $this->getValidationService()->getErrorMessages($property, $value);
+			}
+
+			foreach ($errorMessages as $errorMessage) {
+				$output .= sprintf($this->template, $errorMessage);
+			}
+		}
+
+		return $output;
 	}
+
 }

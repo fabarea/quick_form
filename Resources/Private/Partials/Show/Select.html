@@ -5,7 +5,7 @@
 	<f:section name="Select">
 
 		<f:if condition="{qf:property.value()}">
-			<div class="form-group {qf:render.hasError(property: '{property}')}">
+			<div class="form-group {qf:property.errorClass()}">
 				<label for="{property}" class="control-label">
 					<qf:tca.fieldLabel />
 				</label>
@@ -13,7 +13,7 @@
 				<f:form.select property="{property}" id="{property}"
 				               disabled="disabled"
 				               size="{qf:tca.selectSize()}"
-				               class="form-control {qf:render.validationClasses(property: '{property}')}"
+				               class="form-control"
 				               options="{qf:tca.items(items: '{items}', itemsDataType: '{itemsDataType}')}"/>
 			</div>
 		</f:if>

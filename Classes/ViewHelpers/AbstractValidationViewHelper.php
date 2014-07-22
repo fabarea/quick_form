@@ -22,11 +22,14 @@ namespace Vanilla\QuickForm\ViewHelpers;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
+use Vanilla\QuickForm\Validation\ValidationService;
 
 /**
- * View helper which tells whether a property is required given a property name.
+ * Abstract View helper which enables to get some protected attributes.
  */
-class AbstractValidationViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
+abstract class AbstractValidationViewHelper extends AbstractViewHelper {
 
 	/**
 	 * @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface
@@ -79,6 +82,77 @@ class AbstractValidationViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\Abst
 	 */
 	public function getTemplateVariableContainer() {
 		return $this->templateVariableContainer;
+	}
+
+	/**
+	 * Tell whether the form is being posted.
+	 *
+	 * @return bool
+	 */
+	protected function isFormPosted() {
+
+		$fieldNamePrefix = (string) $this->viewHelperVariableContainer->get('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'fieldNamePrefix');
+		$formObjectName = (string) $this->viewHelperVariableContainer->get('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'formObjectName');
+		$arguments = GeneralUtility::_GP($fieldNamePrefix);
+		return !empty($arguments[$formObjectName]);
+	}
+
+	/**
+	 * Return the current value for this property.
+	 *
+	 * @param string $property
+	 * @return mixed
+	 */
+	protected function getValue($property) {
+		$value = '';
+
+		$fieldNamePrefix = (string) $this->viewHelperVariableContainer->get('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'fieldNamePrefix');
+		$formObjectName = (string) $this->viewHelperVariableContainer->get('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'formObjectName');
+
+		// Check whether the property contains an uploaded file
+		// @todo refactor me, quick implementation. Could be an UploadedFile object -> normalized value.
+		if (isset($_FILES[$fieldNamePrefix]['name'][$formObjectName][$property])) {
+			$value = array(
+				'name' => $_FILES[$fieldNamePrefix]['name'][$formObjectName][$property],
+				'type' => $_FILES[$fieldNamePrefix]['type'][$formObjectName][$property],
+				'tmp_name' => $_FILES[$fieldNamePrefix]['tmp_name'][$formObjectName][$property],
+				'error' => $_FILES[$fieldNamePrefix]['error'][$formObjectName][$property],
+				'size' => $_FILES[$fieldNamePrefix]['size'][$formObjectName][$property],
+			);
+		} else {
+
+			// Otherwise get from the GP.
+			$arguments = GeneralUtility::_GP($fieldNamePrefix);
+
+			if (isset($arguments[$formObjectName][$property])) {
+				$value = $arguments[$formObjectName][$property];
+			}
+		}
+		return $value;
+	}
+
+	/**
+	 * Return the validation object
+	 *
+	 * @return \Vanilla\QuickForm\Validation\ValidationService
+	 */
+	protected function getValidationService() {
+
+		// @todo save Service Configurator, singleton? How to persist it?
+
+		/** @var \Vanilla\QuickForm\Validation\ValidationServiceConfigurator $serviceConfigurator */
+		$serviceConfigurator = $this->objectManager->get('Vanilla\QuickForm\Validation\ValidationServiceConfigurator');
+
+		$objectName = $this->getViewHelperVariableContainer()->get('TYPO3\CMS\Fluid\ViewHelpers\FormViewHelper', 'formObjectName');
+		$serviceConfigurator->set('objectName', $objectName);
+
+		$validationType = $this->getTemplateVariableContainer()->get('validationType');
+		$serviceConfigurator->set('validationType', $validationType);
+
+		$type = $this->getTemplateVariableContainer()->get('type');
+		$serviceConfigurator->set('type', $type);
+
+		return ValidationService::getInstance($serviceConfigurator);
 	}
 
 }

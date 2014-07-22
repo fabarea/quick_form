@@ -3,7 +3,7 @@
      xmlns:qf="http://typo3.org/ns/Vanilla/QuickForm/ViewHelpers">
 
 	<f:section name="RadioButtons">
-		<div class="form-group {qf:render.hasError(property: '{property}')}">
+		<div class="form-group {qf:property.errorClass()}">
 			<label class="control-label">
 				<qf:tca.fieldLabel/>
 				<f:if condition="{qf:property.isRequired(property: '{property}')}">*</f:if>
@@ -14,9 +14,9 @@
 				<f:for each="{qf:tca.items()}" as="radioButtonLabel" key="radioValue">
 					<label class="radio-inline">
 						<f:form.radio property="{property}"
-						              value="{radioValue}"/>
+						              value="{radioValue}"
 						              checked="{f:if(condition: '{qf:property.value()} == {radioValue}', then: 'true', else: 'false')}"
-						              additionalAttributes="{qf:form.additionalAttributes()}"
+						              additionalAttributes="{qf:form.additionalAttributes()}"/>
 						{radioButtonLabel}
 					</label>
 				</f:for>

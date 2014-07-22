@@ -1,5 +1,5 @@
 <?php
-namespace Vanilla\QuickForm\ViewHelpers\Render;
+namespace Vanilla\QuickForm\ViewHelpers\Property;
 /***************************************************************
  *  Copyright notice
  *
@@ -22,39 +22,36 @@ namespace Vanilla\QuickForm\ViewHelpers\Render;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
-use Vanilla\QuickForm\Validation\ValidationService;
 use Vanilla\QuickForm\ViewHelpers\AbstractValidationViewHelper;
 
 /**
- * View helper which tells whether a property has an error.
+ * View helper which returns an error class if the property is not valid.
  */
-class HasErrorViewHelper extends AbstractValidationViewHelper {
+class ErrorClassViewHelper extends AbstractValidationViewHelper {
 
 	/**
-	 * Returns whether a property has an error.
+	 * Returns a possible error class.
 	 *
-	 * @param string $property
-	 * @return bool
+	 * @return string
 	 */
-	public function render($property) {
+	public function render() {
 
-		$fieldNamePrefix = (string) $this->viewHelperVariableContainer->get('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'fieldNamePrefix');
-		$formObjectName = (string) $this->viewHelperVariableContainer->get('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'formObjectName');
+		$className = '';
 
-		$arguments = GeneralUtility::_GP($fieldNamePrefix);
+		if ($this->isFormPosted()) {
 
-		$result = '';
-		if (isset($arguments[$formObjectName][$property])) {
+			// Get the current property
+			$property = $this->templateVariableContainer->get('property');
 
-			$value = $arguments[$formObjectName][$property];
+			// Get the current value for the property.
+			$value = $this->getValue($property);
 
-			if (ValidationService::getInstance($this)->isRequired($property) && empty($value)) {
-				$result = 'has-error';
+			// Query the Validation Engine.
+			if (!$this->getValidationService()->isValid($property, $value)) {
+				$className = 'has-error';
 			}
 		}
 
-		return $result;
+		return $className;
 	}
 }

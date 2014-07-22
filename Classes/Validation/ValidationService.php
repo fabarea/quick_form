@@ -29,9 +29,7 @@ namespace Vanilla\QuickForm\Validation;
  ***************************************************************/
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
-use Vanilla\QuickForm\ViewHelpers\AbstractValidationViewHelper;
-use TYPO3\CMS\Vidi\Tca\TcaService;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
  * Service class related to validation. This is meant to be used internally in Quick Form.
@@ -39,228 +37,136 @@ use TYPO3\CMS\Vidi\Tca\TcaService;
 class ValidationService implements SingletonInterface {
 
 	/**
-	 * @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface
+	 * @var ValidationServiceConfigurator
 	 */
-	protected $configurationManager;
-
-	/**
-	 * @var \TYPO3\CMS\Extbase\Reflection\ReflectionService
-	 */
-	protected $reflectionService;
-
-	/**
-	 * @var \TYPO3\CMS\Extbase\Service\TypoScriptService
-	 */
-	protected $typoScriptService;
-
-	/**
-	 * @var \TYPO3\CMS\Fluid\Core\ViewHelper\TemplateVariableContainer
-	 */
-	protected $templateVariableContainer;
-
-	/**
-	 * @var string
-	 */
-	protected $formObjectName;
-
-	/**
-	 * @var string
-	 */
-	protected $validationType;
+	protected $serviceConfigurator;
 
 	/**
 	 * @var array
 	 */
-	protected $properties = array();
+	protected $validationMessages = array();
+
+	/**
+	 * @var array
+	 */
+	protected $appliedValidators = array();
 
 	/**
 	 * @var array
 	 */
 	static protected $instances;
 
-	const VALIDATION_TYPE_TYPOSCRIPT = 'typoscript';
-	const VALIDATION_TYPE_TCA = 'tca';
-	const VALIDATION_TYPE_OBJECT = 'object';
-
 	/**
 	 * Returns a class instance.
 	 *
-	 * @param \Vanilla\QuickForm\ViewHelpers\AbstractValidationViewHelper $viewHelper
+	 * @param ValidationServiceConfigurator $serviceConfigurator
 	 * @return \Vanilla\QuickForm\Validation\ValidationService
 	 */
-	static public function getInstance(AbstractValidationViewHelper $viewHelper) {
+	static public function getInstance(ValidationServiceConfigurator $serviceConfigurator) {
 
-		$formObjectName = $viewHelper->getViewHelperVariableContainer()->get('TYPO3\CMS\Fluid\ViewHelpers\FormViewHelper', 'formObjectName');
-		if (empty(self::$instances[$formObjectName])) {
-
-			$validationType = $viewHelper->getTemplateVariableContainer()->get('validationType');
+		$objectName = $serviceConfigurator->get('objectName');
+		if (empty(self::$instances[$objectName])) {
 
 			/** @var \Vanilla\QuickForm\Validation\ValidationService $instance */
-			$instance = GeneralUtility::makeInstance('Vanilla\QuickForm\Validation\ValidationService');
-			$instance->setTemplateVariableContainer($viewHelper->getTemplateVariableContainer())
-				->setConfigurationManager($viewHelper->getConfigurationManager())
-				->setReflectionService($viewHelper->getReflectionService())
-				->setTypoScriptService($viewHelper->getTypoScriptService())
-				->setValidationType($validationType)
-				->setFormObjectName($formObjectName);
-
-			self::$instances[$formObjectName] = $instance;
+			$instance = GeneralUtility::makeInstance('Vanilla\QuickForm\Validation\ValidationService', $serviceConfigurator);
+			self::$instances[$objectName] = $instance;
 		}
 
-		return self::$instances[$formObjectName];
+		return self::$instances[$objectName];
 	}
 
 	/**
-	 * Returns whether a property is required given a property name.
+	 * Constructor
+	 */
+	public function __construct(ValidationServiceConfigurator $serviceConfigurator) {
+		$this->serviceConfigurator = $serviceConfigurator;
+	}
+
+	/**
+	 * Validate the property given its value and compute possible error messages.
 	 *
 	 * @param string $property
-	 * @return string
+	 * @param string $value
+	 * @return array
 	 */
-	public function isRequired($property) {
+	public function getErrorMessages($property, $value) {
 
-		if (!isset($this->properties[$property]['required'])) {
+		if (!isset($this->validationMessages[$property])) {
+			$this->validationMessages[$property] = array();
+			$errorMessages = array();
 
-			if ($this->validationType == self::VALIDATION_TYPE_TCA) {
-				$isRequired = $this->isRequiredWithTcaStrategy($property);
-			} elseif ($this->validationType == self::VALIDATION_TYPE_TYPOSCRIPT) {
-				$isRequired = $this->isRequiredWithTypoScriptStrategy($property);
-			} else {
-				$isRequired = $this->isRequiredWithModelStrategy($property);
+			foreach ($this->getAppliedValidators($property) as $validatorName => $rule) {
+
+				/** @var \Vanilla\QuickForm\Validation\ValidatorInterface $validator */
+				$className = sprintf('Vanilla\QuickForm\Validation\%sValidator', $validatorName);
+				$validator = GeneralUtility::makeInstance($className);
+				$isValid = $validator->validate($value, $rule);
+
+				if (!$isValid) {
+					$errorMessages[$validatorName] = $this->getErrorMessage($validatorName);
+					break; // display only one error message at a time // @todo make me configurable.
+				}
+			};
+
+			$this->validationMessages[$property] = $errorMessages;
+		}
+
+		return $this->validationMessages[$property];
+	}
+
+	/**
+	 * Returns whether a property is valid according to its value.
+	 *
+	 * @param string $property
+	 * @param string $value
+	 * @return array
+	 */
+	public function isValid($property, $value) {
+		$errorMessages = $this->getErrorMessages($property, $value);
+		return empty($errorMessages);
+	}
+
+	/**
+	 * Returns the applied validators for a property.
+	 *
+	 * @param string $property
+	 * @return array
+	 */
+	public function getAppliedValidators($property) {
+
+		if (!isset($this->appliedValidators[$property])) {
+
+			// Initialize the property.
+			$this->appliedValidators[$property] = array();
+
+			$rulerConfiguration = $this->serviceConfigurator->getConfiguration($property);
+
+			/** @var \Vanilla\QuickForm\Validation\ValidatorName $availableValidators */
+			$availableValidators = GeneralUtility::makeInstance('Vanilla\QuickForm\Validation\ValidatorName');
+
+			foreach ($availableValidators->getConstants() as $validatorName) {
+
+				$className = sprintf('Vanilla\QuickForm\Validation\%sRuler', $validatorName);
+
+				/** @var \Vanilla\QuickForm\Validation\RulerInterface $ruler */
+				$ruler = GeneralUtility::makeInstance($className, $rulerConfiguration);
+				$appliedRule = $ruler->getRule($property, $this->serviceConfigurator->get('validationType'));
+				if ($appliedRule) {
+					$this->appliedValidators[$property][$validatorName] = $appliedRule;
+				}
 			}
-
-			$this->properties[$property]['required'] = $isRequired;
 		}
 
-		return $this->properties[$property]['required'];
+		return $this->appliedValidators[$property];
 	}
 
 	/**
-	 * Tell whether the field is required using the typoscript strategy.
+	 * Returns the error message given a failed validation.
 	 *
-	 * @param string $property
-	 * @return bool
+	 * @param string $validatorName
+	 * @return array
 	 */
-	protected function isRequiredWithTcaStrategy($property) {
-		$dataType = $type = $this->templateVariableContainer->get('dataType');
-		$fieldName = GeneralUtility::camelCaseToLowerCaseUnderscored($property);
-		return TcaService::table($dataType)->field($fieldName)->isRequired();
-	}
-
-	/**
-	 * Tell whether the field is required using the typoscript strategy.
-	 *
-	 * @param string $property
-	 * @throws \Exception
-	 * @return bool
-	 */
-	protected function isRequiredWithTypoScriptStrategy($property) {
-
-		$isRequired = FALSE;
-
-		$validationConfiguration = $this->getValidationConfiguration();
-
-		$type = $this->templateVariableContainer->get('type');
-		$field = GeneralUtility::camelCaseToLowerCaseUnderscored($property);
-
-		// TRUE means the validation is defined by TypoScript which is useful in the context of multi-type models.
-		if (empty($validationConfiguration[$this->formObjectName][$type])) {
-			$message = sprintf('I could not find TypoScript validation for type "%s". It must be added "tx_quickform.validate.%s.%s {...}"',
-				$type,
-				$this->formObjectName,
-				$type
-			);
-			throw new \Exception($message, 1388850911);
-		}
-
-		$rules = $validationConfiguration[$this->formObjectName][$type];
-		if (!empty($rules[$field]) && isset($rules[$field]['required']) && $rules[$field]['required'] == 1) {
-			$isRequired = TRUE;
-		}
-		return $isRequired;
-	}
-
-	/**
-	 * Tell whether the field is required using the typoscript strategy.
-	 *
-	 * @param string $property
-	 * @throws \Exception
-	 * @return bool
-	 */
-	protected function isRequiredWithModelStrategy($property) {
-
-		$isRequired = FALSE;
-
-		// Get the validation value from the class name by reflection.
-		$values = $this->reflectionService->getPropertyTagsValues($this->validationType, $property);
-		$rules = $values['validate'];
-		if (is_array($rules)) {
-			$isRequired = in_array('NotEmpty', $rules);
-		}
-
-		return $isRequired;
-	}
-
-	/**
-	 * Returns the validation configuration
-	 *
-	 * @return string
-	 */
-	protected function getValidationConfiguration() {
-		$configuration = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
-		return $this->typoScriptService->convertTypoScriptArrayToPlainArray($configuration['plugin.']['tx_quickform.']['validate.']);
-	}
-
-	/**
-	 * @param mixed $configurationManager
-	 * @return $this
-	 */
-	public function setConfigurationManager($configurationManager) {
-		$this->configurationManager = $configurationManager;
-		return $this;
-	}
-
-	/**
-	 * @param \TYPO3\CMS\Extbase\Reflection\ReflectionService $reflectionService
-	 * @return $this
-	 */
-	public function setReflectionService($reflectionService) {
-		$this->reflectionService = $reflectionService;
-		return $this;
-	}
-
-	/**
-	 * @param \TYPO3\CMS\Extbase\Service\TypoScriptService $typoScriptService
-	 * @return $this
-	 */
-	public function setTypoScriptService($typoScriptService) {
-		$this->typoScriptService = $typoScriptService;
-		return $this;
-	}
-
-	/**
-	 * @param mixed $templateVariableContainer
-	 * @return $this
-	 */
-	public function setTemplateVariableContainer($templateVariableContainer) {
-		$this->templateVariableContainer = $templateVariableContainer;
-		return $this;
-	}
-
-	/**
-	 * @param string $formObjectName
-	 * @return $this
-	 */
-	public function setFormObjectName($formObjectName) {
-		$this->formObjectName = $formObjectName;
-		return $this;
-	}
-
-	/**
-	 * @param string $validationType
-	 * @return $this
-	 */
-	public function setValidationType($validationType) {
-		$this->validationType = $validationType;
-		return $this;
+	protected function getErrorMessage($validatorName) {
+		return LocalizationUtility::translate($validatorName, 'quick_form');
 	}
 }

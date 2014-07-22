@@ -1,9 +1,11 @@
 <?php
-namespace Vanilla\QuickForm\ViewHelpers\Property;
+namespace Vanilla\QuickForm\Validation;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2013 Fabien Udriot <fabien.udriot@typo3.org>
+ *  (c) 2014 Fabien Udriot <fabien.udriot@typo3.org>
+ *
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -14,6 +16,9 @@ namespace Vanilla\QuickForm\ViewHelpers\Property;
  *
  *  The GNU General Public License can be found at
  *  http://www.gnu.org/copyleft/gpl.html.
+ *  A copy is found in the textfile GPL.txt and important notices to the license
+ *  from the author is found in LICENSE.txt distributed with these scripts.
+ *
  *
  *  This script is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -22,22 +27,19 @@ namespace Vanilla\QuickForm\ViewHelpers\Property;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-use Vanilla\QuickForm\Validation\ValidatorName;
-use Vanilla\QuickForm\ViewHelpers\AbstractValidationViewHelper;
 
 /**
- * View helper which tells whether a property is required given a property name.
+ * Interface for a Validator object.
  */
-class IsRequiredViewHelper extends AbstractValidationViewHelper {
+interface ValidatorInterface {
 
 	/**
-	 * Returns whether a property is required given a property name.
+	 * Validate the value
 	 *
-	 * @param string $property
-	 * @return string
+	 * @param string $value
+	 * @param string $rule
+	 * @return bool
 	 */
-	public function render($property) {
-		$appliedValidators = $this->getValidationService()->getAppliedValidators($property);
-		return isset($appliedValidators[ValidatorName::NOT_EMPTY]) || $appliedValidators[ValidatorName::FILE_REQUIRED];
-	}
+	public function validate($value, $rule);
+
 }

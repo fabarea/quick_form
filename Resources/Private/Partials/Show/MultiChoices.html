@@ -4,7 +4,7 @@
 
 	<f:section name="MultiChoices">
 		<f:if condition="{qf:property.value()}">
-			<div class="form-group {qf:render.hasError(property: '{property}')}">
+			<div class="form-group {qf:property.errorClass()}">
 				<label class="control-label">
 					<qf:tca.fieldLabel />
 				</label>

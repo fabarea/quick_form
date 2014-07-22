@@ -3,14 +3,14 @@
      xmlns:qf="http://typo3.org/ns/Vanilla/QuickForm/ViewHelpers">
 
 	<f:section name="NumberField">
-		<div class="form-group {qf:render.hasError(property: '{property}')}">
+		<div class="form-group {qf:property.errorClass()}">
 			<label class="control-label" for="{property}">
 				<qf:tca.fieldLabel />
 				<f:if condition="{qf:property.isRequired(property: '{property}')}">*</f:if>
 			</label>
 			<f:form.textfield property="{property}" id="{property}"
 			                  additionalAttributes="{qf:form.additionalAttributes()}"
-			                  class="form-control {qf:render.validationClasses(property: '{property}')}"/>
+			                  class="form-control"/>
 		</div>
 	</f:section>
 </div>
