@@ -18,6 +18,9 @@
 			<trans-unit id="AllowedExtensions">
 				<source>This kind of file is not allowed.</source>
 			</trans-unit>
+			<trans-unit id="file_upload_tooltip">
+				<source>Max. %s Mb, only %s are accepted.</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
