@@ -53,11 +53,11 @@ class AllowedExtensionsValidator implements ValidatorInterface {
 			$storageIdentifier = $ruleParts[1];
 
 			$allowedExtensions = PermissionUtility::getInstance()->getAllowedExtensions($storageIdentifier);
-			$mimeTypeParts = explode('/', $value['type']);
-			$extensionName = $mimeTypeParts[1];
+			$extensionName = pathinfo($value['name'], PATHINFO_EXTENSION);
 			$isValid = in_array($extensionName, $allowedExtensions);
 
 		}
 		return $isValid;
 	}
+
 }
