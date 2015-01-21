@@ -108,16 +108,16 @@ class ItemsViewHelper extends RenderViewHelper {
 			throw new \Exception('Attribute $itemDataType can not be empty', 1389936621);
 		}
 
-		$allIdentifier = $this->templateVariableContainer->getAllIdentifiers();
-		if (!in_array($items, $allIdentifier)) {
+		if (!$this->templateVariableContainer->exists($items)) {
 			$message = sprintf('I could not fetch items for Fluid variable "%s". Has it been set in the Controller?', $items);
 			throw new \Exception($message, 1389880458);
 		}
 
 		$labelField = TcaService::table($itemsDataType)->getLabelField();
 		$labelProperty = GeneralUtility::underscoredToLowerCamelCase($labelField);
+
 		$values = array();
-		foreach ($this->templateVariableContainer->get('organisations') as $subject) {
+		foreach ($this->templateVariableContainer->get($items) as $subject) {
 			$key = ObjectAccess::getProperty($subject, 'uid');
 			$value = ObjectAccess::getProperty($subject, is_array($subject) ? $labelField : $labelProperty);
 			$values[$key] = $value;
