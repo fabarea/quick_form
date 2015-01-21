@@ -77,6 +77,8 @@ class ValidationService implements SingletonInterface {
 
 	/**
 	 * Constructor
+	 *
+	 * @param ValidationServiceConfigurator $serviceConfigurator
 	 */
 	public function __construct(ValidationServiceConfigurator $serviceConfigurator) {
 		$this->serviceConfigurator = $serviceConfigurator;
@@ -151,6 +153,7 @@ class ValidationService implements SingletonInterface {
 				/** @var \Vanilla\QuickForm\Validation\RulerInterface $ruler */
 				$ruler = GeneralUtility::makeInstance($className, $rulerConfiguration);
 				$appliedRule = $ruler->getRule($property, $this->serviceConfigurator->get('validationType'));
+
 				if ($appliedRule) {
 					$this->appliedValidators[$property][$validatorName] = $appliedRule;
 				}
