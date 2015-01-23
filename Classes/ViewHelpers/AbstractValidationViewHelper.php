@@ -23,6 +23,7 @@ namespace Vanilla\QuickForm\ViewHelpers;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 use Vanilla\QuickForm\Validation\ValidationService;
 
@@ -126,6 +127,11 @@ abstract class AbstractValidationViewHelper extends AbstractViewHelper {
 
 			if (isset($arguments[$formObjectName][$property])) {
 				$value = $arguments[$formObjectName][$property];
+			} elseif($this->templateVariableContainer->exists($formObjectName)) {
+				$object = $this->templateVariableContainer->get($formObjectName);
+				if (is_object($object)) {
+					$value = ObjectAccess::getProperty($object, $property);
+				}
 			}
 		}
 		return $value;
