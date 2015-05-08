@@ -27,8 +27,6 @@ namespace Vanilla\QuickForm\Validation;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-use TYPO3\CMS\Vidi\Converter\Property;
-use TYPO3\CMS\Vidi\Tca\TcaService;
 
 /**
  * Tell the rule for an "AllowedExtensions" validation.

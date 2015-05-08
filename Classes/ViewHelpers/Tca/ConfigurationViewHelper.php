@@ -23,8 +23,8 @@ namespace Vanilla\QuickForm\ViewHelpers\Tca;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
-use TYPO3\CMS\Vidi\Converter\Property;
-use TYPO3\CMS\Vidi\Tca\TcaService;
+use Fab\Vidi\Converter\Property;
+use Fab\Vidi\Tca\TcaService;
 
 /**
  * View helper which returns configuration of the property from the context given a key.

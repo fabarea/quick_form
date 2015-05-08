@@ -30,7 +30,7 @@ use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use Vanilla\QuickForm\Component\ComponentInterface;
 use Vanilla\QuickForm\ObjectFactory;
 use Vanilla\QuickForm\ArgumentRegistry;
-use TYPO3\CMS\Vidi\Tca\TcaService;
+use Fab\Vidi\Tca\TcaService;
 
 /**
  * View helper which render a TCA form on the FE.

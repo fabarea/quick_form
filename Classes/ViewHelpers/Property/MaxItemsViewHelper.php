@@ -24,7 +24,7 @@ namespace Vanilla\QuickForm\ViewHelpers\Property;
  ***************************************************************/
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use Vanilla\QuickForm\ViewHelpers\AbstractValidationViewHelper;
-use TYPO3\CMS\Vidi\Tca\TcaService;
+use Fab\Vidi\Tca\TcaService;
 
 /**
  * View helper which return the max items to be in relation with the object in the context.

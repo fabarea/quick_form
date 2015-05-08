@@ -28,8 +28,8 @@ namespace Vanilla\QuickForm\Validation;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 use Fab\Vidi\Tca\FieldType;
-use TYPO3\CMS\Vidi\Converter\Property;
-use TYPO3\CMS\Vidi\Tca\TcaService;
+use Fab\Vidi\Converter\Property;
+use Fab\Vidi\Tca\TcaService;
 
 /**
  * Tell the rule for an "EmailAddress" validation.
