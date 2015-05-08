@@ -28,7 +28,7 @@ namespace Vanilla\QuickForm\Validation;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 use Fab\Vidi\Converter\Property;
-use Fab\Vidi\Tca\TcaService;
+use Fab\Vidi\Tca\Tca;
 
 /**
  * Tell the rule for an "FileSize" validation.
@@ -44,7 +44,7 @@ class FileSizeRuler extends AbstractRuler {
 	protected function getRuleWithTcaStrategy($property) {
 		$dataType = $this->configuration['dataType'];
 		$fieldName = Property::name($property)->of($dataType)->toField();
-		return TcaService::table($dataType)->field($fieldName)->isRequired();
+		return Tca::table($dataType)->field($fieldName)->isRequired();
 	}
 
 	/**

@@ -26,7 +26,7 @@ namespace Vanilla\QuickForm\ViewHelpers\Property;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
 use TYPO3\CMS\Fluid\ViewHelpers\RenderViewHelper;
-use Fab\Vidi\Tca\TcaService;
+use Fab\Vidi\Tca\Tca;
 
 /**
  * View helper which returns a property value. The property and the object are given from the context.
@@ -57,7 +57,7 @@ class ValueViewHelper extends RenderViewHelper {
 				$dataType = $this->templateVariableContainer->get('dataType');
 				$property = $this->templateVariableContainer->get('property');
 				$fieldName = GeneralUtility::camelCaseToLowerCaseUnderscored($property);
-				$result = TcaService::table($dataType)->field($fieldName)->get('default');
+				$result = Tca::table($dataType)->field($fieldName)->get('default');
 			}
 		}
 

@@ -30,7 +30,7 @@ use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use Vanilla\QuickForm\Component\ComponentInterface;
 use Vanilla\QuickForm\ObjectFactory;
 use Vanilla\QuickForm\ArgumentRegistry;
-use Fab\Vidi\Tca\TcaService;
+use Fab\Vidi\Tca\Tca;
 
 /**
  * View helper which render a TCA form on the FE.
@@ -105,7 +105,7 @@ class FormViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\RenderViewHelper {
 			} elseif (TRUE === is_string($item)) { // this is a field.
 
 				$initialArguments = $this->getInitialArguments();
-				$fieldType = TcaService::table($initialArguments['dataType'])->field($item)->getType();
+				$fieldType = Tca::table($initialArguments['dataType'])->field($item)->getType();
 
 				if ($fieldType == FieldType::TEXTAREA) {
 					$section = 'TextArea';

@@ -26,7 +26,7 @@ namespace Vanilla\QuickForm\ViewHelpers\Property;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
 use TYPO3\CMS\Fluid\ViewHelpers\RenderViewHelper;
-use Fab\Vidi\Tca\TcaService;
+use Fab\Vidi\Tca\Tca;
 
 /**
  * View helper which returns a placeholder taken from the TCA.
@@ -44,6 +44,6 @@ class PlaceholderViewHelper extends RenderViewHelper {
 		$dataType = $this->templateVariableContainer->get('dataType');
 		$property = $this->templateVariableContainer->get('property');
 		$fieldName = GeneralUtility::camelCaseToLowerCaseUnderscored($property);
-		return TcaService::table($dataType)->field($fieldName)->get('placeholder');
+		return Tca::table($dataType)->field($fieldName)->get('placeholder');
 	}
 }

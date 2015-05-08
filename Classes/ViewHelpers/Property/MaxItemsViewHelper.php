@@ -24,7 +24,7 @@ namespace Vanilla\QuickForm\ViewHelpers\Property;
  ***************************************************************/
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use Vanilla\QuickForm\ViewHelpers\AbstractValidationViewHelper;
-use Fab\Vidi\Tca\TcaService;
+use Fab\Vidi\Tca\Tca;
 
 /**
  * View helper which return the max items to be in relation with the object in the context.
@@ -48,7 +48,7 @@ class MaxItemsViewHelper extends AbstractValidationViewHelper {
 
 		$property = $this->templateVariableContainer->get('property');
 		$fieldName = GeneralUtility::camelCaseToLowerCaseUnderscored($property);
-		$configuration = TcaService::table($dataType)->field($fieldName)->getConfiguration();
+		$configuration = Tca::table($dataType)->field($fieldName)->getConfiguration();
 
 		if (isset($configuration['maxitems'])) {
 			$result = $configuration['maxitems'];

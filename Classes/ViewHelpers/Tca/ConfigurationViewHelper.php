@@ -24,7 +24,7 @@ namespace Vanilla\QuickForm\ViewHelpers\Tca;
  ***************************************************************/
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 use Fab\Vidi\Converter\Property;
-use Fab\Vidi\Tca\TcaService;
+use Fab\Vidi\Tca\Tca;
 
 /**
  * View helper which returns configuration of the property from the context given a key.
@@ -41,6 +41,6 @@ class ConfigurationViewHelper extends AbstractViewHelper {
 		$dataType = $this->templateVariableContainer->get('dataType');
 		$property = $this->templateVariableContainer->get('property');
 		$fieldName = Property::name($property)->of($dataType)->toField();
-		return TcaService::table($dataType)->field($fieldName)->get($key);
+		return Tca::table($dataType)->field($fieldName)->get($key);
 	}
 }

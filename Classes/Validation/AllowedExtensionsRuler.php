@@ -44,7 +44,7 @@ class AllowedExtensionsRuler extends AbstractRuler {
 		throw new \Exception('Implement me method getRuleWithTcaStrategy', 1406015137);
 		#$dataType = $this->configuration['dataType'];
 		#$fieldName = Property::name($property)->of($dataType)->toField();
-		#return TcaService::table($dataType)->field($fieldName)->isRequired();
+		#return Tca::table($dataType)->field($fieldName)->isRequired();
 	}
 
 	/**

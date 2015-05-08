@@ -23,7 +23,7 @@ namespace Vanilla\QuickForm\ViewHelpers\Tca;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
-use Fab\Vidi\Tca\TcaService;
+use Fab\Vidi\Tca\Tca;
 
 /**
  * View helper which translates a label for field given by the context.
@@ -51,7 +51,7 @@ class FieldLabelViewHelper extends AbstractViewHelper {
 		if (strpos($key, 'LLL:') === 0) {
 			$result = $this->getFrontendObject()->sL($key);
 		} else {
-			$result = TcaService::table($dataType)->field($key)->getLabel();
+			$result = Tca::table($dataType)->field($key)->getLabel();
 		}
 		return $result;
 	}

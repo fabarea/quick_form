@@ -29,7 +29,7 @@ namespace Vanilla\QuickForm\Validation;
  ***************************************************************/
 use Fab\Vidi\Tca\FieldType;
 use Fab\Vidi\Converter\Property;
-use Fab\Vidi\Tca\TcaService;
+use Fab\Vidi\Tca\Tca;
 
 /**
  * Tell the rule for an "EmailAddress" validation.
@@ -45,7 +45,7 @@ class EmailAddressRuler extends AbstractRuler {
 	protected function getRuleWithTcaStrategy($property) {
 		$dataType = $this->configuration['dataType'];
 		$fieldName = Property::name($property)->of($dataType)->toField();
-		return TcaService::table($dataType)->field($fieldName)->getType() === FieldType::EMAIL;
+		return Tca::table($dataType)->field($fieldName)->getType() === FieldType::EMAIL;
 	}
 
 	/**

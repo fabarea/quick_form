@@ -27,7 +27,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Fluid\ViewHelpers\RenderViewHelper;
-use Fab\Vidi\Tca\TcaService;
+use Fab\Vidi\Tca\Tca;
 
 /**
  * View helper which returns options given a field name.
@@ -113,7 +113,7 @@ class ItemsViewHelper extends RenderViewHelper {
 			throw new \Exception($message, 1389880458);
 		}
 
-		$labelField = TcaService::table($itemsDataType)->getLabelField();
+		$labelField = Tca::table($itemsDataType)->getLabelField();
 		$labelProperty = GeneralUtility::underscoredToLowerCamelCase($labelField);
 
 		$values = array();
@@ -136,7 +136,7 @@ class ItemsViewHelper extends RenderViewHelper {
 	protected function fetchItems($tableName, $fieldName, $removeEmptyValues) {
 		$values = array();
 
-		$configuration = TcaService::table($tableName)->field($fieldName)->getConfiguration();
+		$configuration = Tca::table($tableName)->field($fieldName)->getConfiguration();
 		if (!empty($configuration['items'])) {
 
 			foreach ($configuration['items'] as $items) {
@@ -172,7 +172,7 @@ class ItemsViewHelper extends RenderViewHelper {
 	protected function fetchItemsFromUserFunction($tableName, $fieldName) {
 		$values = array();
 
-		$configuration = TcaService::table($tableName)->field($fieldName)->getConfiguration();
+		$configuration = Tca::table($tableName)->field($fieldName)->getConfiguration();
 		if (!empty($configuration['itemsProcFunc'])) {
 			$parts = explode('php:', $configuration['itemsProcFunc']);
 			if (!empty($parts[1])) {
@@ -201,14 +201,14 @@ class ItemsViewHelper extends RenderViewHelper {
 	protected function fetchItemsFromDatabase($tableName, $fieldName) {
 		$values = array();
 
-		$foreignTable = TcaService::table($tableName)->field($fieldName)->getForeignTable();
+		$foreignTable = Tca::table($tableName)->field($fieldName)->getForeignTable();
 		if (!empty($foreignTable)) {
 
-			$foreignLabelField = TcaService::table($foreignTable)->getLabelField();
-			$foreignOrder = TcaService::table($tableName)->field($fieldName)->getForeignOrder();
+			$foreignLabelField = Tca::table($foreignTable)->getLabelField();
+			$foreignOrder = Tca::table($tableName)->field($fieldName)->getForeignOrder();
 
 			$clause = '1 = 1 ';
-			$clause .= TcaService::table($tableName)->field($fieldName)->getForeignClause();
+			$clause .= Tca::table($tableName)->field($fieldName)->getForeignClause();
 			if ($this->isFrontendMode()) {
 				$clause .= $this->getPageRepository()->enableFields($foreignTable);
 			}

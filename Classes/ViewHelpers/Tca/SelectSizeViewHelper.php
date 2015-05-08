@@ -26,7 +26,7 @@ namespace Vanilla\QuickForm\ViewHelpers\Tca;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Fluid\ViewHelpers\RenderViewHelper;
-use Fab\Vidi\Tca\TcaService;
+use Fab\Vidi\Tca\Tca;
 
 /**
  * View helper which returns the select size.
@@ -52,7 +52,7 @@ class SelectSizeViewHelper extends RenderViewHelper {
 		}
 
 		$fieldName = GeneralUtility::camelCaseToLowerCaseUnderscored($property);
-		$configuration = TcaService::table($dataType)->field($fieldName)->getConfiguration();
+		$configuration = Tca::table($dataType)->field($fieldName)->getConfiguration();
 
 		$size = 1;
 
