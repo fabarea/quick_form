@@ -1,0 +1,15 @@
+{
+  "name": "fab/quick-form",
+  "type": "typo3-cms-extension",
+  "description": "Generate quick form on the Frontend based on TCA",
+  "homepage": "https://github.com/fabarea/quick_form",
+  "license": ["GPL-2.0+"],
+  "keywords": [
+    "TYPO3 CMS",
+    "Form"
+  ],
+  "support": {
+    "issues": "https://github.com/fabarea/quick_form/issues"
+  },
+  "version": "1.1.0-dev"
+}
