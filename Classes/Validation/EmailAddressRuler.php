@@ -27,6 +27,7 @@ namespace Vanilla\QuickForm\Validation;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+use Fab\Vidi\Tca\FieldType;
 use TYPO3\CMS\Vidi\Converter\Property;
 use TYPO3\CMS\Vidi\Tca\TcaService;
 
@@ -44,7 +45,7 @@ class EmailAddressRuler extends AbstractRuler {
 	protected function getRuleWithTcaStrategy($property) {
 		$dataType = $this->configuration['dataType'];
 		$fieldName = Property::name($property)->of($dataType)->toField();
-		return TcaService::table($dataType)->field($fieldName)->getType() === TcaService::EMAIL;
+		return TcaService::table($dataType)->field($fieldName)->getType() === FieldType::EMAIL;
 	}
 
 	/**

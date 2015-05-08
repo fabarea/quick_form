@@ -22,6 +22,7 @@ namespace Vanilla\QuickForm\ViewHelpers\Form;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+use Fab\Vidi\Tca\FieldType;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 use TYPO3\CMS\Vidi\Tca\TcaService;
@@ -46,7 +47,7 @@ class InputTypeViewHelper extends AbstractViewHelper {
 		$fieldType = TcaService::table($dataType)->field($fieldName)->getFieldType();
 
 		$inputType = 'text';
-		if ($fieldType == TcaService::EMAIL) {
+		if ($fieldType == FieldType::EMAIL) {
 			$inputType = 'email';
 		}
 		return $inputType;

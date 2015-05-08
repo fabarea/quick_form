@@ -23,6 +23,7 @@ namespace Vanilla\QuickForm\ViewHelpers\Tca;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+use Fab\Vidi\Tca\FieldType;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
@@ -106,21 +107,21 @@ class FormViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\RenderViewHelper {
 				$initialArguments = $this->getInitialArguments();
 				$fieldType = TcaService::table($initialArguments['dataType'])->field($item)->getType();
 
-				if ($fieldType == TcaService::TEXTAREA) {
+				if ($fieldType == FieldType::TEXTAREA) {
 					$section = 'TextArea';
-				} elseif ($fieldType == TcaService::TEXT || $fieldType == TcaService::EMAIL) {
+				} elseif ($fieldType == FieldType::TEXT || $fieldType == FieldType::EMAIL) {
 					$section = 'TextField';
-				} elseif ($fieldType == TcaService::NUMBER) {
+				} elseif ($fieldType == FieldType::NUMBER) {
 					$section = 'NumberField';
-				} elseif ($fieldType == TcaService::DATE) {
+				} elseif ($fieldType == FieldType::DATE) {
 					$section = 'DatePicker';
-				} elseif ($fieldType == TcaService::SELECT) {
+				} elseif ($fieldType == FieldType::SELECT) {
 					$section = 'Select';
-				} elseif ($fieldType == TcaService::MULTISELECT) {
+				} elseif ($fieldType == FieldType::MULTISELECT) {
 					$section = 'MultiSelect';
-				} elseif ($fieldType == TcaService::CHECKBOX) {
+				} elseif ($fieldType == FieldType::CHECKBOX) {
 					$section = 'Checkbox';
-				} elseif ($fieldType == TcaService::RADIO) {
+				} elseif ($fieldType == FieldType::RADIO) {
 					$section = 'RadioButtons';
 				} else {
 					$message = sprintf('Unknown field type: "%s" for field "%s"', $fieldType, $item);
