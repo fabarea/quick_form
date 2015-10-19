@@ -9,6 +9,9 @@
 			<trans-unit id="EmailAddress">
 				<source>Not a valid email address.</source>
 			</trans-unit>
+			<trans-unit id="Numeric">
+				<source>Not a valid number.</source>
+			</trans-unit>
 			<trans-unit id="FileRequired">
 				<source>A file is missing.</source>
 			</trans-unit>

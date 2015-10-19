@@ -5,16 +5,20 @@ namespace Vanilla\QuickForm\Validation;
  *  Copyright notice
  *
  *  (c) 2014 Fabien Udriot <fabien.udriot@typo3.org>
+ *
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
  *  free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 3 of the License, or
+ *  the Free Software Foundation; either version 2 of the License, or
  *  (at your option) any later version.
  *
  *  The GNU General Public License can be found at
  *  http://www.gnu.org/copyleft/gpl.html.
+ *  A copy is found in the textfile GPL.txt and important notices to the license
+ *  from the author is found in LICENSE.txt distributed with these scripts.
+ *
  *
  *  This script is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -23,25 +27,21 @@ namespace Vanilla\QuickForm\Validation;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-use TYPO3\CMS\Core\Type\Enumeration;
 
 /**
- * Validator name Enumeration class.
+ * Validate a value against "Numeric".
  */
-class ValidatorName extends Enumeration {
+class NumericValidator implements ValidatorInterface {
 
-	const NOT_EMPTY = 'NotEmpty';
-
-	const EMAIL_ADDRESS = 'EmailAddress';
-
-	const NUMERIC = 'Numeric';
-
-	const FILE_REQUIRED = 'FileRequired';
-
-	const FILE_SIZE = 'FileSize';
-
-	const ALLOWED_EXTENSIONS = 'AllowedExtensions';
-
-	const __default = '';
+	/**
+	 * Validate the value.
+	 *
+	 * @param string $value
+	 * @param string $rule
+	 * @return bool
+	 */
+	public function validate($value, $rule) {
+		return is_numeric($value);
+	}
 
 }
