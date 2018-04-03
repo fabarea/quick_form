@@ -1,4 +1,5 @@
 <?php
+
 namespace Vanilla\QuickForm\ViewHelpers\Tca;
 
 /**
@@ -17,29 +18,32 @@ namespace Vanilla\QuickForm\ViewHelpers\Tca;
 /**
  * View helper which render a detail view of a TCA data type.
  */
-class ShowViewHelper extends FormViewHelper {
+class ShowViewHelper extends FormViewHelper
+{
 
-	/**
-	 * Computes a partial name for an item.
-	 *
-	 * @param array $item
-	 * @return array
-	 */
-	protected function computePartialNameForItem($item) {
-		$partial = $item['partial'];
-		$searches = array('Form/');
-		$replaces = array('Show/');
-		return str_replace($searches, $replaces, $partial);
-	}
+    /**
+     * Computes a partial name for an item.
+     *
+     * @param array $item
+     * @return array
+     */
+    protected function computePartialNameForItem($item)
+    {
+        $partial = $item['partial'];
+        $searches = array('Form/');
+        $replaces = array('Show/');
+        return str_replace($searches, $replaces, $partial);
+    }
 
-	/**
-	 * Computes a partial name for a field.
-	 *
-	 * @param string $section
-	 * @return string
-	 */
-	protected function computePartialNameForField($section) {
-		return 'Show/' . $section;
-	}
+    /**
+     * Computes a partial name for a field.
+     *
+     * @param string $section
+     * @return string
+     */
+    protected function computePartialNameForField($section)
+    {
+        return 'Show/' . $section;
+    }
 
 }

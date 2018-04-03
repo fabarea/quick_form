@@ -1,4 +1,5 @@
 <?php
+
 namespace Vanilla\QuickForm\Component;
 
 /**
@@ -19,40 +20,44 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * A text field form component to be rendered in a Quick Form.
  */
-class TextFieldComponent extends GenericComponent {
+class TextFieldComponent extends GenericComponent
+{
 
-	/**
-	 * Constructor
-	 *
-	 * @param string $property
-	 * @param string $label
-	 * @param array $additionalAttributes
-	 */
-	public function __construct($property, $label = '', array $additionalAttributes = array()) {
-		$partialName = 'Form/TextField';
-		$arguments['property'] = $property;
+    /**
+     * Constructor
+     *
+     * @param string $property
+     * @param string $label
+     * @param array $additionalAttributes
+     */
+    public function __construct($property, $label = '', array $additionalAttributes = array())
+    {
+        $partialName = 'Form/TextField';
+        $arguments['property'] = $property;
 
-		if (empty($label)) {
-			$label = GeneralUtility::camelCaseToLowerCaseUnderscored($property);
-		}
-		$arguments['label'] = $label;
-		$arguments['additionalAttributes'] = $additionalAttributes;
+        if (empty($label)) {
+            $label = GeneralUtility::camelCaseToLowerCaseUnderscored($property);
+        }
+        $arguments['label'] = $label;
+        $arguments['additionalAttributes'] = $additionalAttributes;
 
-		parent::__construct($partialName, $arguments);
-	}
+        parent::__construct($partialName, $arguments);
+    }
 
-	/**
-	 * @return array
-	 */
-	public function getArguments() {
-		return $this->arguments;
-	}
+    /**
+     * @return array
+     */
+    public function getArguments()
+    {
+        return $this->arguments;
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getPartialName() {
-		return $this->partialName;
-	}
+    /**
+     * @return string
+     */
+    public function getPartialName()
+    {
+        return $this->partialName;
+    }
 
 }

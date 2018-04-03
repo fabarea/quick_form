@@ -1,4 +1,5 @@
 <?php
+
 namespace Vanilla\QuickForm\ViewHelpers\File;
 
 /**
@@ -20,15 +21,17 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 /**
  * Tell what is the max upload size in Mb.
  */
-class MaxUploadSizeViewHelper extends AbstractViewHelper {
+class MaxUploadSizeViewHelper extends AbstractViewHelper
+{
 
-	/**
-	 * Returns the max upload size in Mb.
-	 *
-	 * @return string
-	 */
-	public function render() {
-		return round(GeneralUtility::getMaxUploadFileSize() / 1024, 1);
-	}
+    /**
+     * Returns the max upload size in Mb.
+     *
+     * @return string
+     */
+    public function render()
+    {
+        return round(GeneralUtility::getMaxUploadFileSize() / 1024, 1);
+    }
 
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace Vanilla\QuickForm\ViewHelpers\Tca;
 
 /**
@@ -21,19 +22,21 @@ use Fab\Vidi\Tca\Tca;
 /**
  * View helper which returns configuration of the property from the context given a key.
  */
-class ConfigurationViewHelper extends AbstractViewHelper {
+class ConfigurationViewHelper extends AbstractViewHelper
+{
 
-	/**
-	 * Returns configuration of the property from the context given a key.
-	 *
-	 * @param string $key
-	 * @return string
-	 */
-	public function render($key) {
-		$dataType = $this->templateVariableContainer->get('dataType');
-		$property = $this->templateVariableContainer->get('property');
-		$fieldName = Property::name($property)->of($dataType)->toFieldName();
-		return Tca::table($dataType)->field($fieldName)->get($key);
-	}
+    /**
+     * Returns configuration of the property from the context given a key.
+     *
+     * @param string $key
+     * @return string
+     */
+    public function render($key)
+    {
+        $dataType = $this->templateVariableContainer->get('dataType');
+        $property = $this->templateVariableContainer->get('property');
+        $fieldName = Property::name($property)->of($dataType)->toFieldName();
+        return Tca::table($dataType)->field($fieldName)->get($key);
+    }
 
 }

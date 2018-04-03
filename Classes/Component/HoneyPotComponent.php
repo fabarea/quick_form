@@ -1,4 +1,5 @@
 <?php
+
 namespace Vanilla\QuickForm\Component;
 
 /**
@@ -17,29 +18,33 @@ namespace Vanilla\QuickForm\Component;
 /**
  * A honey Pot component to be rendered in a Quick Form.
  */
-class HoneyPotComponent extends GenericComponent{
+class HoneyPotComponent extends GenericComponent
+{
 
-	/**
-	 * Constructor
-	 */
-	public function __construct() {
-		$partialName = 'Form/HoneyPot';
-		$arguments = array();
-		parent::__construct($partialName, $arguments);
-	}
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $partialName = 'Form/HoneyPot';
+        $arguments = array();
+        parent::__construct($partialName, $arguments);
+    }
 
-	/**
-	 * @return array
-	 */
-	public function getArguments() {
-		return $this->arguments;
-	}
+    /**
+     * @return array
+     */
+    public function getArguments()
+    {
+        return $this->arguments;
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getPartialName() {
-		return $this->partialName;
-	}
+    /**
+     * @return string
+     */
+    public function getPartialName()
+    {
+        return $this->partialName;
+    }
 
 }

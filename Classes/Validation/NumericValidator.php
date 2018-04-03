@@ -1,4 +1,5 @@
 <?php
+
 namespace Vanilla\QuickForm\Validation;
 
 /**
@@ -17,17 +18,19 @@ namespace Vanilla\QuickForm\Validation;
 /**
  * Validate a value against "Numeric".
  */
-class NumericValidator implements ValidatorInterface {
+class NumericValidator implements ValidatorInterface
+{
 
-	/**
-	 * Validate the value.
-	 *
-	 * @param string $value
-	 * @param string $rule
-	 * @return bool
-	 */
-	public function validate($value, $rule) {
-		return is_numeric($value);
-	}
+    /**
+     * Validate the value.
+     *
+     * @param string $value
+     * @param string $rule
+     * @return bool
+     */
+    public function validate($value, $rule)
+    {
+        return is_numeric($value);
+    }
 
 }

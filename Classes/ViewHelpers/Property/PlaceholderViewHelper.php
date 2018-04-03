@@ -1,4 +1,5 @@
 <?php
+
 namespace Vanilla\QuickForm\ViewHelpers\Property;
 
 /**
@@ -22,20 +23,22 @@ use Fab\Vidi\Tca\Tca;
 /**
  * View helper which returns a placeholder taken from the TCA.
  */
-class PlaceholderViewHelper extends RenderViewHelper {
+class PlaceholderViewHelper extends RenderViewHelper
+{
 
-	/**
-	 * Returns a placeholder taken from the TCA.
-	 * The property is given by the context.
-	 * @todo remove me as handled by {qf:form.additionalAttributes()}
-	 *
-	 * @return NULL|string
-	 */
-	public function render() {
-		$dataType = $this->templateVariableContainer->get('dataType');
-		$property = $this->templateVariableContainer->get('property');
-		$fieldName = GeneralUtility::camelCaseToLowerCaseUnderscored($property);
-		return Tca::table($dataType)->field($fieldName)->get('placeholder');
-	}
+    /**
+     * Returns a placeholder taken from the TCA.
+     * The property is given by the context.
+     * @todo remove me as handled by {qf:form.additionalAttributes()}
+     *
+     * @return NULL|string
+     */
+    public function render()
+    {
+        $dataType = $this->templateVariableContainer->get('dataType');
+        $property = $this->templateVariableContainer->get('property');
+        $fieldName = GeneralUtility::camelCaseToLowerCaseUnderscored($property);
+        return Tca::table($dataType)->field($fieldName)->get('placeholder');
+    }
 
 }

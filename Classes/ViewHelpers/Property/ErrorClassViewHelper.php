@@ -1,4 +1,5 @@
 <?php
+
 namespace Vanilla\QuickForm\ViewHelpers\Property;
 
 /**
@@ -19,32 +20,34 @@ use Vanilla\QuickForm\ViewHelpers\AbstractValidationViewHelper;
 /**
  * View helper which returns an error class if the property is not valid.
  */
-class ErrorClassViewHelper extends AbstractValidationViewHelper {
+class ErrorClassViewHelper extends AbstractValidationViewHelper
+{
 
-	/**
-	 * Returns a possible error class.
-	 *
-	 * @return string
-	 */
-	public function render() {
+    /**
+     * Returns a possible error class.
+     *
+     * @return string
+     */
+    public function render()
+    {
 
-		$className = '';
+        $className = '';
 
-		if ($this->isFormPosted()) {
+        if ($this->isFormPosted()) {
 
-			// Get the current property
-			$property = $this->templateVariableContainer->get('property');
+            // Get the current property
+            $property = $this->templateVariableContainer->get('property');
 
-			// Get the current value for the property.
-			$value = $this->getValue($property);
+            // Get the current value for the property.
+            $value = $this->getValue($property);
 
-			// Query the Validation Engine.
-			if (!$this->getValidationService()->isValid($property, $value)) {
-				$className = 'has-error';
-			}
-		}
+            // Query the Validation Engine.
+            if (!$this->getValidationService()->isValid($property, $value)) {
+                $className = 'has-error';
+            }
+        }
 
-		return $className;
-	}
+        return $className;
+    }
 
 }

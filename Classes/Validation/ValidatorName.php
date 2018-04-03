@@ -1,4 +1,5 @@
 <?php
+
 namespace Vanilla\QuickForm\Validation;
 
 /**
@@ -19,20 +20,21 @@ use TYPO3\CMS\Core\Type\Enumeration;
 /**
  * Validator name Enumeration class.
  */
-class ValidatorName extends Enumeration {
+class ValidatorName extends Enumeration
+{
 
-	const NOT_EMPTY = 'NotEmpty';
+    const NOT_EMPTY = 'NotEmpty';
 
-	const EMAIL_ADDRESS = 'EmailAddress';
+    const EMAIL_ADDRESS = 'EmailAddress';
 
-	const NUMERIC = 'Numeric';
+    const NUMERIC = 'Numeric';
 
-	const FILE_REQUIRED = 'FileRequired';
+    const FILE_REQUIRED = 'FileRequired';
 
-	const FILE_SIZE = 'FileSize';
+    const FILE_SIZE = 'FileSize';
 
-	const ALLOWED_EXTENSIONS = 'AllowedExtensions';
+    const ALLOWED_EXTENSIONS = 'AllowedExtensions';
 
-	const __default = '';
+    const __default = '';
 
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace Vanilla\QuickForm\ViewHelpers\Property;
 
 /**
@@ -22,37 +23,39 @@ use Fab\Vidi\Tca\Tca;
 /**
  * View helper which returns a property value. The property and the object are given from the context.
  */
-class ValueViewHelper extends RenderViewHelper {
+class ValueViewHelper extends RenderViewHelper
+{
 
-	/**
-	 * Returns a property value. The property and the object are given from the context.
-	 *
-	 * @return string
-	 */
-	public function render() {
+    /**
+     * Returns a property value. The property and the object are given from the context.
+     *
+     * @return string
+     */
+    public function render()
+    {
 
-		$result = '';
+        $result = '';
 
-		// Retrieve object or array.
-		$formObjectName = $this->viewHelperVariableContainer->get('TYPO3\CMS\Fluid\ViewHelpers\FormViewHelper', 'formObjectName');
-		if ($this->templateVariableContainer->exists($formObjectName)) {
+        // Retrieve object or array.
+        $formObjectName = $this->viewHelperVariableContainer->get('TYPO3\CMS\Fluid\ViewHelpers\FormViewHelper', 'formObjectName');
+        if ($this->templateVariableContainer->exists($formObjectName)) {
 
-			$object = $this->templateVariableContainer->get($formObjectName);
+            $object = $this->templateVariableContainer->get($formObjectName);
 
-			if (!empty($object)) {
-				// Retrieve the property name.
-				$property = $this->templateVariableContainer->get('property');
-				$result = ObjectAccess::getProperty($object, $property);
-			} else {
-				// Fetch defaults from TCA
-				$dataType = $this->templateVariableContainer->get('dataType');
-				$property = $this->templateVariableContainer->get('property');
-				$fieldName = GeneralUtility::camelCaseToLowerCaseUnderscored($property);
-				$result = Tca::table($dataType)->field($fieldName)->get('default');
-			}
-		}
+            if (!empty($object)) {
+                // Retrieve the property name.
+                $property = $this->templateVariableContainer->get('property');
+                $result = ObjectAccess::getProperty($object, $property);
+            } else {
+                // Fetch defaults from TCA
+                $dataType = $this->templateVariableContainer->get('dataType');
+                $property = $this->templateVariableContainer->get('property');
+                $fieldName = GeneralUtility::camelCaseToLowerCaseUnderscored($property);
+                $result = Tca::table($dataType)->field($fieldName)->get('default');
+            }
+        }
 
-		return $result;
-	}
+        return $result;
+    }
 
 }

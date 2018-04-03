@@ -1,4 +1,5 @@
 <?php
+
 namespace Vanilla\QuickForm;
 
 /**
@@ -20,35 +21,39 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * A class to store the arguments being passed.
  */
-class ArgumentRegistry implements SingletonInterface {
+class ArgumentRegistry implements SingletonInterface
+{
 
-	/**
-	 * @var $arguments
-	 */
-	protected $arguments = array();
+    /**
+     * @var $arguments
+     */
+    protected $arguments = array();
 
-	/**
-	 * Gets a singleton instance of this class.
-	 *
-	 * @return \Vanilla\QuickForm\ArgumentRegistry
-	 */
-	static public function getInstance() {
-		return GeneralUtility::makeInstance('Vanilla\QuickForm\ArgumentRegistry');
-	}
+    /**
+     * Gets a singleton instance of this class.
+     *
+     * @return \Vanilla\QuickForm\ArgumentRegistry
+     */
+    static public function getInstance()
+    {
+        return GeneralUtility::makeInstance('Vanilla\QuickForm\ArgumentRegistry');
+    }
 
-	/**
-	 * @return array
-	 */
-	public function get() {
-		return $this->arguments;
-	}
+    /**
+     * @return array
+     */
+    public function get()
+    {
+        return $this->arguments;
+    }
 
-	/**
-	 * @param array $arguments
-	 * @return \Vanilla\QuickForm\ArgumentRegistry
-	 */
-	public function set($arguments) {
-		$this->arguments = $arguments;
-		return $this;
-	}
+    /**
+     * @param array $arguments
+     * @return \Vanilla\QuickForm\ArgumentRegistry
+     */
+    public function set($arguments)
+    {
+        $this->arguments = $arguments;
+        return $this;
+    }
 }

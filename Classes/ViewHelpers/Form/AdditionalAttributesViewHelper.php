@@ -1,4 +1,5 @@
 <?php
+
 namespace Vanilla\QuickForm\ViewHelpers\Form;
 
 /**
@@ -20,36 +21,38 @@ use Vanilla\QuickForm\ViewHelpers\AbstractValidationViewHelper;
 /**
  * View helper which returns default additional attributes for a form component.
  */
-class AdditionalAttributesViewHelper extends AbstractValidationViewHelper {
+class AdditionalAttributesViewHelper extends AbstractValidationViewHelper
+{
 
-	/**
-	 * Returns default additional attributes for a form component.
-	 *
-	 * @return array
-	 */
-	public function render() {
+    /**
+     * Returns default additional attributes for a form component.
+     *
+     * @return array
+     */
+    public function render()
+    {
 
-		// Default attributes for Firefox, can be removed as of Firefox 31
-		// @see https://developer.mozilla.org/en-US/docs/Web/Security/Securing_your_site/Turning_off_form_autocompletion
-		$attributes = array('autocomplete' => "off");
+        // Default attributes for Firefox, can be removed as of Firefox 31
+        // @see https://developer.mozilla.org/en-US/docs/Web/Security/Securing_your_site/Turning_off_form_autocompletion
+        $attributes = array('autocomplete' => "off");
 
-		// Check if the the property is required.
-		$property = $this->templateVariableContainer->get('property');
-		$appliedValidators = $this->getValidationService()->getAppliedValidators($property);
+        // Check if the the property is required.
+        $property = $this->templateVariableContainer->get('property');
+        $appliedValidators = $this->getValidationService()->getAppliedValidators($property);
 
-		if (isset($appliedValidators[ValidatorName::NOT_EMPTY]) || $appliedValidators[ValidatorName::FILE_REQUIRED]) {
-			$attributes['required'] = 'required';
-		}
+        if (isset($appliedValidators[ValidatorName::NOT_EMPTY]) || $appliedValidators[ValidatorName::FILE_REQUIRED]) {
+            $attributes['required'] = 'required';
+        }
 
-		$hasAdditionalAttributes = $this->templateVariableContainer->exists('additionalAttributes');
-		if ($hasAdditionalAttributes) {
-			$additionalAttributes = $this->templateVariableContainer->get('additionalAttributes');
-			foreach ($additionalAttributes as $attribute => $value) {
-				$attributes[$attribute] = $value;
-			}
-		}
+        $hasAdditionalAttributes = $this->templateVariableContainer->exists('additionalAttributes');
+        if ($hasAdditionalAttributes) {
+            $additionalAttributes = $this->templateVariableContainer->get('additionalAttributes');
+            foreach ($additionalAttributes as $attribute => $value) {
+                $attributes[$attribute] = $value;
+            }
+        }
 
-		return $attributes;
-	}
+        return $attributes;
+    }
 
 }

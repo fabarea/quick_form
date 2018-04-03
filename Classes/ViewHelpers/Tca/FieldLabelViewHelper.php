@@ -1,4 +1,5 @@
 <?php
+
 namespace Vanilla\QuickForm\ViewHelpers\Tca;
 
 /**
@@ -21,40 +22,43 @@ use Fab\Vidi\Tca\Tca;
  * View helper which translates a label for field given by the context.
  * Under the hood, it will search the label from the TCA.
  */
-class FieldLabelViewHelper extends AbstractViewHelper {
+class FieldLabelViewHelper extends AbstractViewHelper
+{
 
-	/**
-	 * Returns a label for field given by the context.
-	 * It will search the label value from the TCA.
-	 *
-	 * An alternate label can be defined by using a "LLL:" reference in the key.
-	 *
-	 * @param string $key Name of a TCA field or LLL: reference
-	 * @return string
-	 */
-	public function render($key = '') {
-		$dataType = $this->templateVariableContainer->get('dataType');
+    /**
+     * Returns a label for field given by the context.
+     * It will search the label value from the TCA.
+     *
+     * An alternate label can be defined by using a "LLL:" reference in the key.
+     *
+     * @param string $key Name of a TCA field or LLL: reference
+     * @return string
+     */
+    public function render($key = '')
+    {
+        $dataType = $this->templateVariableContainer->get('dataType');
 
-		if ($key == '') {
-			$labelName = $this->templateVariableContainer->exists('alternative_label') ? 'alternative_label' : 'label';
-			$key = $this->templateVariableContainer->get($labelName);
-		}
+        if ($key == '') {
+            $labelName = $this->templateVariableContainer->exists('alternative_label') ? 'alternative_label' : 'label';
+            $key = $this->templateVariableContainer->get($labelName);
+        }
 
-		if (strpos($key, 'LLL:') === 0) {
-			$result = $this->getFrontendObject()->sL($key);
-		} else {
-			$result = Tca::table($dataType)->field($key)->getLabel();
-		}
-		return $result;
-	}
+        if (strpos($key, 'LLL:') === 0) {
+            $result = $this->getFrontendObject()->sL($key);
+        } else {
+            $result = Tca::table($dataType)->field($key)->getLabel();
+        }
+        return $result;
+    }
 
-	/**
-	 * Returns an instance of the Frontend object.
-	 *
-	 * @return \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
-	 */
-	protected function getFrontendObject() {
-		return $GLOBALS['TSFE'];
-	}
+    /**
+     * Returns an instance of the Frontend object.
+     *
+     * @return \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
+     */
+    protected function getFrontendObject()
+    {
+        return $GLOBALS['TSFE'];
+    }
 
 }

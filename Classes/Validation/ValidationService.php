@@ -1,4 +1,5 @@
 <?php
+
 namespace Vanilla\QuickForm\Validation;
 
 /**
@@ -21,143 +22,150 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 /**
  * Service class related to validation. This is meant to be used internally in Quick Form.
  */
-class ValidationService implements SingletonInterface {
+class ValidationService implements SingletonInterface
+{
 
-	/**
-	 * @var ValidationServiceConfigurator
-	 */
-	protected $serviceConfigurator;
+    /**
+     * @var ValidationServiceConfigurator
+     */
+    protected $serviceConfigurator;
 
-	/**
-	 * @var array
-	 */
-	protected $validationMessages = array();
+    /**
+     * @var array
+     */
+    protected $validationMessages = array();
 
-	/**
-	 * @var array
-	 */
-	protected $appliedValidators = array();
+    /**
+     * @var array
+     */
+    protected $appliedValidators = array();
 
-	/**
-	 * @var array
-	 */
-	static protected $instances;
+    /**
+     * @var array
+     */
+    static protected $instances;
 
-	/**
-	 * Returns a class instance.
-	 *
-	 * @param ValidationServiceConfigurator $serviceConfigurator
-	 * @return \Vanilla\QuickForm\Validation\ValidationService
-	 */
-	static public function getInstance(ValidationServiceConfigurator $serviceConfigurator) {
+    /**
+     * Returns a class instance.
+     *
+     * @param ValidationServiceConfigurator $serviceConfigurator
+     * @return \Vanilla\QuickForm\Validation\ValidationService
+     */
+    static public function getInstance(ValidationServiceConfigurator $serviceConfigurator)
+    {
 
-		$objectName = $serviceConfigurator->get('objectName');
-		if (empty(self::$instances[$objectName])) {
+        $objectName = $serviceConfigurator->get('objectName');
+        if (empty(self::$instances[$objectName])) {
 
-			/** @var \Vanilla\QuickForm\Validation\ValidationService $instance */
-			$instance = GeneralUtility::makeInstance('Vanilla\QuickForm\Validation\ValidationService', $serviceConfigurator);
-			self::$instances[$objectName] = $instance;
-		}
+            /** @var \Vanilla\QuickForm\Validation\ValidationService $instance */
+            $instance = GeneralUtility::makeInstance('Vanilla\QuickForm\Validation\ValidationService', $serviceConfigurator);
+            self::$instances[$objectName] = $instance;
+        }
 
-		return self::$instances[$objectName];
-	}
+        return self::$instances[$objectName];
+    }
 
-	/**
-	 * Constructor
-	 *
-	 * @param ValidationServiceConfigurator $serviceConfigurator
-	 */
-	public function __construct(ValidationServiceConfigurator $serviceConfigurator) {
-		$this->serviceConfigurator = $serviceConfigurator;
-	}
+    /**
+     * Constructor
+     *
+     * @param ValidationServiceConfigurator $serviceConfigurator
+     */
+    public function __construct(ValidationServiceConfigurator $serviceConfigurator)
+    {
+        $this->serviceConfigurator = $serviceConfigurator;
+    }
 
-	/**
-	 * Validate the property given its value and compute possible error messages.
-	 *
-	 * @param string $property
-	 * @param string $value
-	 * @return array
-	 */
-	public function getErrorMessages($property, $value) {
+    /**
+     * Validate the property given its value and compute possible error messages.
+     *
+     * @param string $property
+     * @param string $value
+     * @return array
+     */
+    public function getErrorMessages($property, $value)
+    {
 
-		if (!isset($this->validationMessages[$property])) {
-			$this->validationMessages[$property] = array();
-			$errorMessages = array();
+        if (!isset($this->validationMessages[$property])) {
+            $this->validationMessages[$property] = array();
+            $errorMessages = array();
 
-			foreach ($this->getAppliedValidators($property) as $validatorName => $rule) {
+            foreach ($this->getAppliedValidators($property) as $validatorName => $rule) {
 
-				/** @var \Vanilla\QuickForm\Validation\ValidatorInterface $validator */
-				$className = sprintf('Vanilla\QuickForm\Validation\%sValidator', $validatorName);
-				$validator = GeneralUtility::makeInstance($className);
-				$isValid = $validator->validate($value, $rule);
+                /** @var \Vanilla\QuickForm\Validation\ValidatorInterface $validator */
+                $className = sprintf('Vanilla\QuickForm\Validation\%sValidator', $validatorName);
+                $validator = GeneralUtility::makeInstance($className);
+                $isValid = $validator->validate($value, $rule);
 
-				if (!$isValid) {
-					$errorMessages[$validatorName] = $this->getErrorMessage($validatorName);
-					break; // display only one error message at a time // @todo make me configurable.
-				}
-			};
+                if (!$isValid) {
+                    $errorMessages[$validatorName] = $this->getErrorMessage($validatorName);
+                    break; // display only one error message at a time // @todo make me configurable.
+                }
+            };
 
-			$this->validationMessages[$property] = $errorMessages;
-		}
+            $this->validationMessages[$property] = $errorMessages;
+        }
 
-		return $this->validationMessages[$property];
-	}
+        return $this->validationMessages[$property];
+    }
 
-	/**
-	 * Returns whether a property is valid according to its value.
-	 *
-	 * @param string $property
-	 * @param string $value
-	 * @return array
-	 */
-	public function isValid($property, $value) {
-		$errorMessages = $this->getErrorMessages($property, $value);
-		return empty($errorMessages);
-	}
+    /**
+     * Returns whether a property is valid according to its value.
+     *
+     * @param string $property
+     * @param string $value
+     * @return array
+     */
+    public function isValid($property, $value)
+    {
+        $errorMessages = $this->getErrorMessages($property, $value);
+        return empty($errorMessages);
+    }
 
-	/**
-	 * Returns the applied validators for a property.
-	 *
-	 * @param string $property
-	 * @return array
-	 */
-	public function getAppliedValidators($property) {
+    /**
+     * Returns the applied validators for a property.
+     *
+     * @param string $property
+     * @return array
+     */
+    public function getAppliedValidators($property)
+    {
 
-		if (!isset($this->appliedValidators[$property])) {
+        if (!isset($this->appliedValidators[$property])) {
 
-			// Initialize the property.
-			$this->appliedValidators[$property] = array();
+            // Initialize the property.
+            $this->appliedValidators[$property] = array();
 
-			$rulerConfiguration = $this->serviceConfigurator->getConfiguration($property);
+            $rulerConfiguration = $this->serviceConfigurator->getConfiguration($property);
 
-			/** @var \Vanilla\QuickForm\Validation\ValidatorName $availableValidators */
-			$availableValidators = GeneralUtility::makeInstance('Vanilla\QuickForm\Validation\ValidatorName');
+            /** @var \Vanilla\QuickForm\Validation\ValidatorName $availableValidators */
+            $availableValidators = GeneralUtility::makeInstance('Vanilla\QuickForm\Validation\ValidatorName');
 
-			foreach ($availableValidators->getConstants() as $validatorName) {
+            foreach ($availableValidators->getConstants() as $validatorName) {
 
-				$className = sprintf('Vanilla\QuickForm\Validation\%sRuler', $validatorName);
+                $className = sprintf('Vanilla\QuickForm\Validation\%sRuler', $validatorName);
 
-				/** @var \Vanilla\QuickForm\Validation\RulerInterface $ruler */
-				$ruler = GeneralUtility::makeInstance($className, $rulerConfiguration);
-				$appliedRule = $ruler->getRule($property, $this->serviceConfigurator->get('validationType'));
+                /** @var \Vanilla\QuickForm\Validation\RulerInterface $ruler */
+                $ruler = GeneralUtility::makeInstance($className, $rulerConfiguration);
+                $appliedRule = $ruler->getRule($property, $this->serviceConfigurator->get('validationType'));
 
-				if ($appliedRule) {
-					$this->appliedValidators[$property][$validatorName] = $appliedRule;
-				}
-			}
-		}
+                if ($appliedRule) {
+                    $this->appliedValidators[$property][$validatorName] = $appliedRule;
+                }
+            }
+        }
 
-		return $this->appliedValidators[$property];
-	}
+        return $this->appliedValidators[$property];
+    }
 
-	/**
-	 * Returns the error message given a failed validation.
-	 *
-	 * @param string $validatorName
-	 * @return array
-	 */
-	protected function getErrorMessage($validatorName) {
-		return LocalizationUtility::translate($validatorName, 'quick_form');
-	}
+    /**
+     * Returns the error message given a failed validation.
+     *
+     * @param string $validatorName
+     * @return array
+     */
+    protected function getErrorMessage($validatorName)
+    {
+        return LocalizationUtility::translate($validatorName, 'quick_form');
+    }
 
 }

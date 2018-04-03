@@ -1,4 +1,5 @@
 <?php
+
 namespace Vanilla\QuickForm\Validation;
 
 /**
@@ -19,32 +20,34 @@ use TYPO3\CMS\Media\Utility\PermissionUtility;
 /**
  * Valid a value against "AllowedExtensions".
  */
-class AllowedExtensionsValidator implements ValidatorInterface {
+class AllowedExtensionsValidator implements ValidatorInterface
+{
 
-	/**
-	 * Validate the value.
-	 *
-	 * @param string $value
-	 * @param string $rule
-	 * @return bool
-	 */
-	public function validate($value, $rule) {
+    /**
+     * Validate the value.
+     *
+     * @param string $value
+     * @param string $rule
+     * @return bool
+     */
+    public function validate($value, $rule)
+    {
 
-		if (is_array($value) && (int)$value['error'] !== 0) {
-			return TRUE; // early return as we want to validate the file extension only if the upload has succeeded.
-		}
+        if (is_array($value) && (int)$value['error'] !== 0) {
+            return TRUE; // early return as we want to validate the file extension only if the upload has succeeded.
+        }
 
-		$isValid = FALSE;
-		if (preg_match('/storage:[0-9]+/', $rule)) {
-			$ruleParts = explode(':', $rule);
-			$storageIdentifier = $ruleParts[1];
+        $isValid = FALSE;
+        if (preg_match('/storage:[0-9]+/', $rule)) {
+            $ruleParts = explode(':', $rule);
+            $storageIdentifier = $ruleParts[1];
 
-			$allowedExtensions = PermissionUtility::getInstance()->getAllowedExtensions($storageIdentifier);
-			$extensionName = pathinfo($value['name'], PATHINFO_EXTENSION);
-			$isValid = in_array($extensionName, $allowedExtensions);
+            $allowedExtensions = PermissionUtility::getInstance()->getAllowedExtensions($storageIdentifier);
+            $extensionName = pathinfo($value['name'], PATHINFO_EXTENSION);
+            $isValid = in_array($extensionName, $allowedExtensions);
 
-		}
-		return $isValid;
-	}
+        }
+        return $isValid;
+    }
 
 }

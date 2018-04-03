@@ -1,4 +1,5 @@
 <?php
+
 namespace Vanilla\QuickForm\Validation;
 
 /**
@@ -17,41 +18,45 @@ namespace Vanilla\QuickForm\Validation;
 /**
  * Tell the rule for an "AllowedExtensions" validation.
  */
-class AllowedExtensionsRuler extends AbstractRuler {
+class AllowedExtensionsRuler extends AbstractRuler
+{
 
-	/**
-	 * Tell whether the property should be validated as not empty relying on the TCA strategy.
-	 *
-	 * @param string $property
-	 * @throws \Exception
-	 * @return string
-	 */
-	protected function getRuleWithTcaStrategy($property) {
-		throw new \Exception('Implement me method getRuleWithTcaStrategy', 1406015137);
-		#$dataType = $this->configuration['dataType'];
-		#$fieldName = Property::name($property)->of($dataType)->toFieldName();
-		#return Tca::table($dataType)->field($fieldName)->isRequired();
-	}
+    /**
+     * Tell whether the property should be validated as not empty relying on the TCA strategy.
+     *
+     * @param string $property
+     * @throws \Exception
+     * @return string
+     */
+    protected function getRuleWithTcaStrategy($property)
+    {
+        throw new \Exception('Implement me method getRuleWithTcaStrategy', 1406015137);
+        #$dataType = $this->configuration['dataType'];
+        #$fieldName = Property::name($property)->of($dataType)->toFieldName();
+        #return Tca::table($dataType)->field($fieldName)->isRequired();
+    }
 
-	/**
-	 * Tell whether the property should be validated as not empty relying on the TypoScript strategy.
-	 *
-	 * @param string $property
-	 * @throws \Exception
-	 * @return string
-	 */
-	protected function getRuleWithTypoScriptStrategy($property) {
-		return parent::getRuleWithTypoScriptStrategy($property, ValidatorName::ALLOWED_EXTENSIONS);
-	}
+    /**
+     * Tell whether the property should be validated as not empty relying on the TypoScript strategy.
+     *
+     * @param string $property
+     * @throws \Exception
+     * @return string
+     */
+    protected function getRuleWithTypoScriptStrategy($property)
+    {
+        return parent::getRuleWithTypoScriptStrategy($property, ValidatorName::ALLOWED_EXTENSIONS);
+    }
 
-	/**
-	 * Tell whether the property should be validated as not empty relying on the Object strategy.
-	 *
-	 * @param string $property
-	 * @return string
-	 */
-	protected function getRuleWithObjectStrategy($property) {
-		return parent::getRuleWithObjectStrategy($property, ValidatorName::ALLOWED_EXTENSIONS);
-	}
+    /**
+     * Tell whether the property should be validated as not empty relying on the Object strategy.
+     *
+     * @param string $property
+     * @return string
+     */
+    protected function getRuleWithObjectStrategy($property)
+    {
+        return parent::getRuleWithObjectStrategy($property, ValidatorName::ALLOWED_EXTENSIONS);
+    }
 
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace Vanilla\QuickForm\ViewHelpers\Math;
 
 /**
@@ -19,15 +20,17 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 /**
  * View helper which tells whether a property is required given a property name.
  */
-class DivisionViewHelper extends AbstractViewHelper {
+class DivisionViewHelper extends AbstractViewHelper
+{
 
-	/**
-	 * @param mixed $a
-	 * @param mixed $b
-	 * @return mixed
-	 */
-	protected function render($a, $b) {
-		return ($b <> 0 ? round($a / $b) : $a);
-	}
+    /**
+     * @param mixed $a
+     * @param mixed $b
+     * @return mixed
+     */
+    protected function render($a, $b)
+    {
+        return ($b <> 0 ? round($a / $b) : $a);
+    }
 
 }

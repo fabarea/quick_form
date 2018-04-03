@@ -1,4 +1,5 @@
 <?php
+
 namespace Vanilla\QuickForm\ViewHelpers;
 
 /**
@@ -22,135 +23,144 @@ use Vanilla\QuickForm\Validation\ValidationService;
 /**
  * Abstract View helper which enables to get some protected attributes.
  */
-abstract class AbstractValidationViewHelper extends AbstractViewHelper {
+abstract class AbstractValidationViewHelper extends AbstractViewHelper
+{
 
-	/**
-	 * @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface
-	 * @inject
-	 */
-	protected $configurationManager;
+    /**
+     * @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface
+     * @inject
+     */
+    protected $configurationManager;
 
-	/**
-	 * @var \TYPO3\CMS\Extbase\Reflection\ReflectionService
-	 * @inject
-	 */
-	protected $reflectionService;
+    /**
+     * @var \TYPO3\CMS\Extbase\Reflection\ReflectionService
+     * @inject
+     */
+    protected $reflectionService;
 
-	/**
-	 * @var \TYPO3\CMS\Extbase\Service\TypoScriptService
-	 * @inject
-	 */
-	protected $typoScriptService;
+    /**
+     * @var \TYPO3\CMS\Extbase\Service\TypoScriptService
+     * @inject
+     */
+    protected $typoScriptService;
 
-	/**
-	 * @return \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface
-	 */
-	public function getConfigurationManager() {
-		return $this->configurationManager;
-	}
+    /**
+     * @return \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface
+     */
+    public function getConfigurationManager()
+    {
+        return $this->configurationManager;
+    }
 
-	/**
-	 * @return \TYPO3\CMS\Extbase\Reflection\ReflectionService
-	 */
-	public function getReflectionService() {
-		return $this->reflectionService;
-	}
+    /**
+     * @return \TYPO3\CMS\Extbase\Reflection\ReflectionService
+     */
+    public function getReflectionService()
+    {
+        return $this->reflectionService;
+    }
 
-	/**
-	 * @return \TYPO3\CMS\Extbase\Service\TypoScriptService
-	 */
-	public function getTypoScriptService() {
-		return $this->typoScriptService;
-	}
+    /**
+     * @return \TYPO3\CMS\Extbase\Service\TypoScriptService
+     */
+    public function getTypoScriptService()
+    {
+        return $this->typoScriptService;
+    }
 
-	/**
-	 * @return \TYPO3\CMS\Fluid\Core\ViewHelper\ViewHelperVariableContainer
-	 */
-	public function getViewHelperVariableContainer() {
-		return $this->viewHelperVariableContainer;
-	}
+    /**
+     * @return \TYPO3\CMS\Fluid\Core\ViewHelper\ViewHelperVariableContainer
+     */
+    public function getViewHelperVariableContainer()
+    {
+        return $this->viewHelperVariableContainer;
+    }
 
-	/**
-	 * @return \TYPO3\CMS\Fluid\Core\ViewHelper\TemplateVariableContainer
-	 */
-	public function getTemplateVariableContainer() {
-		return $this->templateVariableContainer;
-	}
+    /**
+     * @return \TYPO3\CMS\Fluid\Core\ViewHelper\TemplateVariableContainer
+     */
+    public function getTemplateVariableContainer()
+    {
+        return $this->templateVariableContainer;
+    }
 
-	/**
-	 * Tell whether the form is being posted.
-	 *
-	 * @return bool
-	 */
-	protected function isFormPosted() {
+    /**
+     * Tell whether the form is being posted.
+     *
+     * @return bool
+     */
+    protected function isFormPosted()
+    {
 
-		$fieldNamePrefix = (string) $this->viewHelperVariableContainer->get('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'fieldNamePrefix');
-		$formObjectName = (string) $this->viewHelperVariableContainer->get('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'formObjectName');
-		$arguments = GeneralUtility::_GP($fieldNamePrefix);
-		return !empty($arguments[$formObjectName]);
-	}
+        $fieldNamePrefix = (string)$this->viewHelperVariableContainer->get('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'fieldNamePrefix');
+        $formObjectName = (string)$this->viewHelperVariableContainer->get('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'formObjectName');
+        $arguments = GeneralUtility::_GP($fieldNamePrefix);
+        return !empty($arguments[$formObjectName]);
+    }
 
-	/**
-	 * Return the current value for this property.
-	 *
-	 * @param string $property
-	 * @return mixed
-	 */
-	protected function getValue($property) {
-		$value = '';
+    /**
+     * Return the current value for this property.
+     *
+     * @param string $property
+     * @return mixed
+     */
+    protected function getValue($property)
+    {
+        $value = '';
 
-		$fieldNamePrefix = (string) $this->viewHelperVariableContainer->get('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'fieldNamePrefix');
-		$formObjectName = (string) $this->viewHelperVariableContainer->get('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'formObjectName');
+        $fieldNamePrefix = (string)$this->viewHelperVariableContainer->get('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'fieldNamePrefix');
+        $formObjectName = (string)$this->viewHelperVariableContainer->get('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'formObjectName');
 
-		// Check whether the property contains an uploaded file
-		// @todo refactor me, quick implementation. Could be an UploadedFile object -> normalized value.
-		if (isset($_FILES[$fieldNamePrefix]['name'][$formObjectName][$property])) {
-			$value = array(
-				'name' => $_FILES[$fieldNamePrefix]['name'][$formObjectName][$property],
-				'type' => $_FILES[$fieldNamePrefix]['type'][$formObjectName][$property],
-				'tmp_name' => $_FILES[$fieldNamePrefix]['tmp_name'][$formObjectName][$property],
-				'error' => $_FILES[$fieldNamePrefix]['error'][$formObjectName][$property],
-				'size' => $_FILES[$fieldNamePrefix]['size'][$formObjectName][$property],
-			);
-		} else {
+        // Check whether the property contains an uploaded file
+        // @todo refactor me, quick implementation. Could be an UploadedFile object -> normalized value.
+        if (isset($_FILES[$fieldNamePrefix]['name'][$formObjectName][$property])) {
+            $value = array(
+                'name' => $_FILES[$fieldNamePrefix]['name'][$formObjectName][$property],
+                'type' => $_FILES[$fieldNamePrefix]['type'][$formObjectName][$property],
+                'tmp_name' => $_FILES[$fieldNamePrefix]['tmp_name'][$formObjectName][$property],
+                'error' => $_FILES[$fieldNamePrefix]['error'][$formObjectName][$property],
+                'size' => $_FILES[$fieldNamePrefix]['size'][$formObjectName][$property],
+            );
+        } else {
 
-			// Otherwise get from the GP.
-			$arguments = GeneralUtility::_GP($fieldNamePrefix);
+            // Otherwise get from the GP.
+            $arguments = GeneralUtility::_GP($fieldNamePrefix);
 
-			if (isset($arguments[$formObjectName][$property])) {
-				$value = $arguments[$formObjectName][$property];
-			} elseif($this->templateVariableContainer->exists($formObjectName)) {
-				$object = $this->templateVariableContainer->get($formObjectName);
-				if (is_object($object)) {
-					$value = ObjectAccess::getProperty($object, $property);
-				}
-			}
-		}
-		return $value;
-	}
+            if (isset($arguments[$formObjectName][$property])) {
+                $value = $arguments[$formObjectName][$property];
+            } elseif ($this->templateVariableContainer->exists($formObjectName)) {
+                $object = $this->templateVariableContainer->get($formObjectName);
+                if (is_object($object)) {
+                    $value = ObjectAccess::getProperty($object, $property);
+                }
+            }
+        }
+        return $value;
+    }
 
-	/**
-	 * Return the validation object
-	 *
-	 * @return \Vanilla\QuickForm\Validation\ValidationService
-	 */
-	protected function getValidationService() {
+    /**
+     * Return the validation object
+     *
+     * @return \Vanilla\QuickForm\Validation\ValidationService
+     */
+    protected function getValidationService()
+    {
 
-		// @todo save Service Configurator, singleton? How to persist it?
+        // @todo save Service Configurator, singleton? How to persist it?
 
-		/** @var \Vanilla\QuickForm\Validation\ValidationServiceConfigurator $serviceConfigurator */
-		$serviceConfigurator = $this->objectManager->get('Vanilla\QuickForm\Validation\ValidationServiceConfigurator');
+        /** @var \Vanilla\QuickForm\Validation\ValidationServiceConfigurator $serviceConfigurator */
+        $serviceConfigurator = $this->objectManager->get('Vanilla\QuickForm\Validation\ValidationServiceConfigurator');
 
-		$objectName = $this->getViewHelperVariableContainer()->get('TYPO3\CMS\Fluid\ViewHelpers\FormViewHelper', 'formObjectName');
-		$serviceConfigurator->set('objectName', $objectName);
+        $objectName = $this->getViewHelperVariableContainer()->get('TYPO3\CMS\Fluid\ViewHelpers\FormViewHelper', 'formObjectName');
+        $serviceConfigurator->set('objectName', $objectName);
 
-		$validationType = $this->getTemplateVariableContainer()->get('validationType');
-		$serviceConfigurator->set('validationType', $validationType);
+        $validationType = $this->getTemplateVariableContainer()->get('validationType');
+        $serviceConfigurator->set('validationType', $validationType);
 
-		$type = $this->getTemplateVariableContainer()->get('type');
-		$serviceConfigurator->set('type', $type);
+        $type = $this->getTemplateVariableContainer()->get('type');
+        $serviceConfigurator->set('type', $type);
 
-		return ValidationService::getInstance($serviceConfigurator);
-	}
+        return ValidationService::getInstance($serviceConfigurator);
+    }
 
 }

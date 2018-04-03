@@ -1,4 +1,5 @@
 <?php
+
 namespace Vanilla\QuickForm\Component;
 
 /**
@@ -19,42 +20,46 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * A multi file upload form component to be rendered in a Quick Form.
  */
-class SelectComponent extends GenericComponent {
+class SelectComponent extends GenericComponent
+{
 
-	/**
-	 * Constructor
-	 *
-	 * @param string $property
-	 * @param string $label
-	 * @param string $items
-	 * @param string $itemsDataType
-	 */
-	public function __construct($property, $label = '', $items = '', $itemsDataType = '') {
-		$partialName = 'Form/Select';
-		$arguments['property'] = $property;
+    /**
+     * Constructor
+     *
+     * @param string $property
+     * @param string $label
+     * @param string $items
+     * @param string $itemsDataType
+     */
+    public function __construct($property, $label = '', $items = '', $itemsDataType = '')
+    {
+        $partialName = 'Form/Select';
+        $arguments['property'] = $property;
 
-		if (empty($label)) {
-			$label = GeneralUtility::camelCaseToLowerCaseUnderscored($property);
-		}
-		$arguments['label'] = $label;
-		$arguments['items'] = $items;
-		$arguments['itemsDataType'] = $itemsDataType;
+        if (empty($label)) {
+            $label = GeneralUtility::camelCaseToLowerCaseUnderscored($property);
+        }
+        $arguments['label'] = $label;
+        $arguments['items'] = $items;
+        $arguments['itemsDataType'] = $itemsDataType;
 
-		parent::__construct($partialName, $arguments);
-	}
+        parent::__construct($partialName, $arguments);
+    }
 
-	/**
-	 * @return array
-	 */
-	public function getArguments() {
-		return $this->arguments;
-	}
+    /**
+     * @return array
+     */
+    public function getArguments()
+    {
+        return $this->arguments;
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getPartialName() {
-		return $this->partialName;
-	}
+    /**
+     * @return string
+     */
+    public function getPartialName()
+    {
+        return $this->partialName;
+    }
 
 }

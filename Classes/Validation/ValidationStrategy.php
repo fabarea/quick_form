@@ -1,4 +1,5 @@
 <?php
+
 namespace Vanilla\QuickForm\Validation;
 
 /**
@@ -19,14 +20,15 @@ use TYPO3\CMS\Core\Type\Enumeration;
 /**
  * Validation strategy enumeration
  */
-class ValidationStrategy extends Enumeration {
+class ValidationStrategy extends Enumeration
+{
 
-	const TCA = 'tca';
+    const TCA = 'tca';
 
-	const TYPOSCRIPT = 'typoscript';
+    const TYPOSCRIPT = 'typoscript';
 
-	const OBJECT = 'object';
+    const OBJECT = 'object';
 
-	const __default = self::OBJECT;
+    const __default = self::OBJECT;
 
 }

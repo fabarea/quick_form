@@ -1,4 +1,5 @@
 <?php
+
 namespace Vanilla\QuickForm\Component;
 
 /***************************************************************
@@ -32,39 +33,43 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * A multi-choices form component to be rendered in a Quick Form.
  */
-class CheckboxComponent extends GenericComponent {
+class CheckboxComponent extends GenericComponent
+{
 
-	/**
-	 * Constructor
-	 *
-	 * @param string $property
-	 * @param string $label
-	 * @param array $options for the Partials, array('key' => 'value')
-	 *              + "additional_label"
-	 */
-	public function __construct($property, $label = '', array $options = array()) {
-		$partialName = 'Form/Checkbox';
-		$arguments = $options;
-		$arguments['property'] = $property;
+    /**
+     * Constructor
+     *
+     * @param string $property
+     * @param string $label
+     * @param array $options for the Partials, array('key' => 'value')
+     *              + "additional_label"
+     */
+    public function __construct($property, $label = '', array $options = array())
+    {
+        $partialName = 'Form/Checkbox';
+        $arguments = $options;
+        $arguments['property'] = $property;
 
-		if (empty($label)) {
-			$label = GeneralUtility::camelCaseToLowerCaseUnderscored($property);
-		}
-		$arguments['label'] = $label;
-		parent::__construct($partialName, $arguments);
-	}
+        if (empty($label)) {
+            $label = GeneralUtility::camelCaseToLowerCaseUnderscored($property);
+        }
+        $arguments['label'] = $label;
+        parent::__construct($partialName, $arguments);
+    }
 
-	/**
-	 * @return array
-	 */
-	public function getArguments() {
-		return $this->arguments;
-	}
+    /**
+     * @return array
+     */
+    public function getArguments()
+    {
+        return $this->arguments;
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getPartialName() {
-		return $this->partialName;
-	}
+    /**
+     * @return string
+     */
+    public function getPartialName()
+    {
+        return $this->partialName;
+    }
 }

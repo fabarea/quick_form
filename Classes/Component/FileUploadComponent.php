@@ -1,4 +1,5 @@
 <?php
+
 namespace Vanilla\QuickForm\Component;
 
 /**
@@ -19,45 +20,49 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * A file upload form component to be rendered in a Quick Form.
  */
-class FileUploadComponent extends GenericComponent {
+class FileUploadComponent extends GenericComponent
+{
 
-	/**
-	 * Constructor
-	 *
-	 * @param string $property
-	 * @param string $label
-	 * @param string $allowedExtensions
-	 * @param int $storage
-	 */
-	public function __construct($property, $label = '', $allowedExtensions = '', $storage = 1) {
-		$partialName = 'Form/FileUpload';
-		$arguments['property'] = $property;
+    /**
+     * Constructor
+     *
+     * @param string $property
+     * @param string $label
+     * @param string $allowedExtensions
+     * @param int $storage
+     */
+    public function __construct($property, $label = '', $allowedExtensions = '', $storage = 1)
+    {
+        $partialName = 'Form/FileUpload';
+        $arguments['property'] = $property;
 
-		if (empty($label)) {
-			$label = GeneralUtility::camelCaseToLowerCaseUnderscored($property);
-		}
-		$arguments['label'] = $label;
+        if (empty($label)) {
+            $label = GeneralUtility::camelCaseToLowerCaseUnderscored($property);
+        }
+        $arguments['label'] = $label;
 
-		if (empty($allowedExtensions)) {
-			$allowedExtensions = $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext'];
-		}
-		$arguments['allowedExtensions'] = $allowedExtensions;
-		$arguments['storage'] = $storage;
+        if (empty($allowedExtensions)) {
+            $allowedExtensions = $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext'];
+        }
+        $arguments['allowedExtensions'] = $allowedExtensions;
+        $arguments['storage'] = $storage;
 
-		parent::__construct($partialName, $arguments);
-	}
+        parent::__construct($partialName, $arguments);
+    }
 
-	/**
-	 * @return array
-	 */
-	public function getArguments() {
-		return $this->arguments;
-	}
+    /**
+     * @return array
+     */
+    public function getArguments()
+    {
+        return $this->arguments;
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getPartialName() {
-		return $this->partialName;
-	}
+    /**
+     * @return string
+     */
+    public function getPartialName()
+    {
+        return $this->partialName;
+    }
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace Vanilla\QuickForm\ViewHelpers\Property;
 
 /**
@@ -20,17 +21,19 @@ use Vanilla\QuickForm\ViewHelpers\AbstractValidationViewHelper;
 /**
  * View helper which tells whether a property is required given a property name.
  */
-class IsRequiredViewHelper extends AbstractValidationViewHelper {
+class IsRequiredViewHelper extends AbstractValidationViewHelper
+{
 
-	/**
-	 * Returns whether a property is required given a property name.
-	 *
-	 * @param string $property
-	 * @return string
-	 */
-	public function render($property) {
-		$appliedValidators = $this->getValidationService()->getAppliedValidators($property);
-		return isset($appliedValidators[ValidatorName::NOT_EMPTY]) || $appliedValidators[ValidatorName::FILE_REQUIRED];
-	}
+    /**
+     * Returns whether a property is required given a property name.
+     *
+     * @param string $property
+     * @return string
+     */
+    public function render($property)
+    {
+        $appliedValidators = $this->getValidationService()->getAppliedValidators($property);
+        return isset($appliedValidators[ValidatorName::NOT_EMPTY]) || $appliedValidators[ValidatorName::FILE_REQUIRED];
+    }
 
 }

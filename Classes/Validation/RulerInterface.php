@@ -1,4 +1,5 @@
 <?php
+
 namespace Vanilla\QuickForm\Validation;
 
 /**
@@ -17,15 +18,16 @@ namespace Vanilla\QuickForm\Validation;
 /**
  * Interface for a Ruler object.
  */
-interface RulerInterface {
+interface RulerInterface
+{
 
-	/**
-	 * Get rule for a property given a validation strategy
-	 *
-	 * @param string $property
-	 * @param string $validationStrategy
-	 * @return mixed
-	 */
-	public function getRule($property, $validationStrategy);
+    /**
+     * Get rule for a property given a validation strategy
+     *
+     * @param string $property
+     * @param string $validationStrategy
+     * @return mixed
+     */
+    public function getRule($property, $validationStrategy);
 
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace Vanilla\QuickForm\ViewHelpers\Property;
 
 /**
@@ -22,30 +23,32 @@ use Fab\Vidi\Tca\Tca;
  * View helper which return the max items to be in relation with the object in the context.
  * If it is not defined, return an arbitrary big number.
  */
-class MaxItemsViewHelper extends AbstractValidationViewHelper {
+class MaxItemsViewHelper extends AbstractValidationViewHelper
+{
 
-	/**
-	 * Returns the max items to be in relation with the object in the context.
-	 *
-	 * @throws \Exception
-	 * @return int
-	 */
-	public function render() {
-		$result = 9999; // arbitrary big number
+    /**
+     * Returns the max items to be in relation with the object in the context.
+     *
+     * @throws \Exception
+     * @return int
+     */
+    public function render()
+    {
+        $result = 9999; // arbitrary big number
 
-		$dataType = $this->templateVariableContainer->get('dataType');
-		if (empty($dataType)) {
-			throw new \Exception('Could not found a valid data type', 1385408252);
-		}
+        $dataType = $this->templateVariableContainer->get('dataType');
+        if (empty($dataType)) {
+            throw new \Exception('Could not found a valid data type', 1385408252);
+        }
 
-		$property = $this->templateVariableContainer->get('property');
-		$fieldName = GeneralUtility::camelCaseToLowerCaseUnderscored($property);
-		$configuration = Tca::table($dataType)->field($fieldName)->getConfiguration();
+        $property = $this->templateVariableContainer->get('property');
+        $fieldName = GeneralUtility::camelCaseToLowerCaseUnderscored($property);
+        $configuration = Tca::table($dataType)->field($fieldName)->getConfiguration();
 
-		if (isset($configuration['maxitems'])) {
-			$result = $configuration['maxitems'];
-		}
-		return $result;
-	}
+        if (isset($configuration['maxitems'])) {
+            $result = $configuration['maxitems'];
+        }
+        return $result;
+    }
 
 }

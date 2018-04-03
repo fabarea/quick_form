@@ -1,4 +1,5 @@
 <?php
+
 namespace Vanilla\QuickForm\Validation;
 
 /**
@@ -17,29 +18,31 @@ namespace Vanilla\QuickForm\Validation;
 /**
  * Valid a value against "FileSize".
  */
-class FileSizeValidator implements ValidatorInterface {
+class FileSizeValidator implements ValidatorInterface
+{
 
-	/**
-	 * Validate the value.
-	 *
-	 * @param string $value
-	 * @param string $rule
-	 * @return bool
-	 */
-	public function validate($value, $rule) {
+    /**
+     * Validate the value.
+     *
+     * @param string $value
+     * @param string $rule
+     * @return bool
+     */
+    public function validate($value, $rule)
+    {
 
-		if (is_array($value) && (int)$value['error'] !== 0) {
-			return TRUE; // early return as we want to validate the file extension only if the upload has succeeded.
-		}
+        if (is_array($value) && (int)$value['error'] !== 0) {
+            return TRUE; // early return as we want to validate the file extension only if the upload has succeeded.
+        }
 
-		$allowedSize = (int)$rule;
+        $allowedSize = (int)$rule;
 
-		// Handle if rule corresponds to value such as "1M".
-		if (preg_match('/([0-9]+)M/', $rule, $matches)) {
-			$allowedSize = $matches[1] * 1024 * 1024;
-		}
+        // Handle if rule corresponds to value such as "1M".
+        if (preg_match('/([0-9]+)M/', $rule, $matches)) {
+            $allowedSize = $matches[1] * 1024 * 1024;
+        }
 
-		return $allowedSize > $value['size'];
-	}
+        return $allowedSize > $value['size'];
+    }
 
 }

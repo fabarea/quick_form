@@ -1,4 +1,5 @@
 <?php
+
 namespace Vanilla\QuickForm\ViewHelpers\Form;
 
 /**
@@ -22,27 +23,29 @@ use Fab\Vidi\Tca\Tca;
 /**
  * View helper which tells the input type of the property given by the context.
  */
-class InputTypeViewHelper extends AbstractViewHelper {
+class InputTypeViewHelper extends AbstractViewHelper
+{
 
-	/**
-	 * Returns the input type of the property given by the context.
-	 * Possible values: text, email, ... see html5 specification
-	 *
-	 * @return string
-	 */
-	public function render() {
+    /**
+     * Returns the input type of the property given by the context.
+     * Possible values: text, email, ... see html5 specification
+     *
+     * @return string
+     */
+    public function render()
+    {
 
-		$property = $this->templateVariableContainer->get('property');
-		$dataType = $this->templateVariableContainer->get('dataType');
+        $property = $this->templateVariableContainer->get('property');
+        $dataType = $this->templateVariableContainer->get('dataType');
 
-		$fieldName = GeneralUtility::camelCaseToLowerCaseUnderscored($property);
+        $fieldName = GeneralUtility::camelCaseToLowerCaseUnderscored($property);
         $fieldType = Tca::table($dataType)->field($fieldName)->getType();
 
-		$inputType = 'text';
-		if ($fieldType === FieldType::EMAIL) {
-			$inputType = 'email';
-		}
-		return $inputType;
-	}
+        $inputType = 'text';
+        if ($fieldType === FieldType::EMAIL) {
+            $inputType = 'email';
+        }
+        return $inputType;
+    }
 
 }

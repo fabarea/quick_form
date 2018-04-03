@@ -1,4 +1,5 @@
 <?php
+
 namespace Vanilla\QuickForm\Component;
 
 /**
@@ -17,31 +18,35 @@ namespace Vanilla\QuickForm\Component;
 /**
  * A to-do form component to be rendered in a Quick Form.
  */
-class TodoComponent extends GenericComponent {
+class TodoComponent extends GenericComponent
+{
 
-	/**
-	 * Constructor
-	 *
-	 * @param string $message
-	 */
-	public function __construct($message = '') {
-		$partialName = 'Form/Todo';
-		$arguments['message'] = $message;
-		parent::__construct($partialName, $arguments);
-	}
+    /**
+     * Constructor
+     *
+     * @param string $message
+     */
+    public function __construct($message = '')
+    {
+        $partialName = 'Form/Todo';
+        $arguments['message'] = $message;
+        parent::__construct($partialName, $arguments);
+    }
 
-	/**
-	 * @return array
-	 */
-	public function getArguments() {
-		return $this->arguments;
-	}
+    /**
+     * @return array
+     */
+    public function getArguments()
+    {
+        return $this->arguments;
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getPartialName() {
-		return $this->partialName;
-	}
+    /**
+     * @return string
+     */
+    public function getPartialName()
+    {
+        return $this->partialName;
+    }
 
 }

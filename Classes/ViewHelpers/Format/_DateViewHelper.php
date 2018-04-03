@@ -1,4 +1,5 @@
 <?php
+
 namespace Vanilla\QuickForm\ViewHelpers\Format;
 
 /**
@@ -17,18 +18,20 @@ namespace Vanilla\QuickForm\ViewHelpers\Format;
 /**
  * View helper which format a date. Useful in the context of an email.
  */
-class DateViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
+class DateViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+{
 
-	/**
-	 * Returns a date given a format.
-	 *
-	 * @param string $format
-	 * @return string
-	 */
-	public function render($format = 'Y-m-d') {
-		$content = $this->renderChildren();
-		$date = new \DateTime();
-		$date->setTimestamp($content);
-		return $date->format($format);
-	}
+    /**
+     * Returns a date given a format.
+     *
+     * @param string $format
+     * @return string
+     */
+    public function render($format = 'Y-m-d')
+    {
+        $content = $this->renderChildren();
+        $date = new \DateTime();
+        $date->setTimestamp($content);
+        return $date->format($format);
+    }
 }

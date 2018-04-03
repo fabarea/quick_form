@@ -1,4 +1,5 @@
 <?php
+
 namespace Vanilla\QuickForm\Validation;
 
 /**
@@ -17,15 +18,16 @@ namespace Vanilla\QuickForm\Validation;
 /**
  * Interface for a Validator object.
  */
-interface ValidatorInterface {
+interface ValidatorInterface
+{
 
-	/**
-	 * Validate the value
-	 *
-	 * @param string $value
-	 * @param string $rule
-	 * @return bool
-	 */
-	public function validate($value, $rule);
+    /**
+     * Validate the value
+     *
+     * @param string $value
+     * @param string $rule
+     * @return bool
+     */
+    public function validate($value, $rule);
 
 }

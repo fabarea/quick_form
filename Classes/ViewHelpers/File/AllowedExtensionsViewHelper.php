@@ -1,4 +1,5 @@
 <?php
+
 namespace Vanilla\QuickForm\ViewHelpers\File;
 
 /**
@@ -20,17 +21,19 @@ use TYPO3\CMS\Media\Utility\PermissionUtility;
 /**
  * Tell what are the allowed extensions according to a storage.
  */
-class AllowedExtensionsViewHelper extends AbstractViewHelper {
+class AllowedExtensionsViewHelper extends AbstractViewHelper
+{
 
-	/**
-	 * Returns the allowed extensions for a storage.
-	 *
-	 * @param int $storage
-	 * @return string
-	 */
-	public function render($storage = 1) {
-		$allowedExtensions = PermissionUtility::getInstance()->getAllowedExtensions($storage);
-		return implode(', ', $allowedExtensions);
-	}
+    /**
+     * Returns the allowed extensions for a storage.
+     *
+     * @param int $storage
+     * @return string
+     */
+    public function render($storage = 1)
+    {
+        $allowedExtensions = PermissionUtility::getInstance()->getAllowedExtensions($storage);
+        return implode(', ', $allowedExtensions);
+    }
 
 }

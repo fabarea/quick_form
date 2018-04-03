@@ -1,4 +1,5 @@
 <?php
+
 namespace Vanilla\QuickForm\Validation;
 
 /**
@@ -17,17 +18,19 @@ namespace Vanilla\QuickForm\Validation;
 /**
  * Valid a value against "NotEmpty".
  */
-class NotEmptyValidator implements ValidatorInterface {
+class NotEmptyValidator implements ValidatorInterface
+{
 
-	/**
-	 * Validate the value.
-	 *
-	 * @param string $value
-	 * @param string $rule
-	 * @return bool
-	 */
-	public function validate($value, $rule) {
-		return !empty($value);
-	}
+    /**
+     * Validate the value.
+     *
+     * @param string $value
+     * @param string $rule
+     * @return bool
+     */
+    public function validate($value, $rule)
+    {
+        return !empty($value);
+    }
 
 }

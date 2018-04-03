@@ -1,4 +1,5 @@
 <?php
+
 namespace Vanilla\QuickForm\Validation;
 
 /**
@@ -17,17 +18,19 @@ namespace Vanilla\QuickForm\Validation;
 /**
  * Valid a value against "EmailAddress".
  */
-class EmailAddressValidator implements ValidatorInterface {
+class EmailAddressValidator implements ValidatorInterface
+{
 
-	/**
-	 * Validate the value.
-	 *
-	 * @param string $value
-	 * @param string $rule
-	 * @return bool
-	 */
-	public function validate($value, $rule) {
-		return filter_var($value, FILTER_VALIDATE_EMAIL);
-	}
+    /**
+     * Validate the value.
+     *
+     * @param string $value
+     * @param string $rule
+     * @return bool
+     */
+    public function validate($value, $rule)
+    {
+        return filter_var($value, FILTER_VALIDATE_EMAIL);
+    }
 
 }

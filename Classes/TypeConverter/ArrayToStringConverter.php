@@ -1,4 +1,5 @@
 <?php
+
 namespace Vanilla\QuickForm\TypeConverter;
 
 /**
@@ -19,40 +20,42 @@ use TYPO3\CMS\Extbase\Property\TypeConverter\AbstractTypeConverter;
 /**
  * Class ArrayToStringConverter
  */
-class ArrayToStringConverter extends AbstractTypeConverter {
+class ArrayToStringConverter extends AbstractTypeConverter
+{
 
-	/**
-	 * @var array<string>
-	 */
-	protected $sourceTypes = array('boolean', 'string');
+    /**
+     * @var array<string>
+     */
+    protected $sourceTypes = array('boolean', 'string');
 
-	/**
-	 * @var string
-	 */
-	protected $targetType = 'boolean';
+    /**
+     * @var string
+     */
+    protected $targetType = 'boolean';
 
-	/**
-	 * @var integer
-	 */
-	protected $priority = 1;
+    /**
+     * @var integer
+     */
+    protected $priority = 1;
 
-	/**
-	 * Actually convert from $source to $targetType
-	 *
-	 * @param string $source
-	 * @param string $targetType
-	 * @param array $convertedChildProperties
-	 * @param \TYPO3\CMS\Extbase\Property\PropertyMappingConfigurationInterface $configuration
-	 * @return boolean
-	 * @api
-	 */
-	public function convertFrom($source, $targetType, array $convertedChildProperties = array(), \TYPO3\CMS\Extbase\Property\PropertyMappingConfigurationInterface $configuration = NULL) {
+    /**
+     * Actually convert from $source to $targetType
+     *
+     * @param string $source
+     * @param string $targetType
+     * @param array $convertedChildProperties
+     * @param \TYPO3\CMS\Extbase\Property\PropertyMappingConfigurationInterface $configuration
+     * @return boolean
+     * @api
+     */
+    public function convertFrom($source, $targetType, array $convertedChildProperties = array(), \TYPO3\CMS\Extbase\Property\PropertyMappingConfigurationInterface $configuration = NULL)
+    {
 
-		if (!is_array($source)) {
-			$source = array($source);
-		}
+        if (!is_array($source)) {
+            $source = array($source);
+        }
 
-		return implode(',', $source);
-	}
+        return implode(',', $source);
+    }
 
 }

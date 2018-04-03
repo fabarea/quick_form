@@ -1,4 +1,5 @@
 <?php
+
 namespace Vanilla\QuickForm\ViewHelpers\Property;
 
 /**
@@ -19,41 +20,43 @@ use Vanilla\QuickForm\ViewHelpers\AbstractValidationViewHelper;
 /**
  * View helper which returns possible errors of a property.
  */
-class ErrorsViewHelper extends AbstractValidationViewHelper {
+class ErrorsViewHelper extends AbstractValidationViewHelper
+{
 
-	/**
-	 * @var string
-	 */
-	protected $template = '<label class="danger">%s</label> ';
+    /**
+     * @var string
+     */
+    protected $template = '<label class="danger">%s</label> ';
 
-	/**
-	 * Returns possible error of a field.
-	 *
-	 * @return bool
-	 */
-	public function render() {
+    /**
+     * Returns possible error of a field.
+     *
+     * @return bool
+     */
+    public function render()
+    {
 
-		$output = '';
+        $output = '';
 
-		if ($this->isFormPosted()) {
-			// Get the current property
-			$property = $this->templateVariableContainer->get('property');
+        if ($this->isFormPosted()) {
+            // Get the current property
+            $property = $this->templateVariableContainer->get('property');
 
-			// Get the current value for the property.
-			$value = $this->getValue($property);
+            // Get the current value for the property.
+            $value = $this->getValue($property);
 
-			// Instantiate the Validation service and check whether the value is valid.
-			$errorMessages = array();
-			if (!$this->getValidationService()->isValid($property, $value)) {
-				$errorMessages = $this->getValidationService()->getErrorMessages($property, $value);
-			}
+            // Instantiate the Validation service and check whether the value is valid.
+            $errorMessages = array();
+            if (!$this->getValidationService()->isValid($property, $value)) {
+                $errorMessages = $this->getValidationService()->getErrorMessages($property, $value);
+            }
 
-			foreach ($errorMessages as $errorMessage) {
-				$output .= sprintf($this->template, $errorMessage);
-			}
-		}
+            foreach ($errorMessages as $errorMessage) {
+                $output .= sprintf($this->template, $errorMessage);
+            }
+        }
 
-		return $output;
-	}
+        return $output;
+    }
 
 }

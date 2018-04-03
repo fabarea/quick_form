@@ -1,4 +1,5 @@
 <?php
+
 namespace Vanilla\QuickForm;
 
 /**
@@ -23,60 +24,64 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\ViewHelperVariableContainer;
 /**
  * A class to store internal instances of Quick Form to speed up
  */
-class ObjectFactory implements SingletonInterface {
+class ObjectFactory implements SingletonInterface
+{
 
-	/**
-	 * @var $instances
-	 */
-	protected $instances = array();
+    /**
+     * @var $instances
+     */
+    protected $instances = array();
 
-	/**
-	 * Gets a singleton instance of this class.
-	 *
-	 * @return object|\Vanilla\QuickForm\ObjectFactory
-	 */
-	static public function getInstance() {
-		return GeneralUtility::makeInstance(self::class);
-	}
+    /**
+     * Gets a singleton instance of this class.
+     *
+     * @return object|\Vanilla\QuickForm\ObjectFactory
+     */
+    static public function getInstance()
+    {
+        return GeneralUtility::makeInstance(self::class);
+    }
 
-	/**
-	 * Forge a Render View Helper object
-	 *
-	 * @param \TYPO3\CMS\Extbase\Mvc\Controller\ControllerContext $controllerContext
-	 * @param \TYPO3\CMS\Fluid\Core\ViewHelper\TemplateVariableContainer $templateVariableContainer
-	 * @param \TYPO3\CMS\Fluid\Core\ViewHelper\ViewHelperVariableContainer $viewHelperVariableContainer
-	 * @return \Vanilla\QuickForm\ViewHelpers\RenderViewHelper
-	 */
-	public function getRenderViewHelper(ControllerContext $controllerContext,
-	                                    TemplateVariableContainer $templateVariableContainer,
-	                                    ViewHelperVariableContainer $viewHelperVariableContainer) {
+    /**
+     * Forge a Render View Helper object
+     *
+     * @param \TYPO3\CMS\Extbase\Mvc\Controller\ControllerContext $controllerContext
+     * @param \TYPO3\CMS\Fluid\Core\ViewHelper\TemplateVariableContainer $templateVariableContainer
+     * @param \TYPO3\CMS\Fluid\Core\ViewHelper\ViewHelperVariableContainer $viewHelperVariableContainer
+     * @return \Vanilla\QuickForm\ViewHelpers\RenderViewHelper
+     */
+    public function getRenderViewHelper(ControllerContext $controllerContext,
+                                        TemplateVariableContainer $templateVariableContainer,
+                                        ViewHelperVariableContainer $viewHelperVariableContainer)
+    {
 
-		if (empty($this->instances['renderViewHelper'])) {
+        if (empty($this->instances['renderViewHelper'])) {
 
-			/** @var \TYPO3\CMS\Fluid\Core\Rendering\RenderingContext $renderingContext */
-			$renderingContext = $this->getObjectManager()->get('TYPO3\CMS\Fluid\Core\Rendering\RenderingContext');
-			$renderingContext->setControllerContext($controllerContext);
+            /** @var \TYPO3\CMS\Fluid\Core\Rendering\RenderingContext $renderingContext */
+            $renderingContext = $this->getObjectManager()->get('TYPO3\CMS\Fluid\Core\Rendering\RenderingContext');
+            $renderingContext->setControllerContext($controllerContext);
             $renderingContext->setVariableProvider($templateVariableContainer);
 
-			// Inject Variable Container
-			$propertyReflection = GeneralUtility::makeInstance('TYPO3\CMS\Extbase\Reflection\PropertyReflection', $renderingContext, 'viewHelperVariableContainer');
-			$propertyReflection->setAccessible(TRUE);
-			$propertyReflection->setValue($renderingContext, $viewHelperVariableContainer);
+            // Inject Variable Container
+            $propertyReflection = GeneralUtility::makeInstance('TYPO3\CMS\Extbase\Reflection\PropertyReflection', $renderingContext, 'viewHelperVariableContainer');
+            $propertyReflection->setAccessible(TRUE);
+            $propertyReflection->setValue($renderingContext, $viewHelperVariableContainer);
 
-			/** @var \Vanilla\QuickForm\ViewHelpers\RenderViewHelper $renderViewHelper */
-			$renderViewHelper = $this->getObjectManager()->get('Vanilla\QuickForm\ViewHelpers\RenderViewHelper');
-			$renderViewHelper->setRenderingContext($renderingContext);
+            /** @var \Vanilla\QuickForm\ViewHelpers\RenderViewHelper $renderViewHelper */
+            $renderViewHelper = $this->getObjectManager()->get('Vanilla\QuickForm\ViewHelpers\RenderViewHelper');
+            $renderViewHelper->setRenderingContext($renderingContext);
 
-			$this->instances['renderViewHelper'] = $renderViewHelper;
-		}
-		return $this->instances['renderViewHelper'];
-	}
+            $this->instances['renderViewHelper'] = $renderViewHelper;
+        }
+        return $this->instances['renderViewHelper'];
+    }
 
-	/**
-	 * @return \TYPO3\CMS\Extbase\Object\ObjectManager
-	 */
-	protected function getObjectManager() {
-		return GeneralUtility::makeInstance('TYPO3\CMS\Extbase\Object\ObjectManager');
-	}
+    /**
+     * @return \TYPO3\CMS\Extbase\Object\ObjectManager
+     */
+    protected function getObjectManager()
+    {
+        return GeneralUtility::makeInstance('TYPO3\CMS\Extbase\Object\ObjectManager');
+    }
 
 }

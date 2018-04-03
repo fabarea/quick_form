@@ -1,4 +1,5 @@
 <?php
+
 namespace Vanilla\QuickForm\ViewHelpers\Tca;
 
 /**
@@ -22,36 +23,38 @@ use Fab\Vidi\Tca\Tca;
 /**
  * View helper which returns the select size.
  */
-class SelectSizeViewHelper extends RenderViewHelper {
+class SelectSizeViewHelper extends RenderViewHelper
+{
 
-	/**
-	 * Returns the select size.
-	 *
-	 * @throws \Exception
-	 * @return int
-	 */
-	public function render() {
+    /**
+     * Returns the select size.
+     *
+     * @throws \Exception
+     * @return int
+     */
+    public function render()
+    {
 
-		$dataType = $this->templateVariableContainer->get('dataType');
-		if (empty($dataType)) {
-			throw new \Exception('Could not found a valid data type', 1385588074);
-		}
+        $dataType = $this->templateVariableContainer->get('dataType');
+        if (empty($dataType)) {
+            throw new \Exception('Could not found a valid data type', 1385588074);
+        }
 
-		$property = $this->templateVariableContainer->get('property');
-		if (empty($property)) {
-			throw new \Exception('Could not found a valid property', 1385588085);
-		}
+        $property = $this->templateVariableContainer->get('property');
+        if (empty($property)) {
+            throw new \Exception('Could not found a valid property', 1385588085);
+        }
 
-		$fieldName = GeneralUtility::camelCaseToLowerCaseUnderscored($property);
-		$configuration = Tca::table($dataType)->field($fieldName)->getConfiguration();
+        $fieldName = GeneralUtility::camelCaseToLowerCaseUnderscored($property);
+        $configuration = Tca::table($dataType)->field($fieldName)->getConfiguration();
 
-		$size = 1;
+        $size = 1;
 
-		if (!empty($configuration['size'])) {
-			$size = (int) $configuration['size'];
-		}
+        if (!empty($configuration['size'])) {
+            $size = (int)$configuration['size'];
+        }
 
-		return $size;
-	}
+        return $size;
+    }
 
 }

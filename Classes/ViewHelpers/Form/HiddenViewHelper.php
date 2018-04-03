@@ -1,4 +1,5 @@
 <?php
+
 namespace Vanilla\QuickForm\ViewHelpers\Form;
 
 /**
@@ -24,47 +25,50 @@ use TYPO3\CMS\Fluid\ViewHelpers\Form\AbstractFormFieldViewHelper;
  *
  * Otherwise, it is just a regular hidden field. This View Helper is useful for handling MM relations.
  */
-class HiddenViewHelper extends AbstractFormFieldViewHelper {
+class HiddenViewHelper extends AbstractFormFieldViewHelper
+{
 
-	/**
-	 * @var string
-	 */
-	protected $tagName = 'input';
+    /**
+     * @var string
+     */
+    protected $tagName = 'input';
 
-	/**
-	 * Initialize the arguments.
-	 *
-	 * @return void
-	 * @api
-	 */
-	public function initializeArguments() {
-		parent::initializeArguments();
-		$this->registerUniversalTagAttributes();
-	}
+    /**
+     * Initialize the arguments.
+     *
+     * @return void
+     * @api
+     */
+    public function initializeArguments()
+    {
+        parent::initializeArguments();
+        $this->registerUniversalTagAttributes();
+    }
 
 
-	/**
-	 * Renders a Hidden Field which format the name attribute as array if a serializable value is defined.
-	 * Useful for MM relations.
-	 *
-	 * @return string
-	 */
-	public function render() {
+    /**
+     * Renders a Hidden Field which format the name attribute as array if a serializable value is defined.
+     * Useful for MM relations.
+     *
+     * @return string
+     */
+    public function render()
+    {
 
-		$name = $this->getName();
+        $name = $this->getName();
 
-		$this->registerFieldNameForFormTokenGeneration($name);
+        $this->registerFieldNameForFormTokenGeneration($name);
 
-		$this->tag->addAttribute('type', 'hidden');
+        $this->tag->addAttribute('type', 'hidden');
 
-		$value = $this->getValue();
-		if (!is_object($value) && !is_null($value)) {
-			$this->tag->addAttribute('value', $this->getValue());
-			$name .= '[]'; //makes it appear as an array
-		}
-		$this->tag->addAttribute('name', $name);
+        $value = $this->getValue();
+        if (!is_object($value) && !is_null($value)) {
+            $this->tag->addAttribute('value', $this->getValue());
+            $name .= '[]'; //makes it appear as an array
+        }
+        $this->tag->addAttribute('name', $name);
 
-		return $this->tag->render();
-	}
+        return $this->tag->render();
+    }
 
 }

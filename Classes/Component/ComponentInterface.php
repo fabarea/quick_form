@@ -1,4 +1,5 @@
 <?php
+
 namespace Vanilla\QuickForm\Component;
 
 /**
@@ -17,26 +18,27 @@ namespace Vanilla\QuickForm\Component;
 /**
  * A form Component interface to be rendered in a Quick Form.
  */
-interface ComponentInterface {
+interface ComponentInterface
+{
 
-	/**
-	 * @return array
-	 */
-	public function getArguments();
+    /**
+     * @return array
+     */
+    public function getArguments();
 
-	/**
-	 * @return string
-	 */
-	public function getPartialName();
+    /**
+     * @return string
+     */
+    public function getPartialName();
 
-	/**
-	 * @return string
-	 */
-	public function getPartialExtensionKey();
+    /**
+     * @return string
+     */
+    public function getPartialExtensionKey();
 
-	/**
-	 * @return string
-	 */
-	public function toArray();
+    /**
+     * @return string
+     */
+    public function toArray();
 
 }

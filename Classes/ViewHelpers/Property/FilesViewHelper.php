@@ -1,4 +1,5 @@
 <?php
+
 namespace Vanilla\QuickForm\ViewHelpers\Property;
 
 /**
@@ -21,50 +22,52 @@ use Vanilla\QuickForm\ViewHelpers\RenderViewHelper;
 /**
  * View helper which returns a file from the property context.
  */
-class FilesViewHelper extends RenderViewHelper {
+class FilesViewHelper extends RenderViewHelper
+{
 
-	/**
-	 * Returns a file from the property context.
-	 *
-	 * @return array
-	 */
-	public function render() {
+    /**
+     * Returns a file from the property context.
+     *
+     * @return array
+     */
+    public function render()
+    {
 
-		$result = array();
+        $result = array();
 
-		// Retrieve object or array.
-		$formObjectName = $this->viewHelperVariableContainer->get('TYPO3\CMS\Fluid\ViewHelpers\FormViewHelper', 'formObjectName');
-		if ($this->templateVariableContainer->exists($formObjectName)) {
+        // Retrieve object or array.
+        $formObjectName = $this->viewHelperVariableContainer->get('TYPO3\CMS\Fluid\ViewHelpers\FormViewHelper', 'formObjectName');
+        if ($this->templateVariableContainer->exists($formObjectName)) {
 
-			$object = $this->templateVariableContainer->get($formObjectName);
+            $object = $this->templateVariableContainer->get($formObjectName);
 
-			if (!empty($object)) {
-				// Retrieve the property name.
-				$property = $this->templateVariableContainer->get('property');
-				$files = ObjectAccess::getProperty($object, $property);
+            if (!empty($object)) {
+                // Retrieve the property name.
+                $property = $this->templateVariableContainer->get('property');
+                $files = ObjectAccess::getProperty($object, $property);
 
-				foreach ($files as $file) {
+                foreach ($files as $file) {
 
-					if ($file instanceof \TYPO3\CMS\Core\Resource\AbstractFile) {
-						$result[] = $file;
-					} elseif ($file instanceof \TYPO3\CMS\Extbase\Domain\Model\AbstractFileFolder) {
-						$_file = $file->getOriginalResource();
+                    if ($file instanceof \TYPO3\CMS\Core\Resource\AbstractFile) {
+                        $result[] = $file;
+                    } elseif ($file instanceof \TYPO3\CMS\Extbase\Domain\Model\AbstractFileFolder) {
+                        $_file = $file->getOriginalResource();
 
-						// Special case for File Reference.
-						if ($_file instanceof \TYPO3\CMS\Core\Resource\FileReference) {
-							$result[$_file->getUid()] = $_file->getOriginalFile();
-						} else {
-							$result[] = $_file;
-						}
+                        // Special case for File Reference.
+                        if ($_file instanceof \TYPO3\CMS\Core\Resource\FileReference) {
+                            $result[$_file->getUid()] = $_file->getOriginalFile();
+                        } else {
+                            $result[] = $_file;
+                        }
 
-					} elseif ((int) $file > 0) {
-						$result[] = ResourceFactory::getInstance()->getFileObject($file);
-					}
-				}
-			}
-		}
+                    } elseif ((int)$file > 0) {
+                        $result[] = ResourceFactory::getInstance()->getFileObject($file);
+                    }
+                }
+            }
+        }
 
-		return $result;
-	}
+        return $result;
+    }
 
 }

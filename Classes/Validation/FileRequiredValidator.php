@@ -1,4 +1,5 @@
 <?php
+
 namespace Vanilla\QuickForm\Validation;
 
 /**
@@ -17,17 +18,19 @@ namespace Vanilla\QuickForm\Validation;
 /**
  * Valid a value against "FileRequired".
  */
-class FileRequiredValidator implements ValidatorInterface {
+class FileRequiredValidator implements ValidatorInterface
+{
 
-	/**
-	 * Validate the value.
-	 *
-	 * @param string $value
-	 * @param string $rule
-	 * @return bool
-	 */
-	public function validate($value, $rule) {
-		return is_array($value) && !empty($value);
-	}
+    /**
+     * Validate the value.
+     *
+     * @param string $value
+     * @param string $rule
+     * @return bool
+     */
+    public function validate($value, $rule)
+    {
+        return is_array($value) && !empty($value);
+    }
 
 }

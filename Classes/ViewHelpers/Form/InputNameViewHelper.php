@@ -1,4 +1,5 @@
 <?php
+
 namespace Vanilla\QuickForm\ViewHelpers\Form;
 
 /**
@@ -22,19 +23,21 @@ use Fab\Vidi\Tca\Tca;
  * View helper which returns an input name according to a property.
  * Useful for the MultiChoices partial.
  */
-class InputNameViewHelper extends AbstractViewHelper {
+class InputNameViewHelper extends AbstractViewHelper
+{
 
-	/**
-	 * Returns an input name according to a property.
-	 *
-	 * @return string
-	 */
-	public function render() {
-		$formObjectName = (string)$this->viewHelperVariableContainer->get('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'formObjectName');
-		$property = $this->templateVariableContainer->get('property');
+    /**
+     * Returns an input name according to a property.
+     *
+     * @return string
+     */
+    public function render()
+    {
+        $formObjectName = (string)$this->viewHelperVariableContainer->get('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'formObjectName');
+        $property = $this->templateVariableContainer->get('property');
 
-		// Use name of type array for the purpose of multi-choice.
-		return sprintf('%s[%s][]', $formObjectName, $property);
-	}
+        // Use name of type array for the purpose of multi-choice.
+        return sprintf('%s[%s][]', $formObjectName, $property);
+    }
 
 }

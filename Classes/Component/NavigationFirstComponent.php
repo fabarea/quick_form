@@ -1,4 +1,5 @@
 <?php
+
 namespace Vanilla\QuickForm\Component;
 
 /**
@@ -17,29 +18,33 @@ namespace Vanilla\QuickForm\Component;
 /**
  * A navigation first component to be rendered in a Quick Form.
  */
-class NavigationFirstComponent extends GenericComponent {
+class NavigationFirstComponent extends GenericComponent
+{
 
-	/**
-	 * Constructor
-	 */
-	public function __construct() {
-		$partialName = 'Form/NavigationFirst';
-		$arguments = array();
-		parent::__construct($partialName, $arguments);
-	}
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $partialName = 'Form/NavigationFirst';
+        $arguments = array();
+        parent::__construct($partialName, $arguments);
+    }
 
-	/**
-	 * @return array
-	 */
-	public function getArguments() {
-		return $this->arguments;
-	}
+    /**
+     * @return array
+     */
+    public function getArguments()
+    {
+        return $this->arguments;
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getPartialName() {
-		return $this->partialName;
-	}
+    /**
+     * @return string
+     */
+    public function getPartialName()
+    {
+        return $this->partialName;
+    }
 
 }

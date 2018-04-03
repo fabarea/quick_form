@@ -1,4 +1,5 @@
 <?php
+
 namespace Vanilla\QuickForm\Component;
 
 /**
@@ -17,32 +18,36 @@ namespace Vanilla\QuickForm\Component;
 /**
  * A hidden form component to be rendered in a Quick Form.
  */
-class HiddenComponent extends GenericComponent {
+class HiddenComponent extends GenericComponent
+{
 
-	/**
-	 * Constructor
-	 *
-	 * @param string $property
-	 * @param string $value
-	 */
-	public function __construct($property, $value = '') {
-		$partialName = 'Form/Hidden';
-		$arguments['property'] = $property;
-		$arguments['value'] = $value;
-		parent::__construct($partialName, $arguments);
-	}
+    /**
+     * Constructor
+     *
+     * @param string $property
+     * @param string $value
+     */
+    public function __construct($property, $value = '')
+    {
+        $partialName = 'Form/Hidden';
+        $arguments['property'] = $property;
+        $arguments['value'] = $value;
+        parent::__construct($partialName, $arguments);
+    }
 
-	/**
-	 * @return array
-	 */
-	public function getArguments() {
-		return $this->arguments;
-	}
+    /**
+     * @return array
+     */
+    public function getArguments()
+    {
+        return $this->arguments;
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getPartialName() {
-		return $this->partialName;
-	}
+    /**
+     * @return string
+     */
+    public function getPartialName()
+    {
+        return $this->partialName;
+    }
 }
