@@ -16,7 +16,7 @@ namespace Vanilla\QuickForm\ViewHelpers\Property;
 
 use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
-use TYPO3\CMS\Fluid\ViewHelpers\RenderViewHelper;
+use Vanilla\QuickForm\ViewHelpers\RenderViewHelper;
 
 /**
  * View helper which returns a file from the property context.

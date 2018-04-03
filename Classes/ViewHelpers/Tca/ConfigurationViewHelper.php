@@ -32,7 +32,7 @@ class ConfigurationViewHelper extends AbstractViewHelper {
 	public function render($key) {
 		$dataType = $this->templateVariableContainer->get('dataType');
 		$property = $this->templateVariableContainer->get('property');
-		$fieldName = Property::name($property)->of($dataType)->toField();
+		$fieldName = Property::name($property)->of($dataType)->toFieldName();
 		return Tca::table($dataType)->field($fieldName)->get($key);
 	}
 

@@ -31,7 +31,7 @@ class NumericRuler extends AbstractRuler {
 	 */
 	protected function getRuleWithTcaStrategy($property) {
 		$dataType = $this->configuration['dataType'];
-		$fieldName = Property::name($property)->of($dataType)->toField();
+		$fieldName = Property::name($property)->of($dataType)->toFieldName();
 		return Tca::table($dataType)->field($fieldName)->getType() === FieldType::NUMBER;
 	}
 

@@ -33,10 +33,10 @@ class ObjectFactory implements SingletonInterface {
 	/**
 	 * Gets a singleton instance of this class.
 	 *
-	 * @return \Vanilla\QuickForm\ObjectFactory
+	 * @return object|\Vanilla\QuickForm\ObjectFactory
 	 */
 	static public function getInstance() {
-		return GeneralUtility::makeInstance('Vanilla\QuickForm\ObjectFactory');
+		return GeneralUtility::makeInstance(self::class);
 	}
 
 	/**
@@ -45,7 +45,7 @@ class ObjectFactory implements SingletonInterface {
 	 * @param \TYPO3\CMS\Extbase\Mvc\Controller\ControllerContext $controllerContext
 	 * @param \TYPO3\CMS\Fluid\Core\ViewHelper\TemplateVariableContainer $templateVariableContainer
 	 * @param \TYPO3\CMS\Fluid\Core\ViewHelper\ViewHelperVariableContainer $viewHelperVariableContainer
-	 * @return \TYPO3\CMS\Fluid\ViewHelpers\RenderViewHelper
+	 * @return \Vanilla\QuickForm\ViewHelpers\RenderViewHelper
 	 */
 	public function getRenderViewHelper(ControllerContext $controllerContext,
 	                                    TemplateVariableContainer $templateVariableContainer,
@@ -56,15 +56,15 @@ class ObjectFactory implements SingletonInterface {
 			/** @var \TYPO3\CMS\Fluid\Core\Rendering\RenderingContext $renderingContext */
 			$renderingContext = $this->getObjectManager()->get('TYPO3\CMS\Fluid\Core\Rendering\RenderingContext');
 			$renderingContext->setControllerContext($controllerContext);
-			$renderingContext->injectTemplateVariableContainer($templateVariableContainer);
+            $renderingContext->setVariableProvider($templateVariableContainer);
 
 			// Inject Variable Container
 			$propertyReflection = GeneralUtility::makeInstance('TYPO3\CMS\Extbase\Reflection\PropertyReflection', $renderingContext, 'viewHelperVariableContainer');
 			$propertyReflection->setAccessible(TRUE);
 			$propertyReflection->setValue($renderingContext, $viewHelperVariableContainer);
 
-			/** @var \TYPO3\CMS\Fluid\ViewHelpers\RenderViewHelper $renderViewHelper */
-			$renderViewHelper = $this->getObjectManager()->get('TYPO3\CMS\Fluid\ViewHelpers\RenderViewHelper');
+			/** @var \Vanilla\QuickForm\ViewHelpers\RenderViewHelper $renderViewHelper */
+			$renderViewHelper = $this->getObjectManager()->get('Vanilla\QuickForm\ViewHelpers\RenderViewHelper');
 			$renderViewHelper->setRenderingContext($renderingContext);
 
 			$this->instances['renderViewHelper'] = $renderViewHelper;

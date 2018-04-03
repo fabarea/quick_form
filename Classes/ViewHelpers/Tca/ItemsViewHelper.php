@@ -17,7 +17,7 @@ namespace Vanilla\QuickForm\ViewHelpers\Tca;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
-use TYPO3\CMS\Fluid\ViewHelpers\RenderViewHelper;
+use Vanilla\QuickForm\ViewHelpers\RenderViewHelper;
 use Fab\Vidi\Tca\Tca;
 
 /**

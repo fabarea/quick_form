@@ -36,10 +36,10 @@ class InputTypeViewHelper extends AbstractViewHelper {
 		$dataType = $this->templateVariableContainer->get('dataType');
 
 		$fieldName = GeneralUtility::camelCaseToLowerCaseUnderscored($property);
-		$fieldType = Tca::table($dataType)->field($fieldName)->getFieldType();
+        $fieldType = Tca::table($dataType)->field($fieldName)->getType();
 
 		$inputType = 'text';
-		if ($fieldType == FieldType::EMAIL) {
+		if ($fieldType === FieldType::EMAIL) {
 			$inputType = 'email';
 		}
 		return $inputType;
