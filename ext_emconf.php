@@ -7,7 +7,7 @@ $EM_CONF[$_EXTKEY] = [
     'author' => 'Fabien Udriot',
     'author_email' => 'fabien.udriot@typo3.org',
     'state' => 'beta',
-    'version' => '2.0.1',
+    'version' => '2.0.1-dev',
     'autoload' => [
         'psr-4' => ['Vanilla\\QuickForm\\' => 'Classes']
     ],
