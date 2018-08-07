@@ -172,18 +172,15 @@ class ItemsViewHelper extends RenderViewHelper
 
         $configuration = Tca::table($tableName)->field($fieldName)->getConfiguration();
         if (!empty($configuration['itemsProcFunc'])) {
-            $parts = explode('php:', $configuration['itemsProcFunc']);
-            if (!empty($parts[1])) {
+            $parts = explode('->', $configuration['itemsProcFunc']);
+            $obj = GeneralUtility::makeInstance($parts[0]);
+            $method = $parts[1];
 
-                list($class, $method) = explode('->', $parts[1]);
+            $parameters = ['items' => []];
+            $obj->$method($parameters);
 
-                $parameters['items'] = array();
-                $object = GeneralUtility::makeInstance($class);
-                $object->$method($parameters);
-
-                foreach ($parameters['items'] as $items) {
-                    $values[$items[1]] = $items[0];
-                }
+            foreach ($parameters['items'] as $items) {
+                $values[$items[1]] = $items[0];
             }
         }
         return $values;
